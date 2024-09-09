@@ -1,0 +1,5 @@
+if x % 2 = 0 then
+    var result : integer is 1
+else
+    var result : integer is 0
+end

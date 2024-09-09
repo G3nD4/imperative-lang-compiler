@@ -1,0 +1,6 @@
+routine findFactorial() : integer is
+    while i <= n loop
+        factorial := factorial * i
+        i := i + 1
+    end
+end
