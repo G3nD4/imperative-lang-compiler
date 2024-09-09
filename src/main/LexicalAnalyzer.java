@@ -202,6 +202,7 @@ public class LexicalAnalyzer {
         tokens.put("}", TokenType.RIGHT_BRACKET);
         tokens.put(":", TokenType.COLON);
         tokens.put(".", TokenType.DOT);
+        tokens.put(",", TokenType.COMMA);
 
         tokens.put("var", TokenType.VAR);
         tokens.put("type", TokenType.TYPE);
@@ -210,6 +211,7 @@ public class LexicalAnalyzer {
         tokens.put("end", TokenType.END);
         tokens.put("while", TokenType.WHILE);
         tokens.put("loop", TokenType.LOOP);
+        tokens.put("in", TokenType.IN);
         tokens.put("for", TokenType.FOR);
         tokens.put("if", TokenType.IF);
         tokens.put("else", TokenType.ELSE);
@@ -232,6 +234,7 @@ public class LexicalAnalyzer {
         delimeters.add("{");
         delimeters.add("}");
         delimeters.add(".");
+        delimeters.add(",");
         delimeters.add(":");
         delimeters.add(":");
         delimeters.add("=");
