@@ -50,7 +50,7 @@ public class LexicalAnalyzerTest {
         ArrayList<Token> tokens = lexicalAnalyzer.analyzeProgram(new File("src/Tests/Test_files/Routine.txt"));
         ArrayList<TokenType> correctAnswer = new ArrayList<>(Arrays.asList(TokenType.ROUTINE, TokenType.IDENTIFIER,
                 TokenType.LEFT_PAREN, TokenType.IDENTIFIER, TokenType.COLON, TokenType.DATA_TYPE_INTEGER,
-                TokenType.IDENTIFIER, TokenType.COLON, TokenType.DATA_TYPE_INTEGER, TokenType.RIGHT_PAREN,
+                TokenType.COMMA, TokenType.IDENTIFIER, TokenType.COLON, TokenType.DATA_TYPE_INTEGER, TokenType.RIGHT_PAREN,
                 TokenType.COLON, TokenType.DATA_TYPE_INTEGER, TokenType.IS, TokenType.IDENTIFIER, TokenType.ASSIGN,
                 TokenType.IDENTIFIER, TokenType.PLUS, TokenType.IDENTIFIER, TokenType.END));
 
@@ -80,11 +80,10 @@ public class LexicalAnalyzerTest {
         ArrayList<Token> tokens = lexicalAnalyzer.analyzeProgram(new File("src/Tests/Test_files/ForLoop.txt"));
         ArrayList<TokenType> correctAnswer = new ArrayList<>(Arrays.asList(TokenType.ROUTINE, TokenType.IDENTIFIER,
                 TokenType.LEFT_PAREN, TokenType.RIGHT_PAREN, TokenType.COLON, TokenType.DATA_TYPE_INTEGER,
-                TokenType.IS, TokenType.FOR, TokenType.IDENTIFIER, TokenType.IDENTIFIER, TokenType.IDENTIFIER, TokenType.RANGE,
+                TokenType.IS, TokenType.FOR, TokenType.IDENTIFIER, TokenType.IN, TokenType.IDENTIFIER, TokenType.RANGE,
                 TokenType.IDENTIFIER, TokenType.LOOP, TokenType.IDENTIFIER, TokenType.ASSIGN, TokenType.IDENTIFIER, TokenType.PLUS,
                 TokenType.IDENTIFIER, TokenType.END, TokenType.END));
 
-        // add keywords: comma, in
 
         Assertions.assertEquals(correctAnswer, makeListOfTokenTypes(tokens));
     }
@@ -98,8 +97,6 @@ public class LexicalAnalyzerTest {
                 TokenType.LOOP, TokenType.IDENTIFIER, TokenType.ASSIGN, TokenType.IDENTIFIER, TokenType.MULTIPLY,
                 TokenType.IDENTIFIER, TokenType.IDENTIFIER, TokenType.ASSIGN, TokenType.IDENTIFIER, TokenType.PLUS,
                 TokenType.IDENTIFIER, TokenType.END, TokenType.END));
-
-        // add keywords: comma, in
 
         Assertions.assertEquals(correctAnswer, makeListOfTokenTypes(tokens));
     }
