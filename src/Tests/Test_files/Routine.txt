@@ -1,0 +1,3 @@
+routine add(a: integer, b: integer): integer is
+    a := a + b
+end
