@@ -8,7 +8,6 @@ import main.LexicalErrorType;
 import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Your test class
 public class ErrorDetectorTest {
 
     @Test
@@ -17,7 +16,6 @@ public class ErrorDetectorTest {
         Method method = ErrorDetector.class.getDeclaredMethod("containsIllegalCharacters", String.class);
         method.setAccessible(true);
 
-        // Test cases
         assertNull(method.invoke(errorDetector, "validName123"));
         assertEquals(LexicalErrorType.IDENTIFYER_NAME_CONTAINS_ILLEGAL_CHARACTERS, 
                 method.invoke(errorDetector, "invalid!name"));
@@ -31,7 +29,6 @@ public class ErrorDetectorTest {
         Method method = ErrorDetector.class.getDeclaredMethod("startWithDigit", String.class);
         method.setAccessible(true);
 
-        // Test cases
         assertNull(method.invoke(errorDetector, "validName"));
         assertEquals(LexicalErrorType.IDENTIFYER_NAME_DOESNT_START_WITH_DIGIT, 
                 method.invoke(errorDetector, "1invalidName"));
