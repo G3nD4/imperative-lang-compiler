@@ -1,4 +1,4 @@
-package main;
+package Lexical_analyzer;
 
 public enum TokenType {
     // Keywords

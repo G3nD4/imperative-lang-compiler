@@ -1,4 +1,4 @@
-package main;
+package Lexical_analyzer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Error_detector.ErrorDetector;
+import Error_detector.LexicalError;
 
 public class LexicalAnalyzer {
 

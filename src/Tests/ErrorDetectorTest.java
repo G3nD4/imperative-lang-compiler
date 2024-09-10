@@ -2,8 +2,9 @@ package Tests;
 
 import org.junit.jupiter.api.Test;
 
-import main.ErrorDetector;
-import main.LexicalErrorType;
+import Error_detector.*;
+
+import Error_detector.ErrorDetector;
 
 import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;

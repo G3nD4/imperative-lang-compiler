@@ -1,6 +1,11 @@
 package Tests;
 
 import org.junit.jupiter.api.Test;
+
+import Lexical_analyzer.LexicalAnalyzer;
+import Lexical_analyzer.Token;
+import Lexical_analyzer.TokenType;
+
 import org.junit.jupiter.api.Assertions;
 
 import java.io.File;

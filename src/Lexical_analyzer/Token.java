@@ -1,6 +1,6 @@
-package main;
+package Lexical_analyzer;
 
-import java.util.ArrayList;
+import Utils.ICopyable;
 
 public class Token implements ICopyable<Token> {
 

@@ -1,4 +1,4 @@
-package main;
+package Error_detector;
 
 public enum LexicalErrorType {
     IDENTIFYER_NAME_DOESNT_START_WITH_DIGIT,

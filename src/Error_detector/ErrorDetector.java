@@ -1,6 +1,8 @@
-package main;
+package Error_detector;
 
 import java.util.ArrayList;
+
+import Lexical_analyzer.Token;
 
 public class ErrorDetector {
     public ArrayList<LexicalError> detectErrors(ArrayList<Token> tokens) {
