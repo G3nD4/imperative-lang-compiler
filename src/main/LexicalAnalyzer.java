@@ -29,6 +29,9 @@ public class LexicalAnalyzer {
 
         ArrayList<Token> finalTokenList = combineDelimeters(tokenList);
 
+        ErrorDetector errorDetector = new ErrorDetector();
+        ArrayList<LexicalError> lexicalErrors = errorDetector.detectErrors(finalTokenList);
+        
         return finalTokenList;
     }
 
