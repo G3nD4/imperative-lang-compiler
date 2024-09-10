@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Token implements ICopyable<Token> {
 
     public Token(Span span, TokenType type, int id, String name) {
@@ -13,9 +15,6 @@ public class Token implements ICopyable<Token> {
     protected TokenType type;
     protected int id;
     protected String name;
-
-    // private int intValue;
-    // private double realValue;
 
     public String getName() {
         return name;
