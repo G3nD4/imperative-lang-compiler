@@ -1,6 +1,6 @@
 package main;
 
-public class Token {
+public class Token implements ICopyable<Token> {
 
     public Token(Span span, TokenType type, int id, String name) {
         this.span = span;
@@ -9,38 +9,13 @@ public class Token {
         this.name = name;
     }
 
-    public Token(Span span, TokenType type, int id, String name, double realValue) {
-        this.span = span;
-        this.type = type;
-        this.id = id;
-        this.name = name;
-        this.realValue = realValue;
-    }
+    protected Span span;
+    protected TokenType type;
+    protected int id;
+    protected String name;
 
-    public Token(Span span, TokenType type, int id, String name, int intValue) {
-        this.span = span;
-        this.type = type;
-        this.id = id;
-        this.name = name;
-        this.intValue = intValue;
-    }
-
-    public Token(Span span, TokenType type, int id, String name, int intValue, double realValue) {
-        this.span = span;
-        this.type = type;
-        this.id = id;
-        this.name = name;
-        this.intValue = intValue;
-        this.realValue = realValue;
-    }
-
-    private Span span;
-    private TokenType type;
-    private int id;
-    private String name;
-
-    private int intValue;
-    private double realValue;
+    // private int intValue;
+    // private double realValue;
 
     public String getName() {
         return name;
@@ -60,19 +35,20 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token:\n\t" + "[" + name + "]" + "\n\ttype: " + type + "\n\tid: " + id + "\n\tline number: " + span.getLineNumber() + "\n\tint_value: " + intValue + "\n\treal_value: " + realValue + "\n---------------------------\n";
+        return "Token:\n\t" + "[" + name + "]" + "\n\ttype: " + type + "\n\tid: " + id + "\n\tline number: " + span.getLineNumber() + "\n---------------------------\n";
     }
 
     public Token copyWith(String newName, TokenType type) {
-        return new Token(span, type, id, newName, intValue, realValue);
+        return new Token(span, type, id, newName);
     }
 
     public Token copyWith(String newName, double doubleVal) {
-        return new Token(span, type, id, newName, intValue, realValue);
+        return new Token(span, type, id, newName);
     }
 
+    @Override
     public Token copy() {
-        return new Token(span, type, id, name, intValue, realValue);
+        return new Token(span, type, id, name);
     }
 
 }

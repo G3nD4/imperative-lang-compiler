@@ -84,7 +84,7 @@ public class LexicalAnalyzer {
                         if (isNumber(tokenList.get(i - 1).getName()) && isNumber(tokenList.get(i + 1).getName())) {
                             String firstName = tokenList.get(i - 1).getName();
                             String secondName = tokenList.get(i + 1).getName();
-                            Token token = TokenFactory.realNumber(tokenList.get(i - 1).getSpan(), TokenType.IDENTIFIER, tokenList.get(i - 1).getId(), firstName + "." + secondName, Double.parseDouble(firstName + "." + secondName));
+                            Token token = new RealToken(tokenList.get(i - 1).getSpan(), TokenType.IDENTIFIER, tokenList.get(i - 1).getId(), firstName + "." + secondName, Double.parseDouble(firstName + "." + secondName));
                             combinedDelimetersTokenList.removeLast();
                             combinedDelimetersTokenList.add(token);
                             ++i;
@@ -157,7 +157,7 @@ public class LexicalAnalyzer {
             tokenList.add(new Token(new Span(lineNumber), tokens.get(currentToken), tokenList.size(), currentToken));
         } else {
             if (isNumber(currentToken)) {
-                Token token = TokenFactory.intNumber(new Span(lineNumber), TokenType.IDENTIFIER, tokenList.size(), currentToken, Integer.parseInt(currentToken));
+                Token token = new IntegerToken(new Span(lineNumber), TokenType.IDENTIFIER, tokenList.size(), currentToken, Integer.parseInt(currentToken));
                 tokenList.add(token);
             } else {
                 tokenList.add(new Token(new Span(lineNumber), TokenType.IDENTIFIER, tokenList.size(), currentToken));
