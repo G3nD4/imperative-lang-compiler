@@ -29,10 +29,21 @@ public class ErrorDetector {
         return error.hasErrors() ? error : null;
     }
 
+    private boolean characterIn(Character character, Character[] array) {
+        for (Character character1 : array) {
+            if (character == character1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private LexicalErrorType containsIllegalCharacters(String name) {
+        Character[] notAllowedSpecial = new Character[]{'!', '"', '#', '$', '`', '@', '[', ']', '~'};
         for (int i = 0; i < name.length(); i++) {
             char ch = name.charAt(i);
-            if (!(Character.isDigit(ch) || (Character.isLetter(ch) && ch <= 0x7F))) {
+            if (Character.isDigit(ch) || characterIn(ch, notAllowedSpecial)) {
+                System.out.println(name);
                 return LexicalErrorType.IDENTIFYER_NAME_CONTAINS_ILLEGAL_CHARACTERS;
             }
         }
