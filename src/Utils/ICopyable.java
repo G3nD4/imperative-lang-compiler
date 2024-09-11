@@ -1,4 +1,4 @@
-package main;
+package Utils;
 
 public interface ICopyable<T> {
     public T copy();

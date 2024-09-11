@@ -1,4 +1,4 @@
-package main;
+package Lexical_analyzer;
 
 public class RealToken extends Token {
     private double realValue;

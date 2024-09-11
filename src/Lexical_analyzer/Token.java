@@ -1,4 +1,6 @@
-package main;
+package Lexical_analyzer;
+
+import Utils.ICopyable;
 
 public class Token implements ICopyable<Token> {
 
@@ -13,9 +15,6 @@ public class Token implements ICopyable<Token> {
     protected TokenType type;
     protected int id;
     protected String name;
-
-    // private int intValue;
-    // private double realValue;
 
     public String getName() {
         return name;

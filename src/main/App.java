@@ -3,6 +3,9 @@ package main;
 import java.io.File;
 import java.util.ArrayList;
 
+import Lexical_analyzer.LexicalAnalyzer;
+import Lexical_analyzer.Token;
+
 public class App {
 
     public static void main(String[] args) {
