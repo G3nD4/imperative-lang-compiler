@@ -3,16 +3,20 @@ package Error_detector;
 import java.util.ArrayList;
 
 import Lexical_analyzer.Token;
+import Lexical_analyzer.TokenType;
 
 public class ErrorDetector {
     public ArrayList<LexicalError> detectErrors(ArrayList<Token> tokens) {
         ArrayList<LexicalError> lexicalErrors = new ArrayList<>();
 
         for (Token token : tokens) {
-            LexicalError error = getLexicalErrorOrNull(token);
-            if (error != null) {
-                lexicalErrors.add(error);
+            if (token.getType() == TokenType.IDENTIFIER) {
+                LexicalError error = getLexicalErrorOrNull(token);
+                if (error != null) {
+                    lexicalErrors.add(error);
+                }
             }
+            
         }
 
         return lexicalErrors;
