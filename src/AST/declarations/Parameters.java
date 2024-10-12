@@ -1,5 +1,7 @@
 package AST.declarations;
 
+import java.util.List;
+
 public class Parameters {
 
     private List<ParameterDeclaration> parameters;

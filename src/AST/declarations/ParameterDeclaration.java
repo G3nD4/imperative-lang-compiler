@@ -1,5 +1,7 @@
 package AST.declarations;
 
+import Lexical_analyzer.TokenType;
+
 public class ParameterDeclaration {
 
     private String identifier;
