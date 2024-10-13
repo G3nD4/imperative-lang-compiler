@@ -1,21 +1,47 @@
 package main;
 
-import java.io.File;
-import java.util.ArrayList;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 
-import Lexical_analyzer.LexicalAnalyzer;
-import Lexical_analyzer.Token;
+import main.MyLangParser.ProgramContext;
+
+import java.io.IOException;
 
 public class App {
 
     public static void main(String[] args) {
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        try {
+            CharStream charStream = CharStreams.fromFileName("/Users/nikitadrozdov/My Compiler/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
 
-        ArrayList<Token> tokens = lexicalAnalyzer.analyzeProgram(new File("src/Tests/Test_files/IncorrectNames"));
+            MyLangLexer myLangLexer = new MyLangLexer(charStream);
+            CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
 
-        for (Token token : tokens) {
-            System.out.println(token.toString());
+            MyLangParser myLangParser = new MyLangParser(tokenStream);
+
+            ProgramContext context = myLangParser.program();
+
+            TreeNode root = TreeBuilder.buildTree(context, myLangParser);
+            
+            printTree(root, 0);
+            
+            System.out.println(((InternalNode)((InternalNode) root).getChildren().get(0)).getRuleName());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println("Total amount of tokens: " + tokens.size());
     }
+
+    public static void printTree(TreeNode node, int indent) {
+        String indentString = "  ".repeat(indent);
+        if (node.isLeaf()) {
+            System.out.println(indentString + "Leaf: " + ((LeafNode) node).getValue());
+        } else {
+            InternalNode internalNode = (InternalNode) node;
+            System.out.println(indentString + "Internal: " + internalNode.getRuleName());
+            for (TreeNode child : internalNode.getChildren()) {
+                printTree(child, indent + 1);
+            }
+        }
+    }
+
 }
