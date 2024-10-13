@@ -32,6 +32,14 @@ RBRACKET: ']';
 DOT: '.';
 COMMA: ',';
 NEWLINE: '\r'? '\n';
+// Tokens for comparison operators
+EQUALS: '==';
+NOT_EQUALS: '!=';
+LESS_THAN: '<';
+GREATER_THAN: '>';
+LESS_THAN_EQUALS: '<=';
+GREATER_THAN_EQUALS: '>=';
+RANGE: '..';
 
 // Literals
 INTEGER_LITERAL: [0-9]+;
@@ -45,6 +53,13 @@ LINE_COMMENT: '//' ~[\r\n]* -> skip;
 /* Parser rules */
 
 // Program structure
+
+separator: NEWLINE+;
+
+sepOrNot
+    :   NEWLINE*
+    ;
+
 program: (declaration | routineDeclaration)* EOF;
 
 // Declarations
@@ -67,7 +82,7 @@ type: 'integer'
 
 // Routine declaration
 routineDeclaration
-    : ROUTINE IDENTIFIER LPAREN parameters? RPAREN (COLON type)? IS body END
+    : ROUTINE IDENTIFIER LPAREN parameters? RPAREN (COLON type)? IS sepOrNot body sepOrNot END
     ;
 
 parameters
@@ -98,15 +113,17 @@ routineCall
     ;
 
 whileLoop
-    : WHILE expression LOOP body END
-    ;
+   : WHILE expression LOOP body separator END
+   | WHILE expression LOOP body END
+   ;
 
 forLoop
-    : FOR IDENTIFIER IN (REVERSE)? range LOOP body END
-    ;
+   : FOR IDENTIFIER IN (REVERSE)? range LOOP body separator END
+   | FOR IDENTIFIER IN (REVERSE)? range LOOP body END
+   ;
 
 range
-    : expression '..' expression
+    : expression RANGE expression
     ;
 
 ifStatement
@@ -115,17 +132,21 @@ ifStatement
 
 // Expressions
 expression
-    : expression PLUS expression
-    | expression MINUS expression
-    | expression MULTIPLY expression
-    | expression DIVIDE expression
-    | INTEGER_LITERAL
-    | REAL_LITERAL
-    | TRUE
-    | FALSE
-    | modifiablePrimary
-    | LPAREN expression RPAREN
-    ;
+  : expression ('+' | '-') expression
+  | expression ('*' | '/') expression
+  | atom
+  ;
+
+atom
+  : INTEGER_LITERAL
+  | REAL_LITERAL
+  | TRUE
+  | FALSE
+  | modifiablePrimary
+  | LPAREN expression RPAREN
+  ;
+
+
 
 modifiablePrimary
     : IDENTIFIER (DOT IDENTIFIER | LBRACKET expression RBRACKET)*

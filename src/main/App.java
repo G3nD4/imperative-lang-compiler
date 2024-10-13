@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import main.MyLangParser.ProgramContext;
 
 import java.io.IOException;
 
@@ -12,14 +11,14 @@ public class App {
 
     public static void main(String[] args) {
         try {
-            CharStream charStream = CharStreams.fromFileName("/Users/nikitadrozdov/My Compiler/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
+            CharStream charStream = CharStreams.fromFileName("/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
 
             MyLangParser myLangParser = new MyLangParser(tokenStream);
 
-            ProgramContext context = myLangParser.program();
+            MyLangParser.ProgramContext context = myLangParser.program();
 
             TreeNode root = TreeBuilder.buildTree(context, myLangParser);
             
