@@ -36,6 +36,7 @@ MINUS: '-';
 MULTIPLY: '*';
 DIVIDE: '/';
 MODULO: '%';
+POWER: '^';
 EQUALS: '=';
 NOT_EQUALS: '!=';
 LESS_THAN: '<';
@@ -161,35 +162,16 @@ sepOrNot
 // -------------------- Expression Rules --------------------
 
 expression
-    : logicalOrExpression
-    ;
+    : expression (OR expression)
+    | expression (AND expression)
+    | expression (EQUALS | NOT_EQUALS) expression
+    | expression (LESS_THAN | GREATER_THAN
+                 | LESS_THAN_EQUALS | GREATER_THAN_EQUALS) expression
+    | expression (PLUS | MINUS) expression
+    | expression (MULTIPLY | DIVIDE | MODULO) expression
+    | (PLUS | MINUS | NOT) expression
 
-logicalOrExpression
-    : logicalAndExpression (OR logicalAndExpression)*
-    ;
-
-logicalAndExpression
-    : equalityExpression (AND equalityExpression)*
-    ;
-
-equalityExpression
-    : relationalExpression ((EQUALS | NOT_EQUALS) relationalExpression)*
-    ;
-
-relationalExpression
-    : additiveExpression ((LESS_THAN | GREATER_THAN | LESS_THAN_EQUALS | GREATER_THAN_EQUALS) additiveExpression)*
-    ;
-
-additiveExpression
-    : multiplicativeExpression ((PLUS | MINUS) multiplicativeExpression)*
-    ;
-
-multiplicativeExpression
-    : unaryExpression ((MULTIPLY | DIVIDE | MODULO) unaryExpression)*
-    ;
-
-unaryExpression
-    : (PLUS | MINUS | NOT)? primary
+    | primary
     ;
 
 primary
