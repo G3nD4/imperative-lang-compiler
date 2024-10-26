@@ -1,0 +1,28 @@
+type Number is integer
+type Result is integer
+
+routine comprehensiveRoutine(a: Number, b: Number, c: Number): Result is
+    var sum: Number is a + b + c
+    var product: Number is a * b * c
+    var average: Number
+    if sum > 100 then
+        average := sum / 3
+    else
+        average := (a + b) / 2
+    end
+    var finalResult: Result is 0
+    for i in 1..average loop
+        if i % 2 = 0 then
+            finalResult := finalResult + i
+        else
+            finalResult := finalResult - i
+        end
+    end
+    while finalResult < 100 loop
+        finalResult := finalResult + product
+        if finalResult > 200 then
+            break
+        end
+    end
+    return finalResult
+end
