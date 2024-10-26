@@ -3,6 +3,7 @@ package main;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 
 import java.io.IOException;
@@ -11,7 +12,8 @@ public class App {
 
     public static void main(String[] args) {
         try {
-            CharStream charStream = CharStreams.fromFileName("/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
+            CharStream charStream = CharStreams.fromFileName(
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -20,27 +22,16 @@ public class App {
 
             MyLangParser.ProgramContext context = myLangParser.program();
 
-            TreeNode root = TreeBuilder.buildTree(context, myLangParser);
-            
-            printTree(root, 0);
-            
-            System.out.println(((InternalNode)((InternalNode) root).getChildren().get(0)).getRuleName());
+            MyListener listener = new MyListener();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(listener, context);
+
+            System.out.println(listener.getRoutines());
+            System.out.println(listener.getVariableDeclarations());
+            System.out.println("Assignments: " + listener.getAssignments());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public static void printTree(TreeNode node, int indent) {
-        String indentString = "  ".repeat(indent);
-        if (node.isLeaf()) {
-            System.out.println(indentString + "Leaf: " + ((LeafNode) node).getValue());
-        } else {
-            InternalNode internalNode = (InternalNode) node;
-            System.out.println(indentString + "Internal: " + internalNode.getRuleName());
-            for (TreeNode child : internalNode.getChildren()) {
-                printTree(child, indent + 1);
-            }
-        }
-    }
-
 }
