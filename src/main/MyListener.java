@@ -9,6 +9,7 @@ import java.util.Stack;
 public class MyListener extends MyLangBaseListener {
     private List<Function> routines = new ArrayList<>();
     private List<VariableDeclaration> variableDeclarations = new ArrayList<>();
+    private List<If> ifStatements = new ArrayList<>();
 
     private Stack<Block> blockStack = new Stack<>();  // Stack of nested blocks
 
@@ -76,11 +77,21 @@ public class MyListener extends MyLangBaseListener {
         blockStack.peek().addStatement(assignment); // Add assignment to the current block
     }
 
+    @Override
+    public void enterIfStatement(MyLangParser.IfStatementContext ctx) {
+        String condition = ctx.expression().get(0).toString();
+        String
+    }
+
     public List<Function> getRoutines() {
         return routines;
     }
 
     public List<VariableDeclaration> getVariableDeclarations() {
         return variableDeclarations;
+    }
+
+    public List<If> getIfStatements() {
+        return ifStatements;
     }
 }

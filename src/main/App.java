@@ -12,8 +12,10 @@ public class App {
 
     public static void main(String[] args) {
         try {
+//            CharStream charStream = CharStreams.fromFileName(
+//                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Assignment.txt");
             CharStream charStream = CharStreams.fromFileName(
-                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Assignment.txt");
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\IfStatement.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -27,6 +29,10 @@ public class App {
 
             System.out.println("Functions:");
             listener.getRoutines().forEach(App::printFunctionDetails);
+            System.out.println("--------------------------");
+
+            System.out.println("If statements:");
+            listener.getIfStatements().forEach(App::printIfDetails);
             System.out.println("--------------------------");
 
             System.out.println("\nVariable Declarations:");
@@ -44,6 +50,12 @@ public class App {
         System.out.println("Parameters: " + function.getParameters());
         System.out.println("Body:");
         printBlockDetails(function.getBody(), 1);
+    }
+
+    public static void printIfDetails(If ifStatement) {
+        System.out.println("Condition: " + ifStatement.getCondition());
+        System.out.println("Body:");
+        printBlockDetails(ifStatement.getBody(), 1);
     }
 
     private static void printBlockDetails(Block block, int indentLevel) {
