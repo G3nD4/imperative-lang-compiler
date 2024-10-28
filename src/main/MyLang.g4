@@ -61,7 +61,7 @@ BLOCK_COMMENT: '/*' .*? '*/' -> skip;
 // -------------------- Parser Rules --------------------
 
 program
-    : (declaration | routineDeclaration | separator)+ EOF
+    : (declaration | routineDeclaration | separator | statement)+ EOF
     ;
 
 declaration

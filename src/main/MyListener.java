@@ -79,8 +79,18 @@ public class MyListener extends MyLangBaseListener {
 
     @Override
     public void enterIfStatement(MyLangParser.IfStatementContext ctx) {
-        String condition = ctx.expression().get(0).toString();
-        String
+        String condition = ctx.expression(0).getText();
+        Block ifBody = new Block();
+        If ifStatement = new If(condition, ifBody);
+
+        ifStatements.add(ifStatement);
+
+        blockStack.push(ifBody);
+    }
+
+    @Override
+    public void exitIfStatement(MyLangParser.IfStatementContext ctx) {
+        blockStack.pop();
     }
 
     public List<Function> getRoutines() {
