@@ -42,7 +42,7 @@ public class App {
         }
     }
 
-    private static void printFunctionDetails(Function function) {
+    private static void printFunctionDetails(RoutineDeclarationStatement function) {
         System.out.println("Function: " + function.getName());
         System.out.println("Return Type: " + function.getReturnType());
         System.out.println("Parameters: " + function.getParameters());
@@ -50,7 +50,7 @@ public class App {
         printBlockDetails(function.getBody(), 1);
     }
 
-    public static void printIfDetails(If ifStatement) {
+    public static void printIfDetails(IfStatement ifStatement) {
         System.out.println("Condition: " + ifStatement.getCondition());
         System.out.println("Body:");
         printBlockDetails(ifStatement.getBody(), 1);
@@ -66,8 +66,8 @@ public class App {
                 VariableDeclaration varDecl = (VariableDeclaration) statement;
                 System.out.println(indent + "Variable Declaration: " + varDecl.getType() + " " + varDecl.getIdentifier() +
                         (varDecl.getInitialValue() != null ? " = " + varDecl.getInitialValue() : ""));
-            } else if (statement instanceof If) {
-                If ifStatement = (If) statement;
+            } else if (statement instanceof IfStatement) {
+                IfStatement ifStatement = (IfStatement) statement;
                 System.out.println(indent + "If Statement: Condition = " + ifStatement.getCondition());
                 System.out.println(indent + "  Body:");
                 printBlockDetails(ifStatement.getBody(), indentLevel + 1);

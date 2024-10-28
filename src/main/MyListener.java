@@ -1,15 +1,16 @@
 package main;
 
 import Nodes.*;
+import Nodes.expression.Expression;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 public class MyListener extends MyLangBaseListener {
-    private List<Function> routines = new ArrayList<>();
+    private List<RoutineDeclarationStatement> routines = new ArrayList<>();
     private List<VariableDeclaration> variableDeclarations = new ArrayList<>();
-    private List<If> ifStatements = new ArrayList<>();
+    private List<IfStatement> ifStatements = new ArrayList<>();
     private Block rootBlock = new Block(); // Root block for top-level statements
     private Stack<Block> blockStack = new Stack<>();  // Stack to manage nested blocks
 
@@ -35,7 +36,7 @@ public class MyListener extends MyLangBaseListener {
         Block body = new Block();
         blockStack.push(body); // Start a new block for the function body
 
-        routines.add(new Function(name, parameters, returnType, body));
+        routines.add(new RoutineDeclarationStatement(name, parameters, returnType, body));
     }
 
     @Override
@@ -83,9 +84,9 @@ public class MyListener extends MyLangBaseListener {
 
     @Override
     public void enterIfStatement(MyLangParser.IfStatementContext ctx) {
-        String condition = ctx.expression(0).getText();
+        Expression condition = null;
         Block ifBody = new Block();
-        If ifStatement = new If(condition, ifBody);
+        IfStatement ifStatement = new IfStatement(condition, ifBody);
         ifStatements.add(ifStatement);
 
         blockStack.peek().addStatement(ifStatement);
@@ -125,7 +126,7 @@ public class MyListener extends MyLangBaseListener {
         blockStack.pop();
     }
 
-    public List<Function> getRoutines() {
+    public List<RoutineDeclarationStatement> getRoutines() {
         return routines;
     }
 
@@ -133,7 +134,7 @@ public class MyListener extends MyLangBaseListener {
         return variableDeclarations;
     }
 
-    public List<If> getIfStatements() {
+    public List<IfStatement> getIfStatements() {
         return ifStatements;
     }
 
