@@ -109,6 +109,22 @@ public class MyListener extends MyLangBaseListener {
         blockStack.peek().addStatement(varDecl);  // Add variable declaration to the current block
     }
 
+    @Override
+    public void enterWhileLoop(MyLangParser.WhileLoopContext ctx) {
+        String expr = ctx.expression().getText();
+        Block whileBody = new Block();
+
+        WhileLoop whileLoop = new WhileLoop(expr, whileBody);
+        blockStack.peek().addStatement(whileLoop);
+
+        blockStack.push(whileBody);
+    }
+
+    @Override
+    public void exitWhileLoop(MyLangParser.WhileLoopContext ctx) {
+        blockStack.pop();
+    }
+
     public List<Function> getRoutines() {
         return routines;
     }

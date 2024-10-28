@@ -12,13 +12,8 @@ public class App {
 
     public static void main(String[] args) {
         try {
-//            CharStream charStream = CharStreams.fromFileName(
-//                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Assignment.txt");
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
-//            CharStream charStream  = CharStreams.fromFileName(
-//                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt"
-//            );
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\WhileLoop.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -65,7 +60,17 @@ public class App {
         String indent = "    ".repeat(indentLevel);
         for (Statement statement : block.getStatements()) {
             if (statement instanceof Assignment) {
-                System.out.println(indent + "Assignment: " + statement);
+                Assignment assignment = (Assignment) statement;
+                System.out.println(indent + "Assignment: " + assignment.getVariable() + " = " + assignment.getExpression());
+            } else if (statement instanceof VariableDeclaration) {
+                VariableDeclaration varDecl = (VariableDeclaration) statement;
+                System.out.println(indent + "Variable Declaration: " + varDecl.getType() + " " + varDecl.getIdentifier() +
+                        (varDecl.getInitialValue() != null ? " = " + varDecl.getInitialValue() : ""));
+            } else if (statement instanceof If) {
+                If ifStatement = (If) statement;
+                System.out.println(indent + "If Statement: Condition = " + ifStatement.getCondition());
+                System.out.println(indent + "  Body:");
+                printBlockDetails(ifStatement.getBody(), indentLevel + 1);
             } else if (statement instanceof ForLoop) {
                 ForLoop forLoop = (ForLoop) statement;
                 System.out.println(indent + "For Loop:");
@@ -73,9 +78,13 @@ public class App {
                 System.out.println(indent + "  Range: " + forLoop.getRange());
                 System.out.println(indent + "  Reverse: " + forLoop.isReverse());
                 System.out.println(indent + "  Body:");
-                printBlockDetails(forLoop.getBody(), indentLevel + 2);
+                printBlockDetails(forLoop.getBody(), indentLevel + 1);
+            } else if (statement instanceof WhileLoop) {
+                WhileLoop whileLoop = (WhileLoop) statement;
+                System.out.println(indent + "While Loop: Condition = " + whileLoop.getCondition());
+                System.out.println(indent + "  Body:");
+                printBlockDetails(whileLoop.getBody(), indentLevel + 1);
             }
         }
     }
-
 }
