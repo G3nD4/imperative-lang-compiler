@@ -2,13 +2,13 @@ package main;
 
 import java.util.List;
 
-public class Function {
+public class Function extends Statement {
     private final String name;
     private final List<Parameter> parameters;
     private final String returnType;
-    private final String body;
+    private final Block body;
 
-    public Function(String name, List<Parameter> parameters, String returnType, String body) {
+    public Function(String name, List<Parameter> parameters, String returnType, Block body) {
         this.name = name;
         this.parameters = parameters;
         this.returnType = returnType;
@@ -27,7 +27,7 @@ public class Function {
         return returnType;
     }
 
-    public String getBody() {
+    public Block getBody() {
         return body;
     }
 
@@ -37,7 +37,7 @@ public class Function {
                 "name='" + name + '\'' +
                 ", parameters=" + parameters +
                 ", returnType='" + returnType + '\'' +
-                ", body='" + body + '\'' +
+                ", body=" + body +
                 '}';
     }
 }

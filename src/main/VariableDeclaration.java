@@ -2,7 +2,7 @@ package main;
 
 import java.util.List;
 
-public class VariableDeclaration {
+public class VariableDeclaration extends Statement {
     private List<String> identifiers;
     private String type;
     private List<String> initialValues;

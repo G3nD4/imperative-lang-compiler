@@ -1,6 +1,6 @@
 package main;
 
-public class Assignment {
+public class Assignment extends Statement {
     private String variable;
     private String expression;
 
