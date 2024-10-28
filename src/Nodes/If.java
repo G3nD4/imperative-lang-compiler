@@ -8,8 +8,7 @@ public class If extends Statement {
         return condition;
     }
 
-
-    public Block getBlock() {
+    public Block getBody() {
         return block;
     }
 

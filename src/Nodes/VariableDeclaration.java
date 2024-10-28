@@ -5,15 +5,15 @@ import java.util.List;
 public class VariableDeclaration extends Statement {
     private String identifier;
     private String type;
-    private List<String> initialValues;
+    private String initialValue;
 
-    public VariableDeclaration(String identifier, String type, List<String> initialValues) {
+    public VariableDeclaration(String identifier, String type, String initialValue) {
         this.identifier = identifier;
         this.type = type;
-        this.initialValues = initialValues;
+        this.initialValue = initialValue;
     }
 
-    public String getIdentifiers() {
+    public String getIdentifier() {
         return identifier;
     }
 
@@ -21,8 +21,8 @@ public class VariableDeclaration extends Statement {
         return type;
     }
 
-    public List<String> getInitialValues() {
-        return initialValues;
+    public String getInitialValue() {
+        return initialValue;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class VariableDeclaration extends Statement {
         return "VariableDeclaration{" +
                 "identifier=" + identifier +
                 ", type='" + type + '\'' +
-                ", initialValues=" + initialValues +
+                ", initialValues=" + initialValue +
                 '}';
     }
 }
