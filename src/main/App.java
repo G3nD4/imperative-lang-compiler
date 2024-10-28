@@ -38,12 +38,12 @@ public class App {
         }
     }
 
-    private static void printFunctionDetails(Function function) {
-        System.out.println("Function: " + function.getName());
-        System.out.println("Return Type: " + function.getReturnType());
-        System.out.println("Parameters: " + function.getParameters());
+    private static void printFunctionDetails(RoutineDeclarationStatement routineDeclarationStatement) {
+        System.out.println("Function: " + routineDeclarationStatement.getName());
+        System.out.println("Return Type: " + routineDeclarationStatement.getReturnType());
+        System.out.println("Parameters: " + routineDeclarationStatement.getParameters());
         System.out.println("Body:");
-        printBlockDetails(function.getBody(), 1);
+        printBlockDetails(routineDeclarationStatement.getBody(), 1);
     }
 
     private static void printBlockDetails(Block block, int indentLevel) {

@@ -1,10 +1,12 @@
 package Nodes;
 
-public class If extends Statement {
-    public final String condition;
+import Nodes.expression.Expression;
+
+public class IfStatement extends Statement {
+    public final Expression condition;
     public final Block block;
 
-    public String getCondition() {
+    public Expression getCondition() {
         return condition;
     }
 
@@ -13,7 +15,7 @@ public class If extends Statement {
         return block;
     }
 
-    public If(String condition, Block block) {
+    public IfStatement(Expression condition, Block block) {
         this.condition = condition;
         this.block = block;
     }
@@ -21,7 +23,7 @@ public class If extends Statement {
     @Override
     public String toString() {
         return "If{" +
-                "condition='" + condition + '\'' +
+                "condition='" + condition.toString() + '\'' +
                 ", block=" + block +
                 '}';
     }

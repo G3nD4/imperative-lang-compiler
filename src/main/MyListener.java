@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class MyListener extends MyLangBaseListener {
-    private List<Function> routines = new ArrayList<>();
+    private List<RoutineDeclarationStatement> routines = new ArrayList<>();
     private List<VariableDeclaration> variableDeclarations = new ArrayList<>();
 
     private Stack<Block> blockStack = new Stack<>();  // Stack of nested blocks
@@ -30,7 +30,7 @@ public class MyListener extends MyLangBaseListener {
         Block body = new Block();
         blockStack.push(body); // Start a new block for the function body
 
-        routines.add(new Function(name, parameters, returnType, body));
+        routines.add(new RoutineDeclarationStatement(name, parameters, returnType, body));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MyListener extends MyLangBaseListener {
         blockStack.peek().addStatement(assignment); // Add assignment to the current block
     }
 
-    public List<Function> getRoutines() {
+    public List<RoutineDeclarationStatement> getRoutines() {
         return routines;
     }
 
