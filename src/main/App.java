@@ -1,5 +1,6 @@
 package main;
 
+import Nodes.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -12,7 +13,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
+                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Assignment.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);

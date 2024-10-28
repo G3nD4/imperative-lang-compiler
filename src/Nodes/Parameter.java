@@ -1,4 +1,4 @@
-package main;
+package Nodes;
 
 public class Parameter {
     private final String name;

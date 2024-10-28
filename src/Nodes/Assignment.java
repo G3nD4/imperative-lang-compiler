@@ -1,4 +1,4 @@
-package main;
+package Nodes;
 
 public class Assignment extends Statement {
     private String variable;

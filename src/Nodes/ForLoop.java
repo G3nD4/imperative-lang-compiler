@@ -1,4 +1,4 @@
-package main;
+package Nodes;
 
 public class ForLoop extends Statement {
     private final String loopVariable;

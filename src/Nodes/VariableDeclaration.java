@@ -1,20 +1,20 @@
-package main;
+package Nodes;
 
 import java.util.List;
 
 public class VariableDeclaration extends Statement {
-    private List<String> identifiers;
+    private String identifier;
     private String type;
     private List<String> initialValues;
 
-    public VariableDeclaration(List<String> identifiers, String type, List<String> initialValues) {
-        this.identifiers = identifiers;
+    public VariableDeclaration(String identifier, String type, List<String> initialValues) {
+        this.identifier = identifier;
         this.type = type;
         this.initialValues = initialValues;
     }
 
-    public List<String> getIdentifiers() {
-        return identifiers;
+    public String getIdentifiers() {
+        return identifier;
     }
 
     public String getType() {
@@ -28,7 +28,7 @@ public class VariableDeclaration extends Statement {
     @Override
     public String toString() {
         return "VariableDeclaration{" +
-                "identifiers=" + identifiers +
+                "identifier=" + identifier +
                 ", type='" + type + '\'' +
                 ", initialValues=" + initialValues +
                 '}';
