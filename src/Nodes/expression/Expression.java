@@ -1,2 +1,4 @@
-package Nodes.expression;public class Expression {
+package Nodes.expression;
+
+public abstract class Expression {
 }
