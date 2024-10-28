@@ -2,7 +2,7 @@ package Nodes;
 
 import java.util.List;
 
-public class RoutineCall extends Statement {
+public class RoutineCallStatement extends Statement {
     private final String identifier;
     private final List<Parameter> parameters;
 
@@ -22,7 +22,7 @@ public class RoutineCall extends Statement {
         return parameters;
     }
 
-    public RoutineCall(String identifier, List<Parameter> parameters) {
+    public RoutineCallStatement(String identifier, List<Parameter> parameters) {
         this.identifier = identifier;
         this.parameters = parameters;
     }

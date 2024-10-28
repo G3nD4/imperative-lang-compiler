@@ -61,7 +61,7 @@ BLOCK_COMMENT: '/*' .*? '*/' -> skip;
 // -------------------- Parser Rules --------------------
 
 program
-    : (declaration | routineDeclaration | separator | statement)+ EOF
+    : (declaration | routineDeclaration | separator)+ EOF
     ;
 
 declaration
@@ -69,12 +69,8 @@ declaration
     | typeDeclaration separator
     ;
 
-//variableDeclaration
-//    : VAR identifierList (COLON type)? (IS expressionList)?
-//    ;
-
 variableDeclaration
-    : VAR IDENTIFIER (COLON type)? (IS expression)?
+    : VAR identifierList (COLON type)? (IS expressionList)?
     ;
 
 identifierList
