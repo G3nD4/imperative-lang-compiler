@@ -4,26 +4,21 @@ import Nodes.expression.Expression;
 
 public class IfStatement extends Statement {
     public final Expression condition;
-    public final Block block;
+    public final Block ifBlock;
+    public final Block elseBlock;
 
-    public Expression getCondition() {
-        return condition;
-    }
-
-    public Block getBody() {
-        return block;
-    }
-
-    public IfStatement(Expression condition, Block block) {
+    public IfStatement(Expression condition, Block ifBlock, Block elseBlock) {
         this.condition = condition;
-        this.block = block;
+        this.ifBlock = ifBlock;
+        this.elseBlock = elseBlock;
     }
 
     @Override
     public String toString() {
-        return "If{" +
-                "condition='" + condition.toString() + '\'' +
-                ", block=" + block +
+        return "IfStatement{" +
+                "condition=" + condition +
+                ", ifBlock=" + ifBlock +
+                ", elseBlock=" + elseBlock +
                 '}';
     }
 }

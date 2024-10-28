@@ -1,27 +1,21 @@
 package Nodes;
 
+import Nodes.expression.Expression;
+
 public class Assignment extends Statement {
-    private String variable;
-    private String expression;
+    public String name;
+    public Expression expression;
 
-    public Assignment(String variable, String expression) {
-        this.variable = variable;
+    public Assignment(String name, Expression expression) {
+        this.name = name;
         this.expression = expression;
-    }
-
-    public String getVariable() {
-        return variable;
-    }
-
-    public String getExpression() {
-        return expression;
     }
 
     @Override
     public String toString() {
         return "Assignment{" +
-                "variable='" + variable + '\'' +
-                ", expression='" + expression + '\'' +
+                "variable='" + name + '\'' +
+                ", expression='" + expression.toString() + '\'' +
                 '}';
     }
 }
