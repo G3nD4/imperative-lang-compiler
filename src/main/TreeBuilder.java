@@ -14,12 +14,12 @@ public class TreeBuilder {
             return new InternalNode(tree.getText());
         } else {
             InternalNode node = new InternalNode(parser.getRuleNames()[((ParserRuleContext) tree).getRuleIndex()]);
-            if (((ParserRuleContext) tree).parent.parent == null) {
-                node.data = Program.parse(((ParserRuleContext) tree).parent);
-            }
+//            if (((ParserRuleContext) tree).parent.parent == null) {
+//                node.data = Program.parse(((ParserRuleContext) tree).parent, parser);
+//            }
             switch(node.ruleName) {
                 case "routineDeclaration":
-//                    node.data = RoutineDeclarationStatement.parse(tree);
+                    node.data = RoutineDeclarationStatement.parse(tree, parser);
             }
 
 

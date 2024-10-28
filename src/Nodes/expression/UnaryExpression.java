@@ -3,7 +3,7 @@ package Nodes.expression;
 import Lexical_analyzer.TokenType;
 import Nodes.primary.Primary;
 
-public class UnaryExpression {
+public class UnaryExpression extends Expression {
     public TokenType operation;
     public TokenType returnType;
     public Primary primary;
