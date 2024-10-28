@@ -1,0 +1,6 @@
+routine sumOfNumbers(): integer is
+    for i in 1..10 loop
+        sum := sum + i
+        sumOfNumbers()
+    end
+end
