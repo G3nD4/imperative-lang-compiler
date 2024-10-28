@@ -15,7 +15,7 @@ public class App {
 //            CharStream charStream = CharStreams.fromFileName(
 //                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Assignment.txt");
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\IfStatement.txt");
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
 //            CharStream charStream  = CharStreams.fromFileName(
 //                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt"
 //            );

@@ -69,8 +69,12 @@ declaration
     | typeDeclaration separator
     ;
 
+//variableDeclaration
+//    : VAR identifierList (COLON type)? (IS expressionList)?
+//    ;
+
 variableDeclaration
-    : VAR identifierList (COLON type)? (IS expressionList)?
+    : VAR IDENTIFIER (COLON type)? (IS expression)?
     ;
 
 identifierList

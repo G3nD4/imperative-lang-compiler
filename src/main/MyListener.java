@@ -10,8 +10,12 @@ public class MyListener extends MyLangBaseListener {
     private List<Function> routines = new ArrayList<>();
     private List<VariableDeclaration> variableDeclarations = new ArrayList<>();
     private List<If> ifStatements = new ArrayList<>();
+    private Block rootBlock = new Block(); // Root block for top-level statements
+    private Stack<Block> blockStack = new Stack<>();  // Stack to manage nested blocks
 
-    private Stack<Block> blockStack = new Stack<>();  // Stack of nested blocks
+    public MyListener() {
+        blockStack.push(rootBlock);
+    }
 
     @Override
     public void enterRoutineDeclaration(MyLangParser.RoutineDeclarationContext ctx) {
@@ -82,15 +86,27 @@ public class MyListener extends MyLangBaseListener {
         String condition = ctx.expression(0).getText();
         Block ifBody = new Block();
         If ifStatement = new If(condition, ifBody);
-
         ifStatements.add(ifStatement);
 
+        blockStack.peek().addStatement(ifStatement);
         blockStack.push(ifBody);
     }
 
     @Override
     public void exitIfStatement(MyLangParser.IfStatementContext ctx) {
         blockStack.pop();
+    }
+
+    @Override
+    public void enterVariableDeclaration(MyLangParser.VariableDeclarationContext ctx) {
+        String variableName = ctx.IDENTIFIER().getText();
+        String type = ctx.type() != null ? ctx.type().getText() : "unknown";
+        String initialization = ctx.expression() != null ? ctx.expression().getText() : null;
+
+        VariableDeclaration varDecl = new VariableDeclaration(variableName, type, initialization);
+        variableDeclarations.add(varDecl);  // Track the variable declarations
+
+        blockStack.peek().addStatement(varDecl);  // Add variable declaration to the current block
     }
 
     public List<Function> getRoutines() {
@@ -103,5 +119,9 @@ public class MyListener extends MyLangBaseListener {
 
     public List<If> getIfStatements() {
         return ifStatements;
+    }
+
+    public Block getRootBlock() {
+        return rootBlock;
     }
 }
