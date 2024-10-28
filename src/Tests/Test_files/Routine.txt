@@ -7,6 +7,7 @@ routine add(a: integer, b: real): integer is
     var y : real is 10.5
     var x is 5
     var z : boolean
+    return a
 end
 
 var p is add(x, y)

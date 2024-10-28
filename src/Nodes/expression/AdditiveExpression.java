@@ -2,27 +2,17 @@ package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
 
+import java.util.ArrayList;
+
 public class AdditiveExpression extends Expression {
-    public MultiplicativeExpression leftOperand;
-    public MultiplicativeExpression rightOperand;
+    public ArrayList<MultiplicativeExpression> operands;
     public TokenType operation;
     public TokenType returnType;
 
-    public AdditiveExpression(MultiplicativeExpression leftOperand, MultiplicativeExpression rightOperand, TokenType operation, TokenType returnType) {
-        this.leftOperand = leftOperand;
-        this.rightOperand = rightOperand;
+    public AdditiveExpression(ArrayList<MultiplicativeExpression> operands, MultiplicativeExpression rightOperand, TokenType operation, TokenType returnType) {
+        this.operands = operands;
         this.operation = operation;
         this.returnType = returnType;
-    }
-
-    @Override
-    public String toString() {
-        return "AdditiveExpression{" +
-                "leftOperand=" + leftOperand +
-                ", rightOperand=" + rightOperand +
-                ", operation=" + operation +
-                ", returnType=" + returnType +
-                '}';
     }
 
 }
