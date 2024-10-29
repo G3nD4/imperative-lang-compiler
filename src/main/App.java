@@ -16,7 +16,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -31,6 +31,9 @@ public class App {
             if (!unusedGlobalVariables.isEmpty()) {
                 System.out.println("Unused global variables: " + unusedGlobalVariables);
             }
+
+            KeywordsListener keywordUsageListener = new KeywordsListener();
+            ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
 //            TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
 
@@ -125,6 +128,19 @@ class UnusedVariableListener extends MyLangBaseListener {
         if (!unusedVars.isEmpty()) {
             System.out.println("Unused variables in routine '" + ctx.IDENTIFIER().getText() + "': " + unusedVars);
         }
+        variableTracker.exitScope();
+    }
+
+    @Override
+    public void enterForLoop(MyLangParser.ForLoopContext ctx) {
+        // Declare the loop variable
+        String loopVarName = ctx.IDENTIFIER().getText();
+        variableTracker.declareVariable(loopVarName);
+        variableTracker.enterScope();
+    }
+
+    @Override
+    public void exitForLoop(MyLangParser.ForLoopContext ctx) {
         variableTracker.exitScope();
     }
 

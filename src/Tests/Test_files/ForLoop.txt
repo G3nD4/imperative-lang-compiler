@@ -1,3 +1,4 @@
+var sum is 0
 routine sumOfNumbers(): integer is
     for i in 1..10 loop
         sum := sum + i
