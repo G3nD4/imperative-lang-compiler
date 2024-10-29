@@ -1,11 +1,5 @@
 package main;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
-import java.util.HashSet;
-import java.util.Set;
-
 public class KeywordsListener extends MyLangBaseListener {
     private boolean inLoop = false;
     private boolean inFunction = false;
