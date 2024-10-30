@@ -1,12 +1,14 @@
-package Nodes;
+package Nodes.statement;
+
+import Nodes.Body;
 
 public class ForLoop extends Statement {
     private final String loopVariable;
     private final String range;
     private final boolean reverse;
-    private final Block body;
+    private final Body body;
 
-    public ForLoop(String loopVariable, String range, boolean reverse, Block body) {
+    public ForLoop(String loopVariable, String range, boolean reverse, Body body) {
         this.loopVariable = loopVariable;
         this.range = range;
         this.reverse = reverse;
@@ -25,7 +27,7 @@ public class ForLoop extends Statement {
         return reverse;
     }
 
-    public Block getBody() {
+    public Body getBody() {
         return body;
     }
 

@@ -1,7 +1,5 @@
 package main;
 
-import Nodes.Program;
-import Nodes.Statement;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import Nodes.RoutineDeclarationStatement;

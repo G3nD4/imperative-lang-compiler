@@ -2,9 +2,9 @@ package Nodes;
 
 public class Parameter {
     private final String name;
-    private final String type;
+    private final Type type;
 
-    public Parameter(String name, String type) {
+    public Parameter(String name, Type type) {
         this.name = name;
         this.type = type;
     }
@@ -13,7 +13,7 @@ public class Parameter {
         return name;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 

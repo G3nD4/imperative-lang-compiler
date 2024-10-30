@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -9,12 +10,13 @@ import java.util.List;
 public class RoutineDeclarationStatement extends Statement {
     private String name;
     private List<Parameter> parameters;
-    private String returnType;
-    private Block body;
+    private Type returnType;
+    private Body body;
 
-    public RoutineDeclarationStatement() {}
+    public RoutineDeclarationStatement() {
+    }
 
-    public RoutineDeclarationStatement(String name, List<Parameter> parameters, String returnType, Block body) {
+    public RoutineDeclarationStatement(String name, List<Parameter> parameters, Type returnType, Body body) {
         this.name = name;
         this.parameters = parameters;
         this.returnType = returnType;
@@ -31,7 +33,12 @@ public class RoutineDeclarationStatement extends Statement {
         if (tree.getChildCount() > 4) {
             String rt = tree.getChild(6).getText();
             if (!rt.equals("is")) {
-                routine.returnType = rt;
+                routine.returnType = switch (rt) {
+                    case "integer" -> Type.INTEGER;
+                    case "real" -> Type.REAL;
+                    case "boolean" -> Type.BOOLEAN;
+                    default -> Type.IDENTIFIER;
+                };
             }
         }
         int bodyIndex;
@@ -40,7 +47,7 @@ public class RoutineDeclarationStatement extends Statement {
         } else {
             bodyIndex = 9;
         }
-        routine.body = Block.parse(tree.getChild(bodyIndex), parser);
+        routine.body = Body.parse(tree.getChild(bodyIndex), parser);
         return routine;
     }
 
@@ -50,7 +57,13 @@ public class RoutineDeclarationStatement extends Statement {
             try {
                 String paramName = parametersTree.getChild(i).getChild(0).getText();
                 String paramType = parametersTree.getChild(i).getChild(2).getText();
-                params.add(new Parameter(paramName, paramType));
+                Type type = switch (paramType) {
+                    case "integer" -> Type.INTEGER;
+                    case "real" -> Type.REAL;
+                    case "boolean" -> Type.BOOLEAN;
+                    default -> Type.IDENTIFIER;
+                };
+                params.add(new Parameter(paramName, type));
             } catch (Exception e) {
                 break;
             }
@@ -66,11 +79,11 @@ public class RoutineDeclarationStatement extends Statement {
         return parameters;
     }
 
-    public String getReturnType() {
+    public Type getReturnType() {
         return returnType;
     }
 
-    public Block getBody() {
+    public Body getBody() {
         return body;
     }
 

@@ -1,10 +1,11 @@
 package Nodes;
 
+import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public class VariableDeclaration extends Statement {
+public class VariableDeclaration extends Declaration {
     private String identifier;
     private String type;
     private String value;

@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -7,8 +8,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Block {
+public class Body {
+    private List<Declaration> declarations = new ArrayList<>();
     private List<Statement> statements = new ArrayList<>();
+
+    public void addDeclaration(Declaration declaration) {
+        declarations.add(declaration);
+    }
 
     public void addStatement(Statement statement) {
         statements.add(statement);
@@ -18,23 +24,23 @@ public class Block {
         return statements;
     }
 
-    public static Block parse(ParseTree tree, MyLangParser parser) {
-        Block block = new Block();
+    public static Body parse(ParseTree tree, MyLangParser parser) {
+        Body body = new Body();
         for (int i = 0; i < tree.getChildCount(); i++) {
             ParseTree child = tree.getChild(i);
             if (child instanceof ParserRuleContext) {
                 String ruleName = parser.getRuleNames()[((ParserRuleContext) child).getRuleIndex()];
                 switch (ruleName) {
                     case "declaration":
-                        block.addStatement(VariableDeclaration.parse(child.getChild(0), parser)); // Assuming it returns Statement
+                        body.addDeclaration(VariableDeclaration.parse(child.getChild(0), parser));
                         break;
                     case "statement":
-                        block.addStatement(Statement.parse(parser.getRuleNames()[((ParserRuleContext) tree.getChild(0).getChild(0)).getRuleIndex()], tree.getChild(0), parser));
-                        Assignment.parse(tree, parser);
+                        body.addStatement(Statement.parse(parser.getRuleNames()[((ParserRuleContext) tree.getChild(0).getChild(0)).getRuleIndex()], tree.getChild(0), parser));
+                        break;
                 }
             }
         }
-        return block;
+        return body;
     }
 
 

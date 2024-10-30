@@ -1,10 +1,12 @@
 package Nodes;
 
-public class TypeDeclaration extends Statement {
-    private String identifier;
-    private String type;
+import Nodes.statement.Statement;
 
-    public TypeDeclaration(String identifier, String type) {
+public class TypeDeclaration extends Declaration {
+    private String identifier;
+    private Type type;
+
+    public TypeDeclaration(String identifier, Type type) {
         this.identifier = identifier;
         this.type = type;
     }
@@ -13,7 +15,7 @@ public class TypeDeclaration extends Statement {
         return identifier;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 

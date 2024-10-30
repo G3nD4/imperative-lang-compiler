@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -7,11 +8,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.ArrayList;
 
 public class Program {
-    ArrayList<Statement> statemets;
+    ArrayList<Statement> statements;
     ArrayList<RoutineDeclarationStatement> routines;
 
-    public Program(ArrayList<Statement> statemets, ArrayList<RoutineDeclarationStatement> routines) {
-        this.statemets = statemets;
+    public Program(ArrayList<Statement> statements, ArrayList<RoutineDeclarationStatement> routines) {
+        this.statements = statements;
         this.routines = routines;
     }
 

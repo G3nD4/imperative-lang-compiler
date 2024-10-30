@@ -14,6 +14,10 @@ public class UnaryExpression extends Expression {
         this.returnType = returnType;
     }
 
+    public UnaryExpression(Primary primary) {
+        this.primary = primary;
+    }
+
     @Override
     public String toString() {
         return "UnaryExpression{" +

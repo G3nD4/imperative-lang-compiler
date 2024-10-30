@@ -16,7 +16,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -35,7 +35,7 @@ public class App {
             KeywordsListener keywordUsageListener = new KeywordsListener();
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
-//            TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
+            TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
 
 //            System.out.println(context.toString());
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class App {
 }
 
 class VariableTracker {
-    private final Deque<Map<String, Integer>> scopes = new ArrayDeque<>();
+    private final Stack<Map<String, Integer>> scopes = new Stack<>();
 
     public VariableTracker() {
         enterScope();
@@ -57,7 +57,9 @@ class VariableTracker {
     }
 
     public void exitScope() {
-        scopes.pop();
+        if (!scopes.isEmpty()) {
+            scopes.pop();
+        }
     }
 
     public void declareParameter(String paramName) {
@@ -106,6 +108,7 @@ class VariableTracker {
         return unusedVars;
     }
 }
+
 
 class UnusedVariableListener extends MyLangBaseListener {
     private final VariableTracker variableTracker = new VariableTracker();

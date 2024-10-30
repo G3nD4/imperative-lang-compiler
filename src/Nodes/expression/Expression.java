@@ -1,15 +1,15 @@
 package Nodes.expression;
 
-import Nodes.Assignment;
-import Nodes.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.ArrayList;
 
 public abstract class Expression {
     public static Expression parse(String ruleName, ParseTree tree, MyLangParser parser) {
         ParseTree expSubtree = tree;
         int depth = 0;
-        while (expSubtree.getChildCount() <= 1) {
+        while (expSubtree.getChildCount() != 0) {
             expSubtree = expSubtree.getChild(0);
             ++depth;
         }

@@ -1,4 +1,6 @@
-package Nodes;
+package Nodes.statement;
+
+import Nodes.Parameter;
 
 import java.util.List;
 
