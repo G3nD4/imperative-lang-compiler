@@ -30,15 +30,6 @@ public abstract class Expression {
                 case 5:
                     expression = MultiplicativeExpression.parse(expSubtree, parser);
                     break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-//                expression = new Primary.parse(expSubtree, parser);
-                    break;
                 default: {
                 }// 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2
             }
