@@ -17,19 +17,16 @@ public class UnaryExpression extends Expression {
         this.primary = primary;
     }
 
-    public UnaryExpression(Primary primary) {
-        this.primary = primary;
-    }
-
     public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
         Primary primary;
+        Sign sign = Sign.PLUS;
 
         if (tree.getChildCount() == 1) {
             // we have only Primary
-            return new UnaryExpression(Primary.parse(tree.getChild(0), parser));
+            return new UnaryExpression(sign, Primary.parse(tree.getChild(0), parser));
         } else {
             // we have sign and Primary
-            Sign sign = switch (String.valueOf(tree.getChild(0))) {
+            sign = switch (String.valueOf(tree.getChild(0))) {
                 case "+" -> Sign.PLUS;
                 case "-" -> Sign.MINUS;
                 case "not" -> Sign.NOT;

@@ -36,8 +36,6 @@ public class App {
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
             TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
-
-            System.out.println(context.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

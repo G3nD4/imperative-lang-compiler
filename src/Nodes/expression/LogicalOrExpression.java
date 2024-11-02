@@ -1,19 +1,25 @@
 package Nodes.expression;
 
-public class LogicalOrExpression {
-    public LogicalAndExpression leftOperand;
-    public LogicalAndExpression rightOperand;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
-    public LogicalOrExpression(LogicalAndExpression leftOperand, LogicalAndExpression rightOperand) {
-        this.leftOperand = leftOperand;
-        this.rightOperand = rightOperand;
+import java.util.ArrayList;
+
+public class LogicalOrExpression extends Expression {
+    public ArrayList<LogicalAndExpression> operands;
+
+    public LogicalOrExpression(ArrayList<LogicalAndExpression> operands) {
+        this.operands = operands;
     }
 
-    @Override
-    public String toString() {
-        return "LogicalOrExpression{" +
-                "leftOperand=" + leftOperand +
-                ", rightOperand=" + rightOperand +
-                '}';
+    public static LogicalOrExpression parse(ParseTree tree, MyLangParser parser) {
+        ArrayList<LogicalAndExpression> operands = new ArrayList<>();
+
+        for (int childCounter = 0; childCounter < tree.getChildCount(); childCounter = childCounter + 2) {
+            // Skip the operation literal (OR)
+            operands.add(LogicalAndExpression.parse(tree.getChild(childCounter), parser));
+        }
+
+        return new LogicalOrExpression(operands);
     }
 }

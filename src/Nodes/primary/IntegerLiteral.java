@@ -17,7 +17,8 @@ public class IntegerLiteral extends Literal<Integer> implements Primary {
                 '}';
     }
 
-    public static Primary parse(ParseTree tree, MyLangParser parser) {
-        return null;
+    public static IntegerLiteral parse(ParseTree tree, MyLangParser parser) {
+        int value = Integer.parseInt(String.valueOf(tree));
+        return new IntegerLiteral(value);
     }
 }

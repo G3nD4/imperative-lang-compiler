@@ -17,21 +17,38 @@ public abstract class Expression {
             expSubtree = expSubtree.getChild(0);
             switch (depth) {
                 case 0:
-//                expression = LogicalOrExpression.parse();
+                    expression = LogicalOrExpression.parse(expSubtree, parser);
+                    if (expSubtree.getChildCount() > 1) {
+                        return expression;
+                    }
                     break;
                 case 1:
+                    expression = LogicalAndExpression.parse(expSubtree, parser);
+                    if (expSubtree.getChildCount() > 1) {
+                        return expression;
+                    }
                     break;
                 case 2:
+                    expression = EqualityExpression.parse(expSubtree, parser);
+                    if (expSubtree.getChildCount() > 1) {
+                        return expression;
+                    }
                     break;
                 case 3:
+                    expression = RelationalExpression.parse(expSubtree, parser);
+                    if (expSubtree.getChildCount() > 1) {
+                        return expression;
+                    }
                     break;
                 case 4:
+                    expression = AdditiveExpression.parse(expSubtree, parser);
+                    if (expSubtree.getChildCount() > 1) {
+                        return expression;
+                    }
                     break;
                 case 5:
                     expression = MultiplicativeExpression.parse(expSubtree, parser);
                     break;
-                default: {
-                }// 1 * 2 + 1 * 2 + 1 * 2 + 1 * 2
             }
             ++depth;
         }

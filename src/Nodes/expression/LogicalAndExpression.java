@@ -1,21 +1,25 @@
 package Nodes.expression;
 
-import Lexical_analyzer.TokenType;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.ArrayList;
 
 public class LogicalAndExpression extends Expression {
-    public EqualityExpression leftOperand;
-    public EqualityExpression rightOperand;
+    public ArrayList<EqualityExpression> operands;
 
-    public LogicalAndExpression(EqualityExpression leftOperand, EqualityExpression rightOperand) {
-        this.leftOperand = leftOperand;
-        this.rightOperand = rightOperand;
+    public LogicalAndExpression(ArrayList<EqualityExpression> operands) {
+        this.operands = operands;
     }
 
-    @Override
-    public String toString() {
-        return "LogicalAndExpression{" +
-                "leftOperand=" + leftOperand +
-                ", rightOperand=" + rightOperand +
-                '}';
+    public static LogicalAndExpression parse(ParseTree tree, MyLangParser parser) {
+        ArrayList<EqualityExpression> operands = new ArrayList<>();
+
+        for (int childCounter = 0; childCounter < tree.getChildCount(); childCounter = childCounter + 2) {
+            // Skip the operation literal (AND)
+            operands.add(EqualityExpression.parse(tree.getChild(childCounter), parser));
+        }
+
+        return new LogicalAndExpression(operands);
     }
 }
