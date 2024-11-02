@@ -35,7 +35,7 @@ public class Body {
                         body.addDeclaration(VariableDeclaration.parse(child.getChild(0), parser));
                         break;
                     case "statement":
-                        body.addStatement(Statement.parse(parser.getRuleNames()[((ParserRuleContext) tree.getChild(0).getChild(0)).getRuleIndex()], tree.getChild(0), parser));
+                        body.addStatement(Statement.parse(tree.getChild(0), parser));
                         break;
                 }
             }
