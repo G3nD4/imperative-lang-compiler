@@ -15,7 +15,7 @@ public class TreeBuilder {
 //            if (((ParserRuleContext) tree).parent.parent == null) {
 //                node.data = Program.parse(((ParserRuleContext) tree).parent, parser);
 //            }
-            switch(node.ruleName) {
+            switch (node.ruleName) {
                 case "routineDeclaration":
                     node.data = RoutineDeclarationStatement.parse(tree, parser);
             }
@@ -27,5 +27,9 @@ public class TreeBuilder {
 
             return node;
         }
+    }
+
+    public static String TreeToRule(ParseTree tree, MyLangParser parser) {
+        return parser.getRuleNames()[((ParserRuleContext) tree).getRuleIndex()];
     }
 }

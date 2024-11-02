@@ -17,7 +17,7 @@ public class Assignment extends Statement {
 
     public static Assignment parse(ParseTree tree, MyLangParser parser) {
         String expressionRuleName = parser.getRuleNames()[((ParserRuleContext) tree.getChild(2).getChild(0)).getRuleIndex()];
-        return new Assignment(tree.getChild(0).getText(), Expression.parse(expressionRuleName, tree.getChild(2), parser));
+        return new Assignment(tree.getChild(0).getText(), Expression.parse(tree.getChild(2), parser));
     }
 
     @Override

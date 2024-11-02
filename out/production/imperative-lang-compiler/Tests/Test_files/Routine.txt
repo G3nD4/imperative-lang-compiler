@@ -1,7 +1,4 @@
 routine add(a: integer): integer is
-    a := 1 * 2 + 3 * 4 + 5 * 6 + 7 * 8 / 9 * 10
-    var y : real is 10.5
-    var x is 5
-    var z : boolean
+    a := 1 / 2 + 3 * 4 + 5 * 6 + 7 * 8 / 9 * 10
     return a
 end

@@ -2,6 +2,8 @@ package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
 import Nodes.primary.Primary;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class UnaryExpression extends Expression {
     public TokenType operation;
@@ -16,6 +18,10 @@ public class UnaryExpression extends Expression {
 
     public UnaryExpression(Primary primary) {
         this.primary = primary;
+    }
+
+    public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
+        return null;
     }
 
     @Override
