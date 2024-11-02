@@ -22,21 +22,20 @@ public class UnaryExpression extends Expression {
     }
 
     public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
-        Primary primary = Primary.parse(tree, parser);
+        Primary primary;
 
         if (tree.getChildCount() == 1) {
             // we have only Primary
-           return new UnaryExpression(primary);
+            return new UnaryExpression(Primary.parse(tree.getChild(0), parser));
         } else {
             // we have sign and Primary
             Sign sign = switch (String.valueOf(tree.getChild(0))) {
                 case "+" -> Sign.PLUS;
                 case "-" -> Sign.MINUS;
                 case "not" -> Sign.NOT;
-                default ->
-                        throw new IllegalStateException("Unexpected value: " + tree.getChild(0));
+                default -> throw new IllegalStateException("Unexpected value: " + tree.getChild(0));
             };
-            return new UnaryExpression(sign, primary);
+            return new UnaryExpression(sign, Primary.parse(tree.getChild(1), parser));
         }
     }
 }
