@@ -18,7 +18,6 @@ public class MultiplicativeExpression extends Expression {
     }
 
     public static MultiplicativeExpression parse(ParseTree tree, MyLangParser parser) {
-        System.out.println(parser.getRuleNames()[((ParserRuleContext) tree).getRuleIndex()]);
         ArrayList<UnaryExpression> operands = new ArrayList<>();
         ArrayList<Operation> operations = new ArrayList<>();
         for (int childCounter = 0; childCounter < tree.getChildCount(); childCounter++) {

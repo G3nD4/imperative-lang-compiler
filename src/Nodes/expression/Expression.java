@@ -11,6 +11,7 @@ public abstract class Expression {
         ParseTree expSubtree = tree;
         int depth = 0;
         Expression expression = null;
+        System.out.print('\n');
         System.out.println("i am in exp parse");
         while (expSubtree.getChild(0).getChildCount() != 0) {
             expSubtree = expSubtree.getChild(0);
