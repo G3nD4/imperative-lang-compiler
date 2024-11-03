@@ -4,4 +4,5 @@ routine findFactorial(i: integer, n: integer) : integer is
         factorial := factorial * i
         i := i + 1
     end
+    return factorial
 end
