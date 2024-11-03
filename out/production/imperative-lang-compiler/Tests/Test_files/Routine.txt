@@ -1,5 +1,5 @@
 routine add(): integer is
     var a is 10 != 100.56 = true != false
-
+    a := true and false
     return 1
 end

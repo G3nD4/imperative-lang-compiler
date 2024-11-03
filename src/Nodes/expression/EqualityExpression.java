@@ -56,7 +56,7 @@ public class EqualityExpression extends Expression {
             Type rightType = operands.get(i).type == null ? operands.get(i).returnType : operands.get(i).type;
             if (rightType == Type.BOOLEAN || leftType == Type.BOOLEAN) {
                 if (rightType != Type.BOOLEAN || leftType != Type.BOOLEAN) {
-                    System.out.println("Unsupported operation " + operations.get(i == 0 ? 0 : i - 1).toString() + " for BOOLEAN");
+                    System.out.println("Unsupported operation " + operations.get(i - 1).toString() + " for BOOLEAN");
                     System.exit(1);
                 }
             }

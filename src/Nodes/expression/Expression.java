@@ -1,12 +1,9 @@
 package Nodes.expression;
 
-import Lexical_analyzer.TokenType;
 import Nodes.Type;
 import Nodes.primary.Primary;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.util.ArrayList;
 
 public abstract class Expression extends Primary {
     public Type returnType;
@@ -52,17 +49,20 @@ public abstract class Expression extends Primary {
                 case 4:
                     if (expSubtree.getChildCount() > 1) {
                         expression = AdditiveExpression.parse(expSubtree, parser);
+                        // returnType is set using super
                         return expression;
                     }
                     break;
                 case 5:
                     if (expSubtree.getChildCount() > 1) {
                         expression = MultiplicativeExpression.parse(expSubtree, parser);
+                        // returnType is set using super
                         return expression;
                     }
                     break;
                 case 6:
                     expression = UnaryExpression.parse(expSubtree, parser);
+                    // returnType is set using super
                     break;
             }
             ++depth;
