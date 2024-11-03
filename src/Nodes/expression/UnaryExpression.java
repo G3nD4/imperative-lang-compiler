@@ -23,7 +23,7 @@ public class UnaryExpression extends Expression {
 
         if (tree.getChildCount() == 1) {
             // we have only Primary
-            return new UnaryExpression(sign, Primary.parse(tree.getChild(0), parser));
+            return new UnaryExpression(sign, (Primary)Primary.parse(tree.getChild(0), parser));
         } else {
             // we have sign and Primary
             sign = switch (String.valueOf(tree.getChild(0))) {
