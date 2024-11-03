@@ -1,6 +1,8 @@
 package Nodes.statement;
 
 import Nodes.Body;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class WhileLoop extends Statement {
     private final String condition;
@@ -25,5 +27,9 @@ public class WhileLoop extends Statement {
     public WhileLoop(String condition, Body body) {
         this.condition = condition;
         this.body = body;
+    }
+
+    public static WhileLoop parse(ParseTree tree, MyLangParser parser) {
+        return null;
     }
 }

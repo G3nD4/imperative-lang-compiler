@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Body {
-    private List<Declaration> declarations = new ArrayList<>();
-    private List<Statement> statements = new ArrayList<>();
+    private final List<Declaration> declarations = new ArrayList<>();
+    private final List<Statement> statements = new ArrayList<>();
 
     public void addDeclaration(Declaration declaration) {
         declarations.add(declaration);
