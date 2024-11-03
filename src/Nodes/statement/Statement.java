@@ -1,6 +1,8 @@
 package Nodes.statement;
 
 import Nodes.Assignment;
+import Nodes.VariableDeclaration;
+import Nodes.primary.ModifiablePrimary;
 import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;

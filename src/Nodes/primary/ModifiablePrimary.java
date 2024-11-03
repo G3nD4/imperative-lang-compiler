@@ -1,11 +1,20 @@
 package Nodes.primary;
 
+import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public class ModifiablePrimary<T> extends Primary<T> {
+public class ModifiablePrimary extends Primary {
 
-    public static Primary parse(ParseTree tree, MyLangParser parser) {
-        return null;
+    public ModifiablePrimary(String identifier) {
+        this.identifier = identifier;
+    }
+
+    String identifier;
+
+
+
+    public static ModifiablePrimary parse(ParseTree tree, MyLangParser parser) {
+        return new ModifiablePrimary(tree.getChild(0).getText());
     }
 }

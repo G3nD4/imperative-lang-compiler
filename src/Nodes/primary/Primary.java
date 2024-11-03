@@ -1,5 +1,6 @@
 package Nodes.primary;
 
+import Nodes.Type;
 import Nodes.expression.Expression;
 import Nodes.statement.RoutineCallStatement;
 import main.MyLangParser;
@@ -8,15 +9,16 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public abstract class Primary<T> {
     public Expression expression;
-    public ModifiablePrimary<T> modifiablePrimary;
+    public ModifiablePrimary modifiablePrimary;
     public RoutineCallStatement routineCall;
     public T value;
+    public Type type;
 
     boolean hasChildren() {
         return expression!= null || modifiablePrimary != null || routineCall != null;
     }
 
-    public static Object parse(ParseTree tree, MyLangParser parser) {
+    public static Primary parse(ParseTree tree, MyLangParser parser) {
         ParseTree child = tree.getChild(0);
         if (child.getChildCount() == 0) {
             // INTEGER_LITERAL | REAL_LITERAL | TRUE | FALSE
@@ -41,7 +43,7 @@ public abstract class Primary<T> {
             String nextStep = TreeBuilder.TreeToRule(child, parser);
             switch (nextStep) {
                 case "routineCall":
-                    return RoutineCallStatement.parse(child, parser);
+                    return RoutineCallPrimary.parse(child, parser);
                 case "modifiablePrimary":
                     return ModifiablePrimary.parse(child, parser);
                 case "expression":

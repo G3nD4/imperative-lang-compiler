@@ -3,6 +3,7 @@ package Nodes.expression;
 import Lexical_analyzer.TokenType;
 import Nodes.Operation;
 import Nodes.Sign;
+import Nodes.Type;
 import Nodes.primary.Primary;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -12,18 +13,19 @@ public class UnaryExpression extends Expression {
     public Sign sign;
     public Primary primary;
 
-    public UnaryExpression(Sign sign, Primary primary) {
+    public UnaryExpression(Sign sign, Primary primary, Type type) {
         this.sign = sign;
         this.primary = primary;
+        super.type = type;
     }
 
     public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
-        Primary primary;
         Sign sign = Sign.PLUS;
 
         if (tree.getChildCount() == 1) {
             // we have only Primary
-            return new UnaryExpression(sign, (Primary)Primary.parse(tree.getChild(0), parser));
+            final Primary _primary = Primary.parse(tree.getChild(0), parser);
+            return new UnaryExpression(sign, _primary, _primary != null ? _primary.type : null);
         } else {
             // we have sign and Primary
             sign = switch (String.valueOf(tree.getChild(0))) {
@@ -32,7 +34,8 @@ public class UnaryExpression extends Expression {
                 case "not" -> Sign.NOT;
                 default -> throw new IllegalStateException("Unexpected value: " + tree.getChild(0));
             };
-            return new UnaryExpression(sign, Primary.parse(tree.getChild(1), parser));
+            final Primary _primary = Primary.parse(tree.getChild(1), parser);
+            return new UnaryExpression(sign, _primary, _primary != null ? _primary.type : null );
         }
     }
 }

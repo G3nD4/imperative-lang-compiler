@@ -1,5 +1,6 @@
 package Nodes.primary;
 
+import Nodes.Type;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -8,6 +9,7 @@ public class RealLiteral extends Primary<Double> implements Literal<Double> {
 
     public RealLiteral(Double value) {
         this.value = value;
+        super.type = Type.REAL;
     }
 
     @Override
@@ -23,6 +25,6 @@ public class RealLiteral extends Primary<Double> implements Literal<Double> {
     }
 
     public static RealLiteral parse(ParseTree tree, MyLangParser parser) {
-        return null;
+        return new RealLiteral(Double.parseDouble(tree.getText()));
     }
 }

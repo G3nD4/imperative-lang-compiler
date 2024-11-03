@@ -16,7 +16,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
+                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Routine.txt");
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
             CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -36,6 +36,7 @@ public class App {
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
             TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
+            System.out.println("Done");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,28 +1,31 @@
 package Nodes;
 
 import Nodes.expression.Expression;
+import Nodes.primary.ModifiablePrimary;
 import Nodes.statement.Statement;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Assignment extends Statement {
-    public String name;
+    public ModifiablePrimary assignee;
     public Expression expression;
 
-    public Assignment(String name, Expression expression) {
-        this.name = name;
+    public Assignment(ModifiablePrimary assignee, Expression expression) {
+        this.assignee = assignee;
         this.expression = expression;
     }
 
     public static Assignment parse(ParseTree tree, MyLangParser parser) {
-        return new Assignment(tree.getChild(0).getText(), Expression.parse(tree.getChild(2), parser));
+        final ModifiablePrimary assignee = ModifiablePrimary.parse(tree.getChild(0), parser);
+        final Expression expression = Expression.parse(tree.getChild(2), parser);
+        return new Assignment(assignee, expression);
     }
 
     @Override
     public String toString() {
         return "Assignment{" +
-                "variable='" + name + '\'' +
+                "variable='" + assignee.toString() + '\'' +
                 ", expression='" + expression.toString() + '\'' +
                 '}';
     }

@@ -1,6 +1,7 @@
 package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
+import Nodes.Type;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -11,9 +12,10 @@ public class RelationalExpression extends Expression {
     public ArrayList<TokenType> operations;
 
 
-    public RelationalExpression(ArrayList<AdditiveExpression> operands, ArrayList<TokenType> operations) {
+    public RelationalExpression(ArrayList<AdditiveExpression> operands, ArrayList<TokenType> operations, Type type) {
         this.operands = operands;
         this.operations = operations;
+        super.type = type;
     }
 
     @Override
@@ -44,6 +46,18 @@ public class RelationalExpression extends Expression {
             }
 
         }
-        return new RelationalExpression(operands, operations);
+
+        if (operands.size() == 1) {
+            // FIXME: type could be null (theoretically)
+            return new RelationalExpression(operands, operations, operands.getFirst().type == null ? operands.getFirst().returnType : operands.getFirst().type);
+        }
+        for (int i = 0; i < operands.size(); ++i) {
+            if (operands.get(i).type == Type.BOOLEAN || operands.get(i).returnType == Type.BOOLEAN) {
+                System.out.println("Unsupported operation " + operations.get(i == 0 ? 0 : i - 1).toString() + " for BOOLEAN");
+                System.exit(1);
+            }
+        }
+
+        return new RelationalExpression(operands, operations, Type.BOOLEAN);
     }
 }

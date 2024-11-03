@@ -1,1 +1,1 @@
-x := 10
+var x: bool is true

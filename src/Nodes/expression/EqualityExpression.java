@@ -1,6 +1,7 @@
 package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
+import Nodes.Type;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -10,9 +11,10 @@ public class EqualityExpression extends Expression {
     public ArrayList<RelationalExpression> operands;
     public ArrayList<TokenType> operations;
 
-    public EqualityExpression(ArrayList<RelationalExpression> operands, ArrayList<TokenType> operations) {
+    public EqualityExpression(ArrayList<RelationalExpression> operands, ArrayList<TokenType> operations, Type type) {
         this.operands = operands;
         this.operations = operations;
+        super.type = type;
     }
 
     @Override
@@ -41,6 +43,27 @@ public class EqualityExpression extends Expression {
             }
 
         }
-        return new EqualityExpression(operands, operations);
+
+        if (operands.size() == 1) {
+            // FIXME: type could be null (theoretically)
+            return new EqualityExpression(operands, operations, operands.getFirst().type == null ? operands.getFirst().returnType : operands.getFirst().type);
+        }
+        Type leftType = operands.getFirst().returnType;
+        if (leftType == null) {
+            leftType = operands.getFirst().type;
+        }
+        for (int i = 1; i < operands.size(); ++i) {
+            Type rightType = operands.get(i).type == null ? operands.get(i).returnType : operands.get(i).type;
+            if (rightType == Type.BOOLEAN || leftType == Type.BOOLEAN) {
+                if (rightType != Type.BOOLEAN || leftType != Type.BOOLEAN) {
+                    System.out.println("Unsupported operation " + operations.get(i == 0 ? 0 : i - 1).toString() + " for BOOLEAN");
+                    System.exit(1);
+                }
+            }
+            leftType = Type.BOOLEAN;
+        }
+        // TODO: maybe need to handle (true == Int|Real) but we do not think so
+
+        return new EqualityExpression(operands, operations, Type.BOOLEAN);
     }
 }

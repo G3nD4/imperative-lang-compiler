@@ -1,5 +1,6 @@
 package Nodes.primary;
 
+import Nodes.Type;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -8,6 +9,7 @@ public class IntegerLiteral extends Primary<Integer> implements Literal<Integer>
 
     public IntegerLiteral(int value) {
         this.value = value;
+        super.type = Type.INTEGER;
     }
 
     @Override
