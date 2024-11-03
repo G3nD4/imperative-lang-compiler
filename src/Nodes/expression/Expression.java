@@ -61,13 +61,13 @@ public abstract class Expression extends Primary {
                     }
                     break;
                 case 6:
-                    expression = UnaryExpression.parse(expSubtree, parser);
                     // returnType is set using super
-                    break;
+                    expression = UnaryExpression.parse(expSubtree, parser);
+                    return expression;
             }
             ++depth;
         }
-        return expression;
+        return null;
     }
 
 }
