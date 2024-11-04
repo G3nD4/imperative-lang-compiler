@@ -55,12 +55,14 @@ public class VariableDeclaration extends Declaration {
         return expression;
     }
 
-    @Override
-    public String toString() {
-        return "VariableDeclaration{" +
-                "identifier=" + identifier +
-                ", type='" + type + '\'' +
-                ", initialValues=" + expression.toString() +
-                '}';
+    public String toString(String indent) {
+        StringBuilder result = new StringBuilder("VariableDeclaration:\n" + indent + "                    --- identifier=" + identifier + '\n');
+        if (type != null) {
+            result.append(indent).append("                    --- type=").append(type.toString().toLowerCase()).append('\n');
+        }
+        if (expression != null) {
+            result.append(indent).append("                    --- initialValues=").append(expression.toString(indent + "                  ")).append('\n');
+        }
+        return result.toString();
     }
 }

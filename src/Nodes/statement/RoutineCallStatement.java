@@ -9,11 +9,20 @@ public class RoutineCallStatement extends Statement {
     private final List<Parameter> parameters;
 
     @Override
-    public String toString() {
-        return "RoutineCall{" +
-                "identifier='" + identifier + '\'' +
-                ", parameters=" + parameters +
+    public String toString(String indent) {
+        return '\n' + indent + "RoutineCall:" + " \n" +
+                indent + "           |" + '\n' +
+                indent + "--- identifier=" + identifier + '\n' +
+                indent + "--- parameters=" + printParameters(indent + "               ") +
                 '}';
+    }
+
+    public String printParameters(String indent) {
+        StringBuilder result = new StringBuilder("|\n");
+        for (Parameter param : parameters) {
+            result.append(indent).append("---").append(param.toString(indent + "               ")).append("\n");
+        }
+        return result.toString();
     }
 
     public String getIdentifier() {

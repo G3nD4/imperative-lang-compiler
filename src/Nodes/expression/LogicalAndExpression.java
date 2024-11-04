@@ -33,4 +33,20 @@ public class LogicalAndExpression extends Expression {
 
         return new LogicalAndExpression(operands, Type.BOOLEAN);
     }
+
+    @Override
+    public String toString(String indent) {
+        StringBuilder result = new StringBuilder();
+        String applyedIndent = indent;
+        if (operands.size() < 2) {
+            applyedIndent = "";
+        }
+        for (int i = 0; i < operands.size(); ++i) {
+            result.append(applyedIndent).append(operands.get(i).toString(indent)).append("\n");
+            if (i < operands.size() - 1) {
+                result.append(applyedIndent).append("AND\n");
+            }
+        }
+        return result.toString();
+    }
 }

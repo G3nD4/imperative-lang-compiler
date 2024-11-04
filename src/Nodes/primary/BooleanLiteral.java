@@ -12,11 +12,8 @@ public class BooleanLiteral extends Primary<Boolean> implements Literal<Boolean>
         super.type = Type.BOOLEAN;
     }
 
-    @Override
-    public String toString() {
-        return "BooleanLiteral{" +
-                "value=" + value +
-                '}';
+    public String toString(String indent) {
+        return indent + "---BoolLit val = " + value + "\n";
     }
 
     @Override

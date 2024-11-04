@@ -11,7 +11,6 @@ public class RelationalExpression extends Expression {
     public ArrayList<AdditiveExpression> operands;
     public ArrayList<TokenType> operations;
 
-
     public RelationalExpression(ArrayList<AdditiveExpression> operands, ArrayList<TokenType> operations, Type type) {
         this.operands = operands;
         this.operations = operations;
@@ -19,11 +18,22 @@ public class RelationalExpression extends Expression {
     }
 
     @Override
-    public String toString() {
-        return "RelationalExpression{" +
-                "operands=" + operands +
-                ", operations=" + operations +
-                '}';
+    public String toString(String indent) {
+        StringBuilder result = new StringBuilder();
+        String applyedIndent = indent;
+        if (operands.size() < 2) {
+            applyedIndent = "";
+        }
+        for (int i = 0; i < operands.size(); ++i) {
+            result.append(applyedIndent).append(operands.get(i).toString(indent)).append("\n");
+            if (i != 0 && i < (operands.size() - 1)) {
+                result.append(applyedIndent).append(operations.get(i - 1).toString()).append("\n");
+            } else if (i == 0 && !operations.isEmpty()) {
+                result.append(applyedIndent).append(operations.getFirst().toString()).append("\n");
+            }
+        }
+
+        return result.toString();
     }
 
     public static RelationalExpression parse(ParseTree tree, MyLangParser parser) {

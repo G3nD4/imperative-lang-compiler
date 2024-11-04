@@ -1,5 +1,6 @@
 package main;
 
+import Nodes.Declaration;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import Nodes.RoutineDeclarationStatement;
@@ -17,7 +18,10 @@ public class TreeBuilder {
 //            }
             switch (node.ruleName) {
                 case "routineDeclaration":
+                    // TODO: node.data = ... --> node.children.add(...)
                     node.data = RoutineDeclarationStatement.parse(tree, parser);
+                case "declaration":
+                    // TODO Declaration.parse(..., parser);
             }
 
 

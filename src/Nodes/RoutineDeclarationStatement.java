@@ -88,12 +88,13 @@ public class RoutineDeclarationStatement extends Statement {
     }
 
     @Override
-    public String toString() {
-        return "Function{" +
-                "name='" + name + '\'' +
-                ", parameters=" + parameters +
-                ", returnType='" + returnType + '\'' +
-                ", body=" + body +
-                '}';
+    public String toString(String indent) {
+        return "Routine |\n" +
+                indent + "--- name= " + name + " \n" +
+                indent + "--- parameters= " + parameters + " \n" +
+                indent + "--- returnType= " + (returnType == null ? "NOT DEFINED" : returnType.toString().toLowerCase()) + " \n" +
+                indent + "--- body:\n"
+                                    + body.toString(indent + "         ") +
+                '\n';
     }
 }

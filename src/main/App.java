@@ -11,15 +11,19 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import java.io.IOException;
 import java.util.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class App {
 
     public static void main(String[] args) {
         try {
-//            CharStream charStream = CharStreams.fromFileName(
-//                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Routine.txt");
-
             CharStream charStream = CharStreams.fromFileName(
-                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\WhileLoop.txt");
+                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/complex_code.txt");
+
+//            CharStream charStream = CharStreams.fromFileName(
+//                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\WhileLoop.txt");
 
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);
@@ -40,7 +44,19 @@ public class App {
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
             TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
-            System.out.println("Done");
+
+
+            try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+                writer.println("\n\n\n");
+                writer.println(root.toString("       "));
+                writer.println("\n\n\nDone");
+                System.out.println("Output successfully written to output.txt");
+            } catch (IOException e) {
+                System.err.println("An error occurred while writing to the file:");
+                e.printStackTrace();
+            }
+
+            System.out.println("\n\n\nDone");
         } catch (IOException e) {
             e.printStackTrace();
         }

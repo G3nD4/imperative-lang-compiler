@@ -9,10 +9,10 @@ public class Return extends Statement {
     public final Expression expression;
 
     @Override
-    public String toString() {
-        return "Return{" +
-                "expression='" + expression + '\'' +
-                '}';
+    public String toString(String indent) {
+        return "Return: |" +
+                indent + "--- expression=" + expression.toString(indent + "               ") + '\n' +
+                '\n';
     }
 
     public Return(Expression expression) {

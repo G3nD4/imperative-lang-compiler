@@ -18,10 +18,8 @@ public class RealLiteral extends Primary<Double> implements Literal<Double> {
     }
 
     @Override
-    public String toString() {
-        return "RealLiteral{" +
-                "value=" + value +
-                '}';
+    public String toString(String indent) {
+        return indent + "---RealLit val = " + value + "\n";
     }
 
     public static RealLiteral parse(ParseTree tree, MyLangParser parser) {

@@ -12,7 +12,9 @@ public class ModifiablePrimary extends Primary {
 
     String identifier;
 
-
+    public String toString(String indent) {
+        return "ModPrim identifier = " + identifier + "\n";
+    }
 
     public static ModifiablePrimary parse(ParseTree tree, MyLangParser parser) {
         return new ModifiablePrimary(tree.getChild(0).getText());

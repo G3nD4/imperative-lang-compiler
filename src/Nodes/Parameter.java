@@ -17,11 +17,10 @@ public class Parameter {
         return type;
     }
 
-    @Override
-    public String toString() {
-        return "Parameter{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+    public String toString(String indent) {
+        return '\n' + indent + "Parameter:\n" +
+                indent + "          |" + '\n' +
+                indent +  "---name=" + name + '\n' +
+                indent + "---type=" + type.toString().toLowerCase() + '\n';
     }
 }

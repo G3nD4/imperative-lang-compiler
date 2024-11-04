@@ -9,6 +9,5 @@ public enum Type {
             case "boolean" -> Type.BOOLEAN;
             default -> Type.IDENTIFIER;
         };
-
     }
 }

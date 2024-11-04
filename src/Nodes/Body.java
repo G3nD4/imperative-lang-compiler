@@ -44,10 +44,25 @@ public class Body {
     }
 
 
-    @Override
-    public String toString() {
-        return "Block{" +
-                "statements=" + statements +
-                '}';
+    public String toString(String indent) {
+        return indent + "Block:\n" +
+                indent + "      --- statements=" + printStatements(indent + "                     ") +
+                indent + "      --- declarations=" + printDeclarations(indent + "                       ");
+    }
+
+    private String printStatements(String indent) {
+        StringBuilder result = new StringBuilder("\n");
+        for (final Statement statement : statements) {
+            result.append(indent).append("---").append(statement.toString(indent + "                ")).append("\n");
+        }
+        return result.toString();
+    }
+
+    private String printDeclarations(String indent) {
+        StringBuilder result = new StringBuilder("|\n");
+        for (final Declaration declaration : declarations) {
+            result.append(indent).append("---").append(declaration.toString(indent)).append("\n");
+        }
+        return result.toString();
     }
 }

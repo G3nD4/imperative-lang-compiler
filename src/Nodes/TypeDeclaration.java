@@ -20,10 +20,9 @@ public class TypeDeclaration extends Declaration {
     }
 
     @Override
-    public String toString() {
-        return "VariableDeclaration{" +
-                "identifier=" + identifier +
-                ", type='" + type + '\'' +
-                '}';
+    public String toString(String indent) {
+        return indent + "TypeDeclaration:" + '\n' +
+                indent + "---identifier: " + identifier +
+                indent + "---type: " + type.toString() + '\n';
     }
 }

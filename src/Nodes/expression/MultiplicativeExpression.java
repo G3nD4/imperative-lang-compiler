@@ -66,4 +66,20 @@ public class MultiplicativeExpression extends Expression {
 
         return new MultiplicativeExpression(operands, operations, type);
     }
+
+    @Override
+    public String toString(String indent) {
+        StringBuilder result = new StringBuilder();
+        String applyedIndent = indent;
+        if (operands.size() < 2) {
+            applyedIndent = "";
+        }
+        for (int i = 0; i < operands.size(); ++i) {
+            result.append(applyedIndent).append(operands.get(i).toString(indent)).append('\n');
+            if (i != 0 && i < operands.size() - 1) {
+                result.append(applyedIndent).append(operations.get(i - 1).toString()).append('\n');
+            }
+        }
+        return result.toString();
+    }
 }

@@ -16,4 +16,11 @@ public class Range {
     public static Range parse(ParseTree tree, MyLangParser parser) {
         return new Range(Expression.parse(tree.getChild(0), parser), Expression.parse(tree.getChild(2), parser));
     }
+
+    public String toString(String indent) {
+        return "Range:\n" +
+                indent + "|\n" +
+                indent + "--- left =" + leftExpression.toString(indent + "          ") + "\n" +
+                indent + "--- right =" + rightExpression.toString(indent + "           ") + '\n';
+    }
 }

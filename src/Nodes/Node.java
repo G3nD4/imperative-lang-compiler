@@ -20,8 +20,8 @@ public class Node<T> {
     @Override
     public String toString() {
         return "Node{" +
-                "parent=" + parent +
-                ", children=" + children +
+                "parent=" + parent.toString() +
+                ", children=" + children.toString() +
                 '}';
     }
 }

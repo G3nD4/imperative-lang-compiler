@@ -16,8 +16,10 @@ public abstract class Statement {
             case "forLoop" -> ForLoop.parse(child, parser);
             case "ifStatement" -> IfStatement.parse(child, parser);
             case "returnStatement" -> Return.parse(child, parser);
-            case "breakStatement" -> Break.parse(child, parser);
+            case "breakStatement" -> new Break();
             default -> null;
         };
     }
+
+    public abstract String toString(String indent);
 }

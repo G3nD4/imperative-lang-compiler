@@ -19,13 +19,13 @@ public class ForLoop extends Statement {
     }
 
     @Override
-    public String toString() {
-        return "ForLoop{" +
-                "loopVariable='" + loopVariable + '\'' +
-                ", range='" + range.toString() + '\'' +
-                ", reverse=" + reverse +
-                ", body=" + body +
-                '}';
+    public String toString(String indent) {
+        return "ForLoop:\n" +
+                indent + "|\n" +
+                indent + "--- loopVariable=" + loopVariable + '\n' +
+                indent + "--- range=" + range.toString(indent + "          ") + '\n' +
+                indent + "--- reverse=" + reverse + '\n' +
+                indent + "--- body=" + body.toString(indent + "         ") + '\n';
     }
 
     public static ForLoop parse(ParseTree tree, MyLangParser parser) {

@@ -38,4 +38,10 @@ public class UnaryExpression extends Expression {
             return new UnaryExpression(sign, _primary, _primary != null ? _primary.type : null );
         }
     }
+
+    @Override
+    public String toString(String indent) {
+        return indent + "---" + sign.toString().toLowerCase() + '\n' +
+                indent + "---" + primary.toString(indent) + '\n';
+    }
 }

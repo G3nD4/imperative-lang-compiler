@@ -1,5 +1,34 @@
-if x % 2 = 0 then
-    var result : integer is 1
-else
-    var result : integer is 0
+routine add(): integer is
+    var x is 4
+
+    if x % 2 = 0 then
+        var result : integer is 1
+    elseif x % 2 = 3 then
+        var result : integer is 2
+    elseif x % 2 = 3 then
+            var result : integer is 2
+    elseif x % 2 = 3 then
+            var result : integer is 2
+    elseif x % 2 = 3 then
+            var result : integer is 2
+    else
+        if x % 2 = 0 then
+                var result : integer is 1
+            elseif x % 2 = 3 then
+                var result : integer is 2
+            elseif x % 2 = 3 then
+                    var result : integer is 2
+            elseif x % 2 = 3 then
+                    var result : integer is 2
+            elseif x % 2 = 3 then
+                    var result : integer is 2
+            else
+                var result : integer is 3
+            end
+    end
+
+    return result
 end
+
+
+

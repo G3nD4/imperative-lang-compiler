@@ -17,14 +17,6 @@ public class EqualityExpression extends Expression {
         super.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "EqualityExpression{" +
-                "operands=" + operands +
-                ", operations=" + operations +
-                '}';
-    }
-
     public static EqualityExpression parse(ParseTree tree, MyLangParser parser) {
         ArrayList<RelationalExpression> operands = new ArrayList<>();
         ArrayList<TokenType> operations = new ArrayList<>();
@@ -65,5 +57,21 @@ public class EqualityExpression extends Expression {
         // TODO: maybe need to handle (true == Int|Real) but we do not think so
 
         return new EqualityExpression(operands, operations, Type.BOOLEAN);
+    }
+
+    @Override
+    public String toString(String indent) {
+        StringBuilder result = new StringBuilder();
+        String applyedIndent = indent;
+        if (operands.size() < 2) {
+            applyedIndent = "";
+        }
+        for (int i = 0; i < operands.size(); ++i) {
+            result.append(applyedIndent).append(operands.get(i).toString(indent)).append('\n');
+            if (i != 0 && i < operands.size() - 1) {
+                result.append(applyedIndent).append(operations.get(i - 1).toString()).append('\n');
+            }
+        }
+        return result.toString();
     }
 }

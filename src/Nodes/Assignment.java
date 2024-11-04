@@ -23,10 +23,10 @@ public class Assignment extends Statement {
     }
 
     @Override
-    public String toString() {
-        return "Assignment{" +
-                "variable='" + assignee.toString() + '\'' +
-                ", expression='" + expression.toString() + '\'' +
-                '}';
+    public String toString(String indent) {
+        return "Assignment: |" + "\n" +
+                indent + "--- variable=" + assignee.toString(indent + "             ") + '\n' +
+                indent + "--- expression=" + expression.toString(indent + "               ") + '\n' +
+                '\n';
     }
 }

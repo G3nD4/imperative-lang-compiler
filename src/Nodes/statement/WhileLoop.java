@@ -11,11 +11,11 @@ public class WhileLoop extends Statement {
 
 
     @Override
-    public String toString() {
-        return "WhileLoop{" +
-                "condition='" + condition + '\'' +
-                ", body=" + body +
-                '}';
+    public String toString(String indent) {
+        return "WhileLoop: |" +
+                indent + "          " + "--- condition=" + condition.toString(indent + "          " + "             ") + '\n' +
+                indent + "          " + "--- body=" + body.toString(indent + "          " + "         ") +
+                '\n';
     }
 
     public WhileLoop(Expression condition, Body body) {

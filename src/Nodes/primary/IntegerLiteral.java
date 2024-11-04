@@ -17,11 +17,8 @@ public class IntegerLiteral extends Primary<Integer> implements Literal<Integer>
         return value;
     }
 
-    @Override
-    public String toString() {
-        return "IntegerLiteral{" +
-                "value=" + value +
-                '}';
+    public String toString(String indent) {
+        return "IntLit val = " + value + "\n";
     }
 
     public static IntegerLiteral parse(ParseTree tree, MyLangParser parser) {

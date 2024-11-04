@@ -1,5 +1,8 @@
 package main;
 
+import Nodes.Declaration;
+import Nodes.statement.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,5 +30,16 @@ public class InternalNode<T> extends TreeNode<T> {
     @Override
     public boolean isLeaf() {
         return children.isEmpty();
+    }
+
+    public String toString(String indent) {
+        if (data instanceof Statement) {
+            return ((Statement)data).toString(indent);
+        } else if (data instanceof Declaration) {
+//            return ((Declaration)data).toString(indent);
+
+        }
+        return data.toString();
+
     }
 }
