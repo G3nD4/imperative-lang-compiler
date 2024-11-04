@@ -1,14 +1,14 @@
 package Nodes.statement;
 
 import Nodes.Body;
+import Nodes.expression.Expression;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class WhileLoop extends Statement {
-    private final String condition;
-    private final Body body;
+    public final Expression condition;
+    public final Body body;
 
-    public String getCondition() {
-        return condition;
-    }
 
     @Override
     public String toString() {
@@ -18,12 +18,12 @@ public class WhileLoop extends Statement {
                 '}';
     }
 
-    public Body getBody() {
-        return body;
-    }
-
-    public WhileLoop(String condition, Body body) {
+    public WhileLoop(Expression condition, Body body) {
         this.condition = condition;
         this.body = body;
+    }
+
+    public static WhileLoop parse(ParseTree tree, MyLangParser parser) {
+        return new WhileLoop(Expression.parse(tree.getChild(1), parser), Body.parse(tree.getChild(4), parser));
     }
 }
