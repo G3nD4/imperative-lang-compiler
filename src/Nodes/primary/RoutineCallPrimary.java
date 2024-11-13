@@ -2,6 +2,7 @@ package Nodes.primary;
 
 import Nodes.IRoutine;
 import Nodes.Parameter;
+import main.IndentManager;
 
 import java.util.List;
 
@@ -24,9 +25,17 @@ public class RoutineCallPrimary extends Primary implements IRoutine  {
 
     @Override
     public String toString(String indent) {
-        return "RoutineCall{" +
-                "identifier='" + identifier + '\'' +
-                ", parameters=" + parameters +
-                '}';
+        IndentManager.print("Routine Call Primary:");
+        IndentManager.goDown();
+        IndentManager.print("identifier: " + identifier);
+        IndentManager.print("parameters");
+        IndentManager.goDown();
+        for (final Parameter param : parameters) {
+            IndentManager.print(param.toString(""));
+        }
+        IndentManager.goUp();
+        IndentManager.goUp();
+
+        return "";
     }
 }

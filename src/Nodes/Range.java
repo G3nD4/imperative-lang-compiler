@@ -1,6 +1,7 @@
 package Nodes;
 
 import Nodes.expression.Expression;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -18,9 +19,13 @@ public class Range {
     }
 
     public String toString(String indent) {
-        return "Range:\n" +
-                indent + "|\n" +
-                indent + "--- left =" + leftExpression.toString(indent + "          ") + "\n" +
-                indent + "--- right =" + rightExpression.toString(indent + "           ") + '\n';
+        IndentManager.print("Range:");
+        IndentManager.goDown();
+        IndentManager.print(leftExpression.toString(""));
+        IndentManager.print("..");
+        IndentManager.print(rightExpression.toString(""));
+        IndentManager.goUp();
+
+        return "";
     }
 }

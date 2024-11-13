@@ -1,6 +1,7 @@
 package Nodes.primary;
 
 import Nodes.Type;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -13,7 +14,9 @@ public class BooleanLiteral extends Primary<Boolean> implements Literal<Boolean>
     }
 
     public String toString(String indent) {
-        return indent + "---BoolLit val = " + value + "\n";
+        IndentManager.print("BooleanLiteran: " + value.toString());
+
+        return "";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Nodes;
 
 import Nodes.statement.Statement;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -89,12 +90,21 @@ public class RoutineDeclarationStatement extends Statement {
 
     @Override
     public String toString(String indent) {
-        return "Routine |\n" +
-                indent + "--- name= " + name + " \n" +
-                indent + "--- parameters= " + parameters + " \n" +
-                indent + "--- returnType= " + (returnType == null ? "NOT DEFINED" : returnType.toString().toLowerCase()) + " \n" +
-                indent + "--- body:\n"
-                                    + body.toString(indent + "         ") +
-                '\n';
+        IndentManager.print("Routine declaration:");
+        IndentManager.goDown();
+        IndentManager.print("name: " + name);
+        IndentManager.print("parameters:");
+        IndentManager.goDown();
+        for (final Parameter param : parameters) {
+            IndentManager.print(param.toString(""));
+        }
+        IndentManager.goUp();
+        IndentManager.print("returnType: " + (returnType == null ? "NOT DEFINED" : returnType.toString().toLowerCase()));
+        IndentManager.print("body:");
+        IndentManager.goDown();
+        IndentManager.print(body.toString(""));
+        IndentManager.goUp();
+
+        return "";
     }
 }

@@ -2,6 +2,7 @@ package Nodes.statement;
 
 import Nodes.Body;
 import Nodes.expression.Expression;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -12,10 +13,18 @@ public class WhileLoop extends Statement {
 
     @Override
     public String toString(String indent) {
-        return "WhileLoop: |" +
-                indent + "          " + "--- condition=" + condition.toString(indent + "          " + "             ") + '\n' +
-                indent + "          " + "--- body=" + body.toString(indent + "          " + "         ") +
-                '\n';
+        IndentManager.print("While Loop:");
+        IndentManager.goDown();
+
+        IndentManager.print("condition:");
+        IndentManager.goDown();
+        IndentManager.print(condition.toString(""));
+        IndentManager.goUp();
+
+        IndentManager.print(body.toString(""));
+
+        IndentManager.goUp();
+        return "";
     }
 
     public WhileLoop(Expression condition, Body body) {

@@ -1,9 +1,12 @@
 package Nodes.statement;
 
+import main.IndentManager;
+
 public class Break extends Statement {
     public Break() {}
 
     public String toString(String indent) {
-        return indent + "Break\n";
+        IndentManager.print("Break Statement");
+        return "";
     }
 }

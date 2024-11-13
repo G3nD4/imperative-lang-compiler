@@ -2,6 +2,7 @@ package Nodes;
 
 import Nodes.expression.Expression;
 import Nodes.statement.Statement;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -56,13 +57,15 @@ public class VariableDeclaration extends Declaration {
     }
 
     public String toString(String indent) {
-        StringBuilder result = new StringBuilder("VariableDeclaration:\n" + indent + "                    --- identifier=" + identifier + '\n');
+        IndentManager.print("VariableDeclaration:");
+        IndentManager.goDown();
         if (type != null) {
-            result.append(indent).append("                    --- type=").append(type.toString().toLowerCase()).append('\n');
+            IndentManager.print("type: " + type.toString().toLowerCase());
         }
         if (expression != null) {
-            result.append(indent).append("                    --- initialValues=").append(expression.toString(indent + "                  ")).append('\n');
+            IndentManager.print("value: " + expression.toString(""));
         }
-        return result.toString();
+        IndentManager.goUp();
+        return "";
     }
 }

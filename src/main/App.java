@@ -20,7 +20,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CharStream charStream = CharStreams.fromFileName(
-                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/complex_code.txt");
+                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
 
 //            CharStream charStream = CharStreams.fromFileName(
 //                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\WhileLoop.txt");
@@ -44,7 +44,6 @@ public class App {
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
             TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
-
 
             try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
                 writer.println("\n\n\n");

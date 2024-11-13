@@ -1,6 +1,7 @@
 package Nodes.statement;
 
 import Nodes.Parameter;
+import main.IndentManager;
 
 import java.util.List;
 
@@ -10,11 +11,17 @@ public class RoutineCallStatement extends Statement {
 
     @Override
     public String toString(String indent) {
-        return '\n' + indent + "RoutineCall:" + " \n" +
-                indent + "           |" + '\n' +
-                indent + "--- identifier=" + identifier + '\n' +
-                indent + "--- parameters=" + printParameters(indent + "               ") +
-                '}';
+        IndentManager.print("Routine Call Statement:");
+        IndentManager.goDown();
+        IndentManager.print("identifier: " + identifier);
+        IndentManager.print("parameters:");
+        IndentManager.goDown();
+        for (final Parameter param : parameters) {
+            IndentManager.print(param.toString(""));
+        }
+        IndentManager.goUp();
+        IndentManager.goUp();
+        return "";
     }
 
     public String printParameters(String indent) {

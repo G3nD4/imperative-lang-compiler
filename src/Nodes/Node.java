@@ -19,6 +19,7 @@ public class Node<T> {
 
     @Override
     public String toString() {
+
         return "Node{" +
                 "parent=" + parent.toString() +
                 ", children=" + children.toString() +

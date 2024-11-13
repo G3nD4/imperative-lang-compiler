@@ -1,6 +1,7 @@
 package Nodes;
 
 import Nodes.statement.Statement;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -11,13 +12,19 @@ import java.util.List;
 public class Body {
     private final List<Declaration> declarations = new ArrayList<>();
     private final List<Statement> statements = new ArrayList<>();
+    /*
+     Contains declarations and statements in the right order.
+     */
+    private final List<Object> orderedDnS = new ArrayList<>();
 
     public void addDeclaration(Declaration declaration) {
         declarations.add(declaration);
+        orderedDnS.add(declaration);
     }
 
     public void addStatement(Statement statement) {
         statements.add(statement);
+        orderedDnS.add(statement);
     }
 
     public List<Statement> getStatements() {
@@ -43,26 +50,18 @@ public class Body {
         return body;
     }
 
-
     public String toString(String indent) {
-        return indent + "Block:\n" +
-                indent + "      --- statements=" + printStatements(indent + "                     ") +
-                indent + "      --- declarations=" + printDeclarations(indent + "                       ");
-    }
-
-    private String printStatements(String indent) {
-        StringBuilder result = new StringBuilder("\n");
-        for (final Statement statement : statements) {
-            result.append(indent).append("---").append(statement.toString(indent + "                ")).append("\n");
+        IndentManager.print("Body:");
+        IndentManager.goDown();
+        for (final Object obj : orderedDnS) {
+            if (obj instanceof Declaration) {
+                IndentManager.print(((Declaration)obj).toString(""));
+            } else {
+                IndentManager.print(((Statement)obj).toString(""));
+            }
         }
-        return result.toString();
-    }
+        IndentManager.goUp();
 
-    private String printDeclarations(String indent) {
-        StringBuilder result = new StringBuilder("|\n");
-        for (final Declaration declaration : declarations) {
-            result.append(indent).append("---").append(declaration.toString(indent)).append("\n");
-        }
-        return result.toString();
+        return "";
     }
 }

@@ -2,6 +2,7 @@ package Nodes.statement;
 
 import Nodes.Body;
 import Nodes.expression.Expression;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -58,26 +59,38 @@ public class IfStatement extends Statement {
 
     @Override
     public String toString(String indent) {
-        StringBuilder result = new StringBuilder("IfStatement:\n" +
-                indent + "--- condition= \n" + condition.toString(indent) + "\n" +
-                indent + "--- if body= " + ifBody.toString(indent + "             ") + "\n" +
-                indent + "--- additional conditions: " + printAdditionalConditions(indent + "                           ") + "\n"
-        );
-        if (elseBody != null) {
-            result.append(indent).append("--- else body= ").append(elseBody.toString(indent + "               ")).append("\n");
+        IndentManager.print("If Statement:");
+        IndentManager.goDown();
+
+        IndentManager.print("if condition: ");
+        IndentManager.goDown();
+        IndentManager.print(condition.toString(""));
+        IndentManager.goUp();
+
+        IndentManager.print("if body: " + ifBody.toString(""));
+        if (!ifElseBodies.isEmpty()) {
+            IndentManager.print("Additional conditions:");
+            IndentManager.goDown();
+            printAdditionalConditions();
+            IndentManager.goUp();
         }
-        return result.toString();
+        if (elseBody != null) {
+            IndentManager.print("else body:");
+            IndentManager.goDown();
+            IndentManager.print(elseBody.toString(""));
+            IndentManager.goUp();
+        }
+        IndentManager.goUp();
+        return "";
     }
 
-    String printAdditionalConditions(String indent) {
-        StringBuilder result = new StringBuilder("\n");
-
+    private void printAdditionalConditions() {
         for (int i = 0; i < ifElseConditions.size(); ++i) {
-            result.append(indent).append("--- condition: ").append(ifElseConditions.get(i).toString(""));
-            result.append(indent).append("--- body: ").append(ifElseBodies.get(i).toString(indent + "          ")).append("\n");
-            result.append(indent).append("\n");
+            IndentManager.print("condition: " + ifElseConditions.get(i).toString(""));
+            IndentManager.print("body:");
+            IndentManager.goDown();
+            IndentManager.print(ifElseBodies.get(i).toString(""));
+            IndentManager.goUp();
         }
-
-        return result.toString();
     }
 }

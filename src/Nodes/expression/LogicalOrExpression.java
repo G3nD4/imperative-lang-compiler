@@ -1,6 +1,7 @@
 package Nodes.expression;
 
 import Nodes.Type;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -35,17 +36,16 @@ public class LogicalOrExpression extends Expression {
 
     @Override
     public String toString(String indent) {
-        StringBuilder result = new StringBuilder();
-        String applyedIndent = indent;
-        if (operands.size() < 2) {
-            applyedIndent = "";
-        }
+        IndentManager.print("Logical OR Expression:");
+        IndentManager.goDown();
         for (int i = 0; i < operands.size(); ++i) {
-            result.append(applyedIndent).append(operands.get(i).toString(indent)).append("\n");
-            if (i < operands.size() - 1) {
-                result.append(applyedIndent).append("OR\n");
+            IndentManager.print(operands.get(i).toString(""));
+            if (i != 0 && i < operands.size() - 1) {
+                IndentManager.print("OR");
             }
         }
-        return result.toString();
+        IndentManager.goUp();
+
+        return "";
     }
 }

@@ -1,6 +1,7 @@
 package Nodes.primary;
 
 import Nodes.Type;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -18,7 +19,9 @@ public class IntegerLiteral extends Primary<Integer> implements Literal<Integer>
     }
 
     public String toString(String indent) {
-        return "IntLit val = " + value + "\n";
+        IndentManager.print("IntegerLiteran: " + value.toString());
+
+        return "";
     }
 
     public static IntegerLiteral parse(ParseTree tree, MyLangParser parser) {

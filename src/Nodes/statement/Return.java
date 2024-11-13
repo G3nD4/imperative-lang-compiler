@@ -1,6 +1,7 @@
 package Nodes.statement;
 
 import Nodes.expression.Expression;
+import main.IndentManager;
 import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -10,9 +11,15 @@ public class Return extends Statement {
 
     @Override
     public String toString(String indent) {
-        return "Return: |" +
-                indent + "--- expression=" + expression.toString(indent + "               ") + '\n' +
-                '\n';
+        IndentManager.print("Return Statement:");
+        IndentManager.goDown();
+        IndentManager.print("expression:");
+        IndentManager.goDown();
+        IndentManager.print(expression.toString(""));
+        IndentManager.goUp();
+        IndentManager.goUp();
+
+        return "";
     }
 
     public Return(Expression expression) {
@@ -24,7 +31,6 @@ public class Return extends Statement {
         Can be empty (just "return")
         or with expression (return expression)
         */
-        System.out.println(TreeBuilder.TreeToRule(tree, parser));
         if (tree.getChildCount() == 1) {
             return new Return(null);
         } else {

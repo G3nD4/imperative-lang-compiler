@@ -5,6 +5,7 @@ import Nodes.Operation;
 import Nodes.Sign;
 import Nodes.Type;
 import Nodes.primary.Primary;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -41,7 +42,15 @@ public class UnaryExpression extends Expression {
 
     @Override
     public String toString(String indent) {
-        return indent + "---" + sign.toString().toLowerCase() + '\n' +
-                indent + "---" + primary.toString(indent) + '\n';
+        IndentManager.print("Unary Expression:");
+
+        IndentManager.goDown();
+
+        IndentManager.print("sign:" + sign.toString().toLowerCase());
+        IndentManager.print(primary.toString(""));
+
+        IndentManager.goUp();
+
+        return "";
     }
 }

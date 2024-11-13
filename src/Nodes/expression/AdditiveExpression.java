@@ -4,6 +4,7 @@ import Lexical_analyzer.TokenType;
 import Nodes.Operation;
 import Nodes.Sign;
 import Nodes.Type;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -54,17 +55,16 @@ public class AdditiveExpression extends Expression {
 
     @Override
     public String toString(String indent) {
-        StringBuilder result = new StringBuilder();
-        String applyedIndent = indent;
-        if (operands.size() < 2) {
-            applyedIndent = "";
-        }
+        IndentManager.print("Additive Expression:");
+        IndentManager.goDown();
         for (int i = 0; i < operands.size(); ++i) {
-            result.append(applyedIndent).append(operands.get(i).toString(indent)).append('\n');
-            if (i != 0 && i < operands.size() - 1) {
-                result.append(applyedIndent).append(operations.get(i - 1).toString()).append('\n');
+            if (i != 0) {
+                IndentManager.print(operations.get(i - 1).toString());
             }
+            IndentManager.print(operands.get(i).toString(""));
         }
-        return result.toString();
+        IndentManager.goUp();
+
+        return "";
     }
 }

@@ -1,10 +1,11 @@
 package Nodes;
 
 import Nodes.statement.Statement;
+import main.IndentManager;
 
 public class TypeDeclaration extends Declaration {
-    private String identifier;
-    private Type type;
+    private final String identifier;
+    private final Type type;
 
     public TypeDeclaration(String identifier, Type type) {
         this.identifier = identifier;
@@ -21,8 +22,11 @@ public class TypeDeclaration extends Declaration {
 
     @Override
     public String toString(String indent) {
-        return indent + "TypeDeclaration:" + '\n' +
-                indent + "---identifier: " + identifier +
-                indent + "---type: " + type.toString() + '\n';
+        IndentManager.print("User Type Declaration:");
+        IndentManager.goDown();
+        IndentManager.print(identifier);
+        IndentManager.print(type.toString().toLowerCase());
+        IndentManager.goUp();
+        return "";
     }
 }

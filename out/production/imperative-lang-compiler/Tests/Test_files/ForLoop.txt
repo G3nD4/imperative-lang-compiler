@@ -3,4 +3,9 @@ routine sumOfNumbers(): integer is
     for i in reverse 1..10 loop
         sum := sum + i
     end
+    var a is true
+    var b is true
+    while a and b loop
+        a := true
+    end
 end

@@ -2,6 +2,7 @@ package Nodes.statement;
 
 import Nodes.Body;
 import Nodes.Range;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -20,12 +21,14 @@ public class ForLoop extends Statement {
 
     @Override
     public String toString(String indent) {
-        return "ForLoop:\n" +
-                indent + "|\n" +
-                indent + "--- loopVariable=" + loopVariable + '\n' +
-                indent + "--- range=" + range.toString(indent + "          ") + '\n' +
-                indent + "--- reverse=" + reverse + '\n' +
-                indent + "--- body=" + body.toString(indent + "         ") + '\n';
+        IndentManager.print("For Loop:");
+        IndentManager.goDown();
+        IndentManager.print("loop variable: " + loopVariable);
+        IndentManager.print(range.toString(""));
+        IndentManager.print("reverse: " + reverse);
+        IndentManager.print(body.toString(""));
+        IndentManager.goUp();
+        return "";
     }
 
     public static ForLoop parse(ParseTree tree, MyLangParser parser) {

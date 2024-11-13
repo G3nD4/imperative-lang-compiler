@@ -1,5 +1,7 @@
 package Nodes;
 
+import main.IndentManager;
+
 public class Parameter {
     private final String name;
     private final Type type;
@@ -18,9 +20,12 @@ public class Parameter {
     }
 
     public String toString(String indent) {
-        return '\n' + indent + "Parameter:\n" +
-                indent + "          |" + '\n' +
-                indent +  "---name=" + name + '\n' +
-                indent + "---type=" + type.toString().toLowerCase() + '\n';
+        IndentManager.print("Parameter:");
+        IndentManager.goDown();
+        IndentManager.print("name: " + name);
+        IndentManager.print("type: " + type.toString().toLowerCase());
+        IndentManager.goUp();
+
+        return "";
     }
 }

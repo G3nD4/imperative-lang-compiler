@@ -1,6 +1,9 @@
 package main;
 
 public class IndentManager {
+    private static IndentManager instance;
+    public IndentManager() {}
+
     private static int indent = 0;
 
     public static void goDown() {
@@ -16,5 +19,9 @@ public class IndentManager {
 
     public static String getIndent() {
         return "\t".repeat(Math.max(0, indent));
+    }
+
+    public static void print(String string) {
+        System.out.println(IndentManager.getIndent() + " " + string);
     }
 }

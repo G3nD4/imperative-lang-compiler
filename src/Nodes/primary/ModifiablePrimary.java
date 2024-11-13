@@ -1,6 +1,7 @@
 package Nodes.primary;
 
 import Nodes.statement.Statement;
+import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -13,7 +14,8 @@ public class ModifiablePrimary extends Primary {
     String identifier;
 
     public String toString(String indent) {
-        return "ModPrim identifier = " + identifier + "\n";
+        IndentManager.print("Modifiable Primary identifier: " + identifier);
+        return "";
     }
 
     public static ModifiablePrimary parse(ParseTree tree, MyLangParser parser) {
