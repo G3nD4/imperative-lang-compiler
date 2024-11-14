@@ -1,7 +1,8 @@
 package Nodes;
 
-import Nodes.statement.Statement;
 import main.IndentManager;
+import main.MyLangParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class TypeDeclaration extends Declaration {
     private final String identifier;
@@ -12,7 +13,13 @@ public class TypeDeclaration extends Declaration {
         this.type = type;
     }
 
-    public String getIdentifiers() {
+    public static TypeDeclaration parse(ParseTree tree, MyLangParser parser) {
+        final String identifier = tree.getChild(1).getText();
+        final Type type = Type.fromString(tree.getChild(3).getText());
+        return new TypeDeclaration(identifier, type);
+    }
+
+    public String getIdentifier() {
         return identifier;
     }
 
@@ -24,8 +31,8 @@ public class TypeDeclaration extends Declaration {
     public String toString(String indent) {
         IndentManager.print("User Type Declaration:");
         IndentManager.goDown();
-        IndentManager.print(identifier);
-        IndentManager.print(type.toString().toLowerCase());
+        IndentManager.print("identifier: " + identifier);
+        IndentManager.print("type: " + type.toString().toLowerCase());
         IndentManager.goUp();
         return "";
     }

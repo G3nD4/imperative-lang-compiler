@@ -59,11 +59,12 @@ public class VariableDeclaration extends Declaration {
     public String toString(String indent) {
         IndentManager.print("VariableDeclaration:");
         IndentManager.goDown();
+        IndentManager.print("identifier: " + identifier);
         if (type != null) {
             IndentManager.print("type: " + type.toString().toLowerCase());
         }
         if (expression != null) {
-            IndentManager.print("value: " + expression.toString(""));
+            IndentManager.print("initializing expression: " + expression.toString(""));
         }
         IndentManager.goUp();
         return "";

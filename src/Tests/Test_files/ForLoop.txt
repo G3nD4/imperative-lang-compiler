@@ -1,4 +1,4 @@
-routine sumOfNumbers(): integer is
+routine sumOfNumbers(a: integer): integer is
     var sum is 0
     for i in reverse 1..10 loop
         sum := sum + i
@@ -9,3 +9,9 @@ routine sumOfNumbers(): integer is
         a := true
     end
 end
+
+var n is 0
+
+type int is integer
+
+sumOfNumbers(1 + 1, 2, n)

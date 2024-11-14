@@ -35,7 +35,11 @@ public abstract class Primary<T> {
                             Double.parseDouble(literal);
                             return RealLiteral.parse(child, parser);
                         } catch (Exception e2) {
-                            throw new IllegalStateException("Incorrect value for Primary");
+                            try {
+                                return ModifiablePrimary.parse(child, parser);
+                            } catch (Exception e3) {
+                                throw new IllegalStateException("Incorrect value for Primary");
+                            }
                         }
                     }
             }
