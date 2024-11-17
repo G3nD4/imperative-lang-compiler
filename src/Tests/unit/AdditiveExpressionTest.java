@@ -1,10 +1,12 @@
 package Tests.unit;
 
+import Lexical_analyzer.TokenType;
 import Nodes.Operation;
 import Nodes.Sign;
 import Nodes.Type;
 import Nodes.expression.AdditiveExpression;
 import Nodes.expression.MultiplicativeExpression;
+import Nodes.expression.RelationalExpression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.IntegerLiteral;
@@ -29,7 +31,16 @@ public class AdditiveExpressionTest {
         operations.add(Sign.PLUS);
 
         final AdditiveExpression additiveExpression = new AdditiveExpression(operands, operations, Type.REAL);
-        additiveExpression.generateCode(generator);
+//        additiveExpression.generateCode(generator);
+
+        final AdditiveExpression additiveExpression2 = new AdditiveExpression(operands, operations, Type.REAL);
+        final ArrayList<AdditiveExpression> arr = new ArrayList<>();
+        arr.add(additiveExpression);
+        arr.add(additiveExpression2);
+        final ArrayList<TokenType> op = new ArrayList<>();
+        op.add(TokenType.GREATER_THAN);
+        final RelationalExpression relationalExpression = new RelationalExpression(arr, op, Type.BOOLEAN);
+        relationalExpression.generateCode(generator);
 
         final String result = generator.getProgramText().trim();
 

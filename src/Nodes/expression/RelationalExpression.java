@@ -76,9 +76,77 @@ public class RelationalExpression extends Expression implements JasminConvertabl
         return new RelationalExpression(operands, operations, Type.BOOLEAN);
     }
 
-
     @Override
     public void generateCode(CodeGenerator generator) {
+        if (operands.size() == 1) {
+            operands.getFirst().generateCode(generator);
+            return;
+        }
 
+        // Generate code for the first operand
+        operands.get(0).generateCode(generator);
+        if (operands.get(0).getType(generator) == Type.INTEGER) {
+            generator.writeToProgram("i2f");
+        }
+
+        // Generate code for the second operand
+        operands.get(1).generateCode(generator);
+        if (operands.get(1).getType(generator) == Type.INTEGER) {
+            generator.writeToProgram("i2f");
+        }
+
+        // Switch on the operation to generate the appropriate comparison code
+        switch (operations.getFirst()) {
+            case TokenType.LESS_THAN -> {
+                // Compare if value1 < value2
+                generator.writeToProgram("fcmpl"); // Compare two float values
+                String labelTrue = generator.generateUniqueLabel("LabelTrue");
+                String labelEnd = generator.generateUniqueLabel("LabelEnd");
+                generator.writeToProgram("iflt " + labelTrue); // Jump if value1 < value2
+                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
+                generator.writeToProgram("goto " + labelEnd);
+                generator.writeLabel(labelTrue);
+                generator.writeToProgram("iconst_1"); // Push 1 (true) onto the stack
+                generator.writeLabel(labelEnd);
+            }
+            case TokenType.GREATER_THAN -> {
+                // Compare if value1 > value2
+                generator.writeToProgram("fcmpl"); // Compare two float values
+                String labelTrue = generator.generateUniqueLabel("LabelTrue");
+                String labelEnd = generator.generateUniqueLabel("LabelEnd");
+                generator.writeToProgram("ifgt " + labelTrue); // Jump if value1 > value2
+                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
+                generator.writeToProgram("goto " + labelEnd);
+                generator.writeLabel(labelTrue);
+                generator.writeToProgram("iconst_1"); // Push 1 (true) onto the stack
+                generator.writeLabel(labelEnd);
+            }
+            case TokenType.LESS_EQUAL -> {
+                // Compare if value1 <= value2
+                generator.writeToProgram("fcmpl"); // Compare two float values
+                String labelTrue = generator.generateUniqueLabel("LabelTrue");
+                String labelEnd = generator.generateUniqueLabel("LabelEnd");
+                generator.writeToProgram("ifle " + labelTrue); // Jump if value1 <= value2
+                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
+                generator.writeToProgram("goto " + labelEnd);
+                generator.writeLabel(labelTrue);
+                generator.writeToProgram("iconst_1"); // Push 1 (true) onto the stack
+                generator.writeLabel(labelEnd);
+            }
+            case TokenType.GREATER_EQUAL -> {
+                // Compare if value1 >= value2
+                generator.writeToProgram("fcmpl"); // Compare two float values
+                String labelTrue = generator.generateUniqueLabel("LabelTrue");
+                String labelEnd = generator.generateUniqueLabel("LabelEnd");
+                generator.writeToProgram("ifge " + labelTrue); // Jump if value1 >= value2
+                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
+                generator.writeToProgram("goto " + labelEnd);
+                generator.writeLabel(labelTrue);
+                generator.writeToProgram("iconst_1"); // Push 1 (true) onto the stack
+                generator.writeLabel(labelEnd);
+            }
+            default -> throw new IllegalStateException("Unexpected operation: " + operations.getFirst());
+        }
     }
+
 }

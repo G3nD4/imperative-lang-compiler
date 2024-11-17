@@ -1,8 +1,6 @@
 package Nodes.jasmine;
 
 import Nodes.Type;
-import jdk.jshell.UnresolvedReferenceException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +11,7 @@ public class CodeGenerator {
     private final StringBuilder assemblyProgram = new StringBuilder();
     private int currentStackIndex = 0;
     private final Map<String, VariableInfo> variables = new HashMap<>();
+    private int labelCounter = 0; // Counter for generating unique labels
 
     public void registerVariable(String name, Type type) {
         variables.put(name, new VariableInfo(currentStackIndex, type));
@@ -21,9 +20,9 @@ public class CodeGenerator {
 
     public VariableInfo getVariable(String name) {
         final VariableInfo info = variables.get(name);
-        // If try to access variable that does not exist, log an error and exit program;
+        // If trying to access a variable that does not exist, log an error and exit the program
         if (info == null) {
-            System.out.println(("Variable " + name + "does not exist!"));
+            System.out.println(("Variable " + name + " does not exist!"));
             System.exit(1);
         }
         return info;
@@ -41,6 +40,16 @@ public class CodeGenerator {
         for (String instruction : instructions) {
             assemblyProgram.append(instruction).append('\n');
         }
+    }
+
+    // **Implementing generateUniqueLabel**
+    public String generateUniqueLabel(String baseLabel) {
+        return baseLabel + "_" + (labelCounter++);
+    }
+
+    // **Implementing writeLabel**
+    public void writeLabel(String label) {
+        assemblyProgram.append(label).append(":\n");
     }
 
     public int getCurrentStackIndex() {
