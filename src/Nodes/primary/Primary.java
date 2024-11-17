@@ -62,4 +62,6 @@ public abstract class Primary<T> {
     }
 
     public abstract String toString(String indent);
+
+
 }

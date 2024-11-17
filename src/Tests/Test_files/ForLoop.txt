@@ -14,4 +14,4 @@ var n is 0
 
 type int is integer
 
-sumOfNumbers(1 + 1, 2, n)
+sumOfNumbers(n)

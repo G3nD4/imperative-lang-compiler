@@ -1,13 +1,21 @@
 package Nodes;
 
 import Nodes.expression.Expression;
+import Nodes.expression.UnaryExpression;
+import Nodes.jasmine.CodeGenerator;
+import Nodes.primary.BooleanLiteral;
+import Nodes.primary.IntegerLiteral;
+import Nodes.primary.ModifiablePrimary;
+import Nodes.primary.RealLiteral;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public class VariableDeclaration extends Declaration {
+import java.util.ArrayList;
+
+public class VariableDeclaration extends Declaration implements JasminConvertable {
     private String identifier;
     private Type type;
     private Expression expression;
@@ -68,5 +76,39 @@ public class VariableDeclaration extends Declaration {
         }
         IndentManager.goUp();
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        generator.registerVariable(identifier, type);
+        int index = generator.getCurrentStackIndex();
+        if (expression instanceof UnaryExpression) {
+            final UnaryExpression exp = (UnaryExpression) expression;
+            if (exp.primary instanceof ModifiablePrimary) {
+                final ModifiablePrimary modifiablePrimary = (ModifiablePrimary)exp.primary;
+                generator.writeToProgram(modifiablePrimary.getLoadCode(generator));
+                generator.writeToProgram(modifiablePrimary.getStoreCode(generator, index));
+            } else {
+                if (exp.primary instanceof IntegerLiteral) {
+                    generator.writeToProgram("iconst_" + ((IntegerLiteral) exp.primary).getValue().toString());
+                } else if (exp.primary instanceof BooleanLiteral) {
+                    generator.writeToProgram("iconst_" + ((BooleanLiteral)exp.primary).jasmineConst());
+                } else if (exp.primary instanceof RealLiteral) {
+                    generator.writeToProgram("fconst_" + ((RealLiteral)exp.primary).value.toString());
+                }
+                // TODO: handle Expression
+                switch (type) {
+                    case Type.BOOLEAN, Type.INTEGER:
+                        generator.writeToProgram("istore_" + index);
+                        break;
+                    case Type.REAL:
+                        generator.writeToProgram("fstore_" + index);
+                        break;
+                    default:
+                        System.out.println("Type " + type.name() + " is not supported!");
+                        System.exit(1);
+                }
+            }
+        }
     }
 }

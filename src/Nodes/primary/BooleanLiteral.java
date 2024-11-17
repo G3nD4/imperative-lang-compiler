@@ -13,6 +13,13 @@ public class BooleanLiteral extends Primary<Boolean> implements Literal<Boolean>
         super.type = Type.BOOLEAN;
     }
 
+    public int jasmineConst() {
+        if (value) {
+            return 1;
+        }
+        return 0;
+    }
+
     public String toString(String indent) {
         IndentManager.print("BooleanLiteran: " + value.toString());
 

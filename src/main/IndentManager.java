@@ -1,7 +1,6 @@
 package main;
 
 public class IndentManager {
-    private static IndentManager instance;
     public IndentManager() {}
 
     private static int indent = 0;
