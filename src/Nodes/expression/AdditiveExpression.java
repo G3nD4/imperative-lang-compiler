@@ -1,16 +1,18 @@
 package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
+import Nodes.JasminConvertable;
 import Nodes.Operation;
 import Nodes.Sign;
 import Nodes.Type;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 
-public class AdditiveExpression extends Expression {
+public class AdditiveExpression extends Expression implements JasminConvertable {
     public ArrayList<MultiplicativeExpression> operands;
     public ArrayList<Sign> operations;
 
@@ -31,7 +33,6 @@ public class AdditiveExpression extends Expression {
                 // operation
                 operations.add(Sign.fromString(String.valueOf(tree.getChild(childCounter))));
             }
-
         }
 
         Type type = Type.INTEGER;
@@ -66,5 +67,61 @@ public class AdditiveExpression extends Expression {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        // If this expression is needed only for priority handling, delegate generateCode to its child.
+        if (operands.size() == 1) {
+            operands.getFirst().generateCode(generator);
+            return;
+        }
+
+        final boolean mustReturnReal = (this.type == Type.REAL) || mustReturnReal();
+
+        for (int i = 0; i < operands.size(); ++i) {
+            // execute operand's expressions
+            operands.get(i).generateCode(generator);
+            // handle wrong type
+            if (operands.get(i).getType(generator) == Type.BOOLEAN) {
+                System.out.println("Operation prohibited for type BOOLEAN!");
+                System.exit(1);
+            }
+            if (mustReturnReal) {
+                // convert integer value to float value if needed
+                if (operands.get(i).getType(generator) == Type.INTEGER) {
+                    generator.writeToProgram("i2f");
+                }
+                if (i != 0) {
+                    switch (operations.get(i - 1)) {
+                        case Sign.PLUS -> generator.writeToProgram("fadd");
+                        case Sign.MINUS -> generator.writeToProgram("fsub");
+                    }
+                }
+            } else {
+                if (i != 0) {
+                    switch (operations.get(i - 1)) {
+                        case Sign.PLUS -> generator.writeToProgram("iadd");
+                        case Sign.MINUS -> generator.writeToProgram("isub");
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean mustReturnReal() {
+        for (final MultiplicativeExpression exp : operands) {
+            if (exp.type == Type.REAL) {
+                return true;
+            }
+            if (exp.type == Type.IDENTIFIER) {
+                System.out.println("This type MUST NOT appear during code-generation process! FIX OPTMIZATION!");
+                System.exit(666);
+//                if (exp.primary.getType(generator) == Type.REAL) {
+//                    return true;
+//                }
+            }
+        }
+        return false;
     }
 }

@@ -15,6 +15,7 @@ public class VariableInfo {
         return index;
     }
 
+    // TODO: handle user-defined types
     public Type getType() {
         return type;
     }

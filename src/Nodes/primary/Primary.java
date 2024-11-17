@@ -2,6 +2,7 @@ package Nodes.primary;
 
 import Nodes.Type;
 import Nodes.expression.Expression;
+import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.RoutineCallStatement;
 import main.MyLangParser;
 import main.TreeBuilder;
@@ -13,6 +14,25 @@ public abstract class Primary<T> {
     public RoutineCallStatement routineCall;
     public T value;
     public Type type;
+
+    public Type getType(CodeGenerator generator) {
+        if (type != null) {
+            return type;
+        }
+        if (expression != null) {
+            return expression.returnType;
+        }
+        if (modifiablePrimary != null) {
+            return generator.getVariable(modifiablePrimary.identifier).getType();
+        }
+        if (routineCall != null) {
+            // TODO: need to write logic to register routines. After that get its type.
+        }
+        System.out.println("Cannot determine type!");
+        System.exit(1);
+
+        return null;
+    }
 
     boolean hasChildren() {
         return expression!= null || modifiablePrimary != null || routineCall != null;

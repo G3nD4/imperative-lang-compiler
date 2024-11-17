@@ -16,7 +16,7 @@ public class ModifiablePrimary extends Primary {
         this.identifier = identifier;
     }
 
-    String identifier;
+    public String identifier;
 
     public String toString(String indent) {
         IndentManager.print("Modifiable Primary identifier: " + identifier);

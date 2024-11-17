@@ -1,14 +1,16 @@
 package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
+import Nodes.JasminConvertable;
 import Nodes.Type;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 
-public class RelationalExpression extends Expression {
+public class RelationalExpression extends Expression implements JasminConvertable {
     public ArrayList<AdditiveExpression> operands;
     public ArrayList<TokenType> operations;
 
@@ -53,7 +55,6 @@ public class RelationalExpression extends Expression {
                 };
                 operations.add(operation);
             }
-
         }
 
         if (operands.size() == 1) {
@@ -67,6 +68,17 @@ public class RelationalExpression extends Expression {
             }
         }
 
+        if (operands.size() > 2) {
+            System.out.println("Relational expression must have exactly 2 operands! Your expression contains " + operands.size() + ".");
+            System.exit(1);
+        }
+
         return new RelationalExpression(operands, operations, Type.BOOLEAN);
+    }
+
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+
     }
 }

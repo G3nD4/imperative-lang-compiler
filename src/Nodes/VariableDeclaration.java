@@ -90,11 +90,11 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
                 generator.writeToProgram(modifiablePrimary.getStoreCode(generator, index));
             } else {
                 if (exp.primary instanceof IntegerLiteral) {
-                    generator.writeToProgram("iconst_" + ((IntegerLiteral) exp.primary).getValue().toString());
+                    generator.writeToProgram("ldc " + ((IntegerLiteral) exp.primary).getValue().toString());
                 } else if (exp.primary instanceof BooleanLiteral) {
-                    generator.writeToProgram("iconst_" + ((BooleanLiteral)exp.primary).jasmineConst());
+                    generator.writeToProgram("ldc " + ((BooleanLiteral)exp.primary).jasmineConst());
                 } else if (exp.primary instanceof RealLiteral) {
-                    generator.writeToProgram("fconst_" + ((RealLiteral)exp.primary).value.toString());
+                    generator.writeToProgram("ldc " + ((RealLiteral)exp.primary).value.toString());
                 }
                 // TODO: handle Expression
                 switch (type) {

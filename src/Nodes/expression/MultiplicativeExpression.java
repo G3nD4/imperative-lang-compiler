@@ -1,16 +1,17 @@
 package Nodes.expression;
 
+import Nodes.JasminConvertable;
 import Nodes.Operation;
 import Nodes.Type;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 
 
-public class MultiplicativeExpression extends Expression {
+public class MultiplicativeExpression extends Expression implements JasminConvertable {
     public ArrayList<UnaryExpression> operands;
     public ArrayList<Operation> operations;
 
@@ -28,13 +29,12 @@ public class MultiplicativeExpression extends Expression {
                 // So it is UnaryExpression
                 operands.add(UnaryExpression.parse(tree.getChild(childCounter), parser));
             } else {
-               // operation
+                // operation
                 Operation operation = switch (String.valueOf(tree.getChild(childCounter))) {
                     case "*" -> Operation.MULTIPLY;
                     case "/" -> Operation.DIVIDE;
                     case "%" -> Operation.MODULO;
-                    default ->
-                            throw new IllegalStateException("Unexpected value: " + tree.getChild(childCounter));
+                    default -> throw new IllegalStateException("Unexpected value: " + tree.getChild(childCounter));
                 };
                 operations.add(operation);
             }
@@ -81,5 +81,70 @@ public class MultiplicativeExpression extends Expression {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        // If this expression is needed only for priority handling, delegate generateCode to its child.
+        if (operands.size() == 1) {
+            operands.getFirst().generateCode(generator);
+            return;
+        }
+
+        final boolean mustReturnReal = (this.type == Type.REAL) || mustReturnReal();
+
+        for (int i = 0; i < operands.size(); ++i) {
+            // load each operand's value
+            final String loadValueInstructionCode = operands.get(i).getLoadCode(generator).trim();
+            // write load instruction into program
+            generator.writeToProgram(loadValueInstructionCode);
+            // handle wrong type
+            if (operands.get(i).getType(generator) == Type.BOOLEAN) {
+                System.out.println("Operation prohibited for type BOOLEAN!");
+                System.exit(1);
+            }
+            if (mustReturnReal) {
+                // convert integer value to float value if needed
+                if (operands.get(i).getType(generator) == Type.INTEGER) {
+                    generator.writeToProgram("i2f");
+                }
+                if (i != 0) {
+                    switch (operations.get(i - 1)) {
+                        case Operation.MULTIPLY -> generator.writeToProgram("fmul");
+                        case Operation.DIVIDE -> generator.writeToProgram("fdiv");
+                        case Operation.MODULO -> generator.writeToProgram("frem");
+                    }
+                }
+            } else {
+                if (i != 0) {
+                    switch (operations.get(i - 1)) {
+                        case Operation.MULTIPLY -> generator.writeToProgram("imul");
+                        case Operation.DIVIDE -> generator.writeToProgram("idiv");
+                        case Operation.MODULO -> generator.writeToProgram("irem");
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean mustReturnReal() {
+        for (final UnaryExpression exp : operands) {
+            if (exp.type == Type.REAL) {
+                return true;
+            }
+            if (exp.type == Type.IDENTIFIER) {
+                System.out.println("This type MUST NOT appear during code-generation process! FIX OPTMIZATION!");
+                System.exit(666);
+//                if (exp.primary.getType(generator) == Type.REAL) {
+//                    return true;
+//                }
+            }
+        }
+        for (final Operation operation : operations) {
+            if (operation == Operation.DIVIDE) {
+                return true;
+            }
+        }
+        return false;
     }
 }
