@@ -96,10 +96,17 @@ public class RelationalExpression extends Expression implements JasminConvertabl
         }
 
         // Switch on the operation to generate the appropriate comparison code
+
         /*
         ATTENTION: need to flip operations, because Jasmin
         compares LAST value with PRE-last
         5 -> 8 for GREATER_THAN will be compared as 8 > 5
+         */
+
+        /*
+        Problem: we can have code after, but here we return finally from the program
+        (check generator.writeToProgram("return")
+        Line 124)
          */
         generator.writeToProgram("swap");
         switch (operations.getFirst()) {
