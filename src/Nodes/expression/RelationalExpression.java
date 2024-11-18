@@ -95,88 +95,48 @@ public class RelationalExpression extends Expression implements JasminConvertabl
             generator.writeToProgram("i2f");
         }
 
-        // Switch on the operation to generate the appropriate comparison code
+        // Swap operands because Jasmin compares in reverse order
+        generator.writeToProgram("swap");
+
+        // Generate unique labels
+        String trueLabel = generator.generateUniqueLabel("true");
+        String endLabel = generator.generateUniqueLabel("end");
 
         /*
         ATTENTION: need to flip operations, because Jasmin
         compares LAST value with PRE-last
         5 -> 8 for GREATER_THAN will be compared as 8 > 5
          */
-
-        /*
-        Problem: we can have code after, but here we return finally from the program
-        (check generator.writeToProgram("return")
-        Line 124)
-         */
-        generator.writeToProgram("swap");
         switch (operations.getFirst()) {
-            case LESS_THAN: {
-                // Compare if value1 < value2
-                generator.writeToProgram("fcmpl"); // Compare two floats
-                String labelTrue = generator.generateUniqueLabel("less_than");  // Unique label for less-than comparison
-                generator.writeToProgram("iflt " + labelTrue); // Jump to true case if x < y
-                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
-                String labelEnd = generator.generateUniqueLabel("end");  // End label for jump after false case
-                generator.writeToProgram("goto " + labelEnd);
-
-                generator.writeLabel(labelTrue); // True case: push 1 (true) onto the stack
-                generator.writeToProgram("iconst_1");
-                generator.writeLabel(labelEnd);
-                generator.writeToProgram("invokevirtual java/io/PrintStream/println(I)V");
-                generator.writeToProgram("return");
-                break;
+            case LESS_THAN -> {
+                generator.writeToProgram("fcmpl");
+                generator.writeToProgram("iflt " + trueLabel);
             }
-            case GREATER_THAN: {
-                // Compare if value1 > value2
-                generator.writeToProgram("fcmpl"); // Compare two floats
-                String labelTrue = generator.generateUniqueLabel("greater_than");  // Unique label for greater-than comparison
-                generator.writeToProgram("ifgt " + labelTrue); // Jump to true case if x > y
-                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
-                String labelEnd = generator.generateUniqueLabel("end");  // End label for jump after false case
-                generator.writeToProgram("goto " + labelEnd);
-
-                generator.writeLabel(labelTrue); // True case: push 1 (true) onto the stack
-                generator.writeToProgram("iconst_1");
-                generator.writeLabel(labelEnd);
-                generator.writeToProgram("invokevirtual java/io/PrintStream/println(I)V");
-                generator.writeToProgram("return");
-                break;
+            case GREATER_THAN -> {
+                generator.writeToProgram("fcmpl");
+                generator.writeToProgram("ifgt " + trueLabel);
             }
-            case LESS_EQUAL: {
-                // Compare if value1 <= value2
-                generator.writeToProgram("fcmpl"); // Compare two floats
-                String labelTrue = generator.generateUniqueLabel("less_equal");  // Unique label for less-than-equal comparison
-                generator.writeToProgram("ifle " + labelTrue); // Jump to true case if x <= y
-                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
-                String labelEnd = generator.generateUniqueLabel("end");  // End label for jump after false case
-                generator.writeToProgram("goto " + labelEnd);
-
-                generator.writeLabel(labelTrue); // True case: push 1 (true) onto the stack
-                generator.writeToProgram("iconst_1");
-                generator.writeLabel(labelEnd);
-                generator.writeToProgram("invokevirtual java/io/PrintStream/println(I)V");
-                generator.writeToProgram("return");
-                break;
+            case LESS_EQUAL -> {
+                generator.writeToProgram("fcmpl");
+                generator.writeToProgram("ifle " + trueLabel);
             }
-            case GREATER_EQUAL: {
-                // Compare if value1 >= value2
-                generator.writeToProgram("fcmpl"); // Compare two floats
-                String labelTrue = generator.generateUniqueLabel("greater_equal");  // Unique label for greater-than-equal comparison
-                generator.writeToProgram("ifge " + labelTrue); // Jump to true case if x >= y
-                generator.writeToProgram("iconst_0"); // Push 0 (false) onto the stack
-                String labelEnd = generator.generateUniqueLabel("end");  // End label for jump after false case
-                generator.writeToProgram("goto " + labelEnd);
-
-                generator.writeLabel(labelTrue); // True case: push 1 (true) onto the stack
-                generator.writeToProgram("iconst_1");
-                generator.writeLabel(labelEnd);
-                generator.writeToProgram("invokevirtual java/io/PrintStream/println(I)V");
-                generator.writeToProgram("return");
-                break;
+            case GREATER_EQUAL -> {
+                generator.writeToProgram("fcmpl");
+                generator.writeToProgram("ifge " + trueLabel);
             }
-            default:
-                throw new IllegalStateException("Unexpected operation: " + operations.get(0));
+            default -> throw new IllegalStateException("Unexpected operation: " + operations.getFirst());
         }
+
+        // Push false and jump to end
+        generator.writeToProgram("iconst_0");
+        generator.writeToProgram("goto " + endLabel);
+
+        // Push true
+        generator.writeLabel(trueLabel);
+        generator.writeToProgram("iconst_1");
+
+        // End label
+        generator.writeLabel(endLabel);
     }
 
 }
