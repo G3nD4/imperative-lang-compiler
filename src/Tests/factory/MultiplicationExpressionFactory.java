@@ -23,6 +23,16 @@ public class MultiplicationExpressionFactory {
 
         return new MultiplicativeExpression(operands, new ArrayList<>(), Type.INTEGER);
     }
+
+    public static MultiplicativeExpression buildOneBoolean(boolean value) {
+        BooleanLiteral int1 = new BooleanLiteral(value);
+        final UnaryExpression num1 = new UnaryExpression(Sign.PLUS, int1, Type.BOOLEAN);
+        ArrayList<UnaryExpression> operands = new ArrayList<>();
+        operands.add(num1);
+
+        return new MultiplicativeExpression(operands, new ArrayList<>(), Type.BOOLEAN);
+    }
+
     public static MultiplicativeExpression buildTwoIntegersMultiplication(int value1, int value2) {
         IntegerLiteral int1 = new IntegerLiteral(value1);
         final UnaryExpression num1 = new UnaryExpression(Sign.PLUS, int1, Type.INTEGER);

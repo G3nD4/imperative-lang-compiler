@@ -1,13 +1,15 @@
 package Nodes.expression;
 
+import Nodes.JasminConvertable;
 import Nodes.Type;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 
-public class LogicalOrExpression extends Expression {
+public class LogicalOrExpression extends Expression implements JasminConvertable {
     public ArrayList<LogicalAndExpression> operands;
 
     public LogicalOrExpression(ArrayList<LogicalAndExpression> operands) {
@@ -47,5 +49,25 @@ public class LogicalOrExpression extends Expression {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        // If this expression is needed only for priority handling, delegate generateCode to its child.
+        if (operands.size() == 1) {
+            operands.getFirst().generateCode(generator);
+            return;
+        }
+
+        // Generate code for the first operand
+        operands.getFirst().generateCode(generator);
+
+        // For each subsequent operand
+        for (int i = 1; i < operands.size(); i++) {
+            // Generate code for current operand
+            operands.get(i).generateCode(generator);
+            // Perform AND operation
+            generator.writeToProgram("ior");
+        }
     }
 }

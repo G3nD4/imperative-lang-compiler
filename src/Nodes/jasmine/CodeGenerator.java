@@ -42,12 +42,10 @@ public class CodeGenerator {
         }
     }
 
-    // **Implementing generateUniqueLabel**
     public String generateUniqueLabel(String baseLabel) {
         return baseLabel + "_" + (labelCounter++);
     }
 
-    // **Implementing writeLabel**
     public void writeLabel(String label) {
         assemblyProgram.append(label).append(":\n");
     }

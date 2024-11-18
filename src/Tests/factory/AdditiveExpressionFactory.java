@@ -23,6 +23,13 @@ public class AdditiveExpressionFactory {
         return new AdditiveExpression(multiplicativeExpressions, new ArrayList<>(), Type.INTEGER);
     }
 
+    public static AdditiveExpression buildOneBoolean(boolean value) {
+        ArrayList<MultiplicativeExpression> multiplicativeExpressions = new ArrayList<>();
+        multiplicativeExpressions.add(MultiplicationExpressionFactory.buildOneBoolean(value));
+
+        return new AdditiveExpression(multiplicativeExpressions, new ArrayList<>(), Type.BOOLEAN);
+    }
+
     public static AdditiveExpression buildTwoIntegersAddition(int value1, int value2) {
         ArrayList<MultiplicativeExpression> multiplicativeExpressions = new ArrayList<>();
         multiplicativeExpressions.add(MultiplicationExpressionFactory.buildOneInteger(value1));

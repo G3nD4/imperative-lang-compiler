@@ -111,7 +111,6 @@ public class EqualityExpression extends Expression implements JasminConvertable 
         generator.writeLabel(endLabel);
     }
 
-
     @Override
     public String toString(String indent) {
         IndentManager.print("Equality Expression:");
