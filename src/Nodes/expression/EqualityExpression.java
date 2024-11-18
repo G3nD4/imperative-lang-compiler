@@ -1,14 +1,16 @@
 package Nodes.expression;
 
 import Lexical_analyzer.TokenType;
+import Nodes.JasminConvertable;
 import Nodes.Type;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 
-public class EqualityExpression extends Expression {
+public class EqualityExpression extends Expression implements JasminConvertable {
     public ArrayList<RelationalExpression> operands;
     public ArrayList<TokenType> operations;
 
@@ -57,8 +59,58 @@ public class EqualityExpression extends Expression {
         }
         // TODO: maybe need to handle (true == Int|Real) but we do not think so
 
+        if (operands.size() > 2) {
+            System.out.println("Relational expression must have exactly 2 operands! Your expression contains " + operands.size() + ".");
+            System.exit(1);
+        }
+
         return new EqualityExpression(operands, operations, Type.BOOLEAN);
     }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        if (operands.size() == 1) {
+            operands.getFirst().generateCode(generator);
+            return;
+        }
+
+        // Generate code for the first operand
+        operands.get(0).generateCode(generator);
+        if (operands.get(0).getType(generator) == Type.INTEGER) {
+            generator.writeToProgram("i2f");
+        }
+
+        // Generate code for the second operand
+        operands.get(1).generateCode(generator);
+        if (operands.get(1).getType(generator) == Type.INTEGER) {
+            generator.writeToProgram("i2f");
+        }
+
+        // Generate unique labels
+        String trueLabel = generator.generateUniqueLabel("true");
+        String endLabel = generator.generateUniqueLabel("end");
+
+        // For floating-point comparison
+        generator.writeToProgram("fcmpl");
+
+        switch (operations.getFirst()) {
+            case EQUAL -> generator.writeToProgram("ifeq " + trueLabel);
+            case NOT_EQUAL -> generator.writeToProgram("ifne " + trueLabel);
+            default -> throw new IllegalStateException("Unexpected operation: " + operations.getFirst());
+        }
+
+        // Push false and jump to end
+        generator.writeToProgram("iconst_0");
+        generator.writeToProgram("goto " + endLabel);
+
+        // Push true
+        generator.writeLabel(trueLabel);
+        generator.writeToProgram("iconst_1");
+
+        // End label
+        generator.writeLabel(endLabel);
+    }
+
 
     @Override
     public String toString(String indent) {

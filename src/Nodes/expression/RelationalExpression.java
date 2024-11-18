@@ -95,8 +95,7 @@ public class RelationalExpression extends Expression implements JasminConvertabl
             generator.writeToProgram("i2f");
         }
 
-        // Swap operands because Jasmin compares in reverse order
-        generator.writeToProgram("swap");
+
 
         // Generate unique labels
         String trueLabel = generator.generateUniqueLabel("true");
@@ -107,23 +106,13 @@ public class RelationalExpression extends Expression implements JasminConvertabl
         compares LAST value with PRE-last
         5 -> 8 for GREATER_THAN will be compared as 8 > 5
          */
+        generator.writeToProgram("swap");
+        generator.writeToProgram("fcmpl");
         switch (operations.getFirst()) {
-            case LESS_THAN -> {
-                generator.writeToProgram("fcmpl");
-                generator.writeToProgram("iflt " + trueLabel);
-            }
-            case GREATER_THAN -> {
-                generator.writeToProgram("fcmpl");
-                generator.writeToProgram("ifgt " + trueLabel);
-            }
-            case LESS_EQUAL -> {
-                generator.writeToProgram("fcmpl");
-                generator.writeToProgram("ifle " + trueLabel);
-            }
-            case GREATER_EQUAL -> {
-                generator.writeToProgram("fcmpl");
-                generator.writeToProgram("ifge " + trueLabel);
-            }
+            case LESS_THAN -> generator.writeToProgram("iflt " + trueLabel);
+            case GREATER_THAN -> generator.writeToProgram("ifgt " + trueLabel);
+            case LESS_EQUAL -> generator.writeToProgram("ifle " + trueLabel);
+            case GREATER_EQUAL -> generator.writeToProgram("ifge " + trueLabel);
             default -> throw new IllegalStateException("Unexpected operation: " + operations.getFirst());
         }
 
