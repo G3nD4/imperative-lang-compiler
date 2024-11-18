@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -35,5 +36,10 @@ public class TypeDeclaration extends Declaration {
         IndentManager.print("type: " + type.toString().toLowerCase());
         IndentManager.goUp();
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+
     }
 }

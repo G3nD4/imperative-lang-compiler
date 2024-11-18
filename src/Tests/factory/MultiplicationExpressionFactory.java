@@ -33,6 +33,23 @@ public class MultiplicationExpressionFactory {
         return new MultiplicativeExpression(operands, new ArrayList<>(), Type.BOOLEAN);
     }
 
+    public static MultiplicativeExpression buildFromModifiablePrimary(Sign sign, ModifiablePrimary modifiablePrimary, Type type) {
+        final UnaryExpression unaryExpression = new UnaryExpression(sign, modifiablePrimary, type);
+        final ArrayList<UnaryExpression> unaryExpressions = new ArrayList<>();
+        unaryExpressions.add(unaryExpression);
+
+        final MultiplicativeExpression multiplicativeExpression = new MultiplicativeExpression(unaryExpressions, new ArrayList<>(), type);
+        return multiplicativeExpression;
+    }
+
+    public static MultiplicativeExpression buildFromUnary(UnaryExpression unaryExpression) {
+        final ArrayList<UnaryExpression> unaryExpressions = new ArrayList<>();
+        unaryExpressions.add(unaryExpression);
+
+        final MultiplicativeExpression multiplicativeExpression = new MultiplicativeExpression(unaryExpressions, new ArrayList<>(), unaryExpression.type);
+        return multiplicativeExpression;
+    }
+
     public static MultiplicativeExpression buildTwoIntegersMultiplication(int value1, int value2) {
         IntegerLiteral int1 = new IntegerLiteral(value1);
         final UnaryExpression num1 = new UnaryExpression(Sign.PLUS, int1, Type.INTEGER);

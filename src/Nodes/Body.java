@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
@@ -9,13 +10,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Body {
+public class Body implements JasminConvertable {
     private final List<Declaration> declarations = new ArrayList<>();
     private final List<Statement> statements = new ArrayList<>();
     /*
      Contains declarations and statements in the right order.
      */
-    private final List<Object> orderedDnS = new ArrayList<>();
+    private final ArrayList<Object> orderedDnS = new ArrayList<>();
 
     public void addDeclaration(Declaration declaration) {
         declarations.add(declaration);
@@ -25,6 +26,10 @@ public class Body {
     public void addStatement(Statement statement) {
         statements.add(statement);
         orderedDnS.add(statement);
+    }
+
+    public ArrayList<Object> getOrderedDnS() {
+        return orderedDnS;
     }
 
     public List<Statement> getStatements() {
@@ -63,5 +68,12 @@ public class Body {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        for (var statement : orderedDnS) {
+            ((JasminConvertable) statement).generateCode(generator);
+        }
     }
 }

@@ -57,7 +57,9 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
     }
 
     @Override
-    public void generateCode(CodeGenerator generator) {}
+    public void generateCode(CodeGenerator generator) {
+        generator.writeToProgram(getLoadCode(generator));
+    }
     @Override
     /*
     Loads variable with respect to its sign: PLUS, MINUS, NOT;

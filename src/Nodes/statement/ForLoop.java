@@ -1,10 +1,18 @@
 package Nodes.statement;
 
-import Nodes.Body;
-import Nodes.Range;
+import Nodes.*;
+import Nodes.expression.AdditiveExpression;
+import Nodes.expression.MultiplicativeExpression;
+import Nodes.expression.UnaryExpression;
+import Nodes.jasmine.CodeGenerator;
+import Nodes.primary.IntegerLiteral;
+import Nodes.primary.ModifiablePrimary;
+import Tests.factory.MultiplicationExpressionFactory;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.util.ArrayList;
 
 public class ForLoop extends Statement {
     public final String loopVariable;
@@ -42,5 +50,71 @@ public class ForLoop extends Statement {
         Body body = Body.parse(tree.getChild(bodyChildIndex), parser);
 
         return new ForLoop(loopVariable, range, reverseExists, body);
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        // Declare iterator variable
+        range.getStart().generateCode(generator);
+        VariableDeclaration iterVar = new VariableDeclaration(loopVariable, Type.INTEGER, range.getStart());
+        iterVar.generateCode(generator);
+
+        // Generate unique labels
+        String loopStart = generator.generateUniqueLabel("for_start");
+        String loopEnd = generator.generateUniqueLabel("for_end");
+
+        // Write loop start label
+        generator.writeLabel(loopStart);
+
+        // Generate condition code (i <= end or i >= end for reverse)
+//        ModifiablePrimary iterRef = new ModifiablePrimary(loopVariable);
+        range.getEnd().generateCode(generator);
+
+        // Load iterator value
+        generator.writeToProgram("iload_" + generator.getVariable(loopVariable).getIndex());
+
+        // Compare iterator with end value
+        if (reverse) {
+            // Normal loop: continue if i <= end
+            generator.writeToProgram("if_icmpgt " + loopEnd); // Exit if i > end
+        } else {
+            // Reverse loop: continue if i >= end
+            generator.writeToProgram("if_icmplt " + loopEnd); // Exit if i < end
+        }
+
+
+        // Generate body code
+        body.generateCode(generator);
+
+        // Generate iterator increment/decrement
+        ModifiablePrimary iter = new ModifiablePrimary(loopVariable);
+        IntegerLiteral one = new IntegerLiteral(1);
+        UnaryExpression oneExpr = new UnaryExpression(
+                Sign.PLUS,
+                one,
+                Type.INTEGER
+        );
+
+        // Create i = i + 1 or i = i - 1
+        final ArrayList<MultiplicativeExpression> multiplicativeExpressionArrayList1 = new ArrayList<>();
+        multiplicativeExpressionArrayList1.add(MultiplicationExpressionFactory.buildFromUnary(new UnaryExpression(Sign.PLUS, iter, Type.INTEGER)));
+        multiplicativeExpressionArrayList1.add(MultiplicationExpressionFactory.buildFromUnary(oneExpr));
+        final ArrayList<Sign> operation = new ArrayList<>();
+        operation.add(reverse ? Sign.MINUS : Sign.PLUS);
+        Assignment increment = new Assignment(
+                iter,
+                new AdditiveExpression(
+                        multiplicativeExpressionArrayList1,
+                        operation,
+                        Type.INTEGER
+                )
+        );
+        increment.generateCode(generator);
+
+        // Jump back to start
+        generator.writeToProgram("goto " + loopStart);
+
+        // Write end label
+        generator.writeLabel(loopEnd);
     }
 }

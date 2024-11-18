@@ -1,6 +1,8 @@
 package Nodes;
 
 import Nodes.expression.Expression;
+import Nodes.jasmine.CodeGenerator;
+import Nodes.jasmine.VariableInfo;
 import Nodes.primary.ModifiablePrimary;
 import Nodes.statement.Statement;
 import main.IndentManager;
@@ -35,5 +37,26 @@ public class Assignment extends Statement {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+        // Generate code for the expression
+        expression.generateCode(generator);
+
+        // Get variable info to determine type and index
+        final VariableInfo varInfo = generator.getVariable(assignee.identifier);
+
+        // Store value based on type
+        switch (varInfo.getType()) {
+            case Type.BOOLEAN, Type.INTEGER ->
+                    generator.writeToProgram("istore_" + varInfo.getIndex());
+            case Type.REAL ->
+                    generator.writeToProgram("fstore_" + varInfo.getIndex());
+            default -> {
+                System.out.println("Type " + varInfo.getType().name() + " is not supported!");
+                System.exit(1);
+            }
+        }
     }
 }

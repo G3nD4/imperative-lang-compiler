@@ -4,7 +4,7 @@ import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public abstract class Declaration {
+public abstract class Declaration implements JasminConvertable {
     // TODO: if ruleName == 'variable declaration' : varDec.parse
     // TODO: else if rule name == 'type declaration' : typeDec.parse
     // TODO: else : sout(error), System.exit(1);

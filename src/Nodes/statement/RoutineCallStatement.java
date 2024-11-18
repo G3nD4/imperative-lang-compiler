@@ -4,6 +4,7 @@ import Nodes.Parameter;
 import Nodes.RoutineCallParameter;
 import Nodes.Type;
 import Nodes.expression.Expression;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -50,5 +51,10 @@ public class RoutineCallStatement extends Statement {
     public RoutineCallStatement(String identifier, List<RoutineCallParameter> parameters) {
         this.identifier = identifier;
         this.parameters = parameters;
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+
     }
 }

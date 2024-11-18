@@ -9,6 +9,14 @@ public class Range {
     Expression leftExpression;
     Expression rightExpression;
 
+    public Expression getStart() {
+        return leftExpression;
+    }
+
+    public Expression getEnd() {
+        return rightExpression;
+    }
+
     public Range(Expression leftExpression, Expression rightExpression) {
         this.leftExpression = leftExpression;
         this.rightExpression = rightExpression;
@@ -17,6 +25,8 @@ public class Range {
     public static Range parse(ParseTree tree, MyLangParser parser) {
         return new Range(Expression.parse(tree.getChild(0), parser), Expression.parse(tree.getChild(2), parser));
     }
+
+
 
     public String toString(String indent) {
         IndentManager.print("Range:");

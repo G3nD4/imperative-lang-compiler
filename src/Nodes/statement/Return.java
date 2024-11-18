@@ -1,6 +1,7 @@
 package Nodes.statement;
 
 import Nodes.expression.Expression;
+import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;
 import main.TreeBuilder;
@@ -36,5 +37,10 @@ public class Return extends Statement {
         } else {
             return new Return(Expression.parse(tree.getChild(1), parser));
         }
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+
     }
 }

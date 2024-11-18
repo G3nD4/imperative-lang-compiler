@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
@@ -106,5 +107,10 @@ public class RoutineDeclarationStatement extends Statement {
         IndentManager.goUp();
 
         return "";
+    }
+
+    @Override
+    public void generateCode(CodeGenerator generator) {
+
     }
 }

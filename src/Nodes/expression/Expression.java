@@ -1,11 +1,12 @@
 package Nodes.expression;
 
+import Nodes.JasminConvertable;
 import Nodes.Type;
 import Nodes.primary.Primary;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public abstract class Expression extends Primary {
+public abstract class Expression extends Primary implements JasminConvertable {
     public Type returnType;
 
     public static Expression parse(ParseTree tree, MyLangParser parser) {

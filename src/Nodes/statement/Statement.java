@@ -1,11 +1,12 @@
 package Nodes.statement;
 
 import Nodes.Assignment;
+import Nodes.JasminConvertable;
 import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-public abstract class Statement {
+public abstract class Statement implements JasminConvertable {
     public static Statement parse(ParseTree tree, MyLangParser parser) {
         ParseTree child = tree.getChild(0);
         String ruleName = TreeBuilder.TreeToRule(child, parser);
