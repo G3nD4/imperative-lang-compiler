@@ -87,7 +87,7 @@ public class MultiplicativeExpression extends Expression implements JasminConver
     public void generateCode(CodeGenerator generator) {
         // If this expression is needed only for priority handling, delegate generateCode to its child.
         if (operands.size() == 1) {
-            operands.getFirst().generateCode(generator);
+            generator.writeToProgram(operands.getFirst().getLoadCode(generator));
             return;
         }
 
