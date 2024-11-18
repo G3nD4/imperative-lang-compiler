@@ -1,6 +1,7 @@
 package Nodes.statement;
 
 import Nodes.Body;
+import Nodes.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
@@ -97,6 +98,45 @@ public class IfStatement extends Statement {
 
     @Override
     public void generateCode(CodeGenerator generator) {
+        // Generate unique labels
+        ArrayList<String> elseIfLabels = new ArrayList<>();
+        for (int i = 0; i < ifElseConditions.size(); i++) {
+            elseIfLabels.add(generator.generateUniqueLabel("elseif"));
+        }
+        String elseLabel = generator.generateUniqueLabel("else");
+        String endLabel = generator.generateUniqueLabel("endif");
 
+        // Main if condition
+        condition.generateCode(generator);
+        generator.writeToProgram("ifeq " + (ifElseConditions.isEmpty() ? elseLabel : elseIfLabels.getFirst()));
+
+        // Main if body
+        ifBody.generateCode(generator);
+        generator.writeToProgram("goto " + endLabel);
+
+        // Generate else-if blocks
+        for (int i = 0; i < ifElseConditions.size(); i++) {
+            generator.writeLabel(elseIfLabels.get(i));
+
+            // Generate condition
+            ifElseConditions.get(i).generateCode(generator);
+
+            // Branch to next else-if or else
+            String nextLabel = (i == ifElseConditions.size() - 1) ? elseLabel : elseIfLabels.get(i + 1);
+            generator.writeToProgram("ifeq " + nextLabel);
+
+            // Generate body
+            ifElseBodies.get(i).generateCode(generator);
+            generator.writeToProgram("goto " + endLabel);
+        }
+
+        // Generate else block
+        generator.writeLabel(elseLabel);
+        if (elseBody != null) {
+            elseBody.generateCode(generator);
+        }
+
+        // End label
+        generator.writeLabel(endLabel);
     }
 }
