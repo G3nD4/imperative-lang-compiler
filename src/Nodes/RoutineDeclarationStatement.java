@@ -111,6 +111,68 @@ public class RoutineDeclarationStatement extends Statement {
 
     @Override
     public void generateCode(CodeGenerator generator) {
+        // Generate method signature
+        StringBuilder methodSignature = new StringBuilder(".method public static ");
+        methodSignature.append(name).append("(");
 
+        // Add parameter types to signature
+        if (parameters != null) {
+            for (Parameter param : parameters) {
+                switch (param.getType()) {
+                    case INTEGER, BOOLEAN -> methodSignature.append("I");
+                    case REAL -> methodSignature.append("F");
+                    default -> throw new IllegalStateException("Unsupported parameter type: " + param.getType());
+                }
+            }
+        }
+        methodSignature.append(")");
+
+        // Add return type to signature
+        if (returnType == null) {
+            methodSignature.append("V");  // void
+        } else {
+            switch (returnType) {
+                case INTEGER, BOOLEAN -> methodSignature.append("I");
+                case REAL -> methodSignature.append("F");
+                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
+            }
+        }
+
+        generator.writeToProgram(methodSignature.toString());
+
+        // Method prologue
+        generator.writeToProgram(".limit stack 100");
+        generator.writeToProgram(".limit locals 100");
+
+        // Save current stack state
+        int previousStackIndex = generator.getCurrentStackIndex();
+
+        // Register parameters as variables
+        if (parameters != null) {
+            for (Parameter param : parameters) {
+                generator.registerVariable(param.getName(), param.getType());
+            }
+        }
+
+        // Generate body code
+        body.generateCode(generator);
+
+        // If no explicit return at the end, add default return
+        if (returnType == null) {
+            generator.writeToProgram("return");
+        } else {
+            switch (returnType) {
+                case INTEGER, BOOLEAN -> generator.writeToProgram("iconst_0\nireturn");
+                case REAL -> generator.writeToProgram("fconst_0\nfreturn");
+                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
+            }
+        }
+
+        // Method epilogue
+        generator.writeToProgram(".end method\n");
+
+        // Restore previous stack state
+        generator.setStackIndex(previousStackIndex);
     }
+
 }

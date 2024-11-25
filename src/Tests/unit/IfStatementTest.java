@@ -1,5 +1,6 @@
 package Tests.unit;
 
+import Helpers.RemoveRedundantEnters;
 import Lexical_analyzer.TokenType;
 import Nodes.*;
 import Nodes.Assignment;
@@ -45,6 +46,7 @@ public class IfStatementTest {
         ifStatement.generateCode(generator);
 
         String result = generator.getProgramText().trim();
+        result = RemoveRedundantEnters.remove(result);
         System.out.println(result);
     }
 

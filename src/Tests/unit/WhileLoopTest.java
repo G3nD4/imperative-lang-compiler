@@ -213,10 +213,6 @@ public class WhileLoopTest {
         String jasminCode = generator.getProgramText();
         jasminCode = RemoveRedundantEnters.remove(jasminCode);
         System.out.println(jasminCode);
-
-        // Verify the generated code contains all necessary components
-        String code = jasminCode.trim();
-        System.out.println(code);
     }
 
 }

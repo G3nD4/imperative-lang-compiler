@@ -65,6 +65,10 @@ public class CodeGenerator {
         return ++currentStackIndex;
     }
 
+    public void setStackIndex(int index) {
+        currentStackIndex = index;
+    }
+
     public void increaseStackIndex() {
         ++currentStackIndex;
     }
