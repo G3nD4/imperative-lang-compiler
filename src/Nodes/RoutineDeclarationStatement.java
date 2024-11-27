@@ -115,6 +115,12 @@ public class RoutineDeclarationStatement extends Statement {
         StringBuilder methodSignature = new StringBuilder(".method public static ");
         methodSignature.append(name).append("(");
 
+        // Enter new scope
+        generator.enterScope(name);
+
+        // register routine
+        generator.registerRoutine(name, returnType, (ArrayList<Parameter>) parameters);
+
         // Add parameter types to signature
         if (parameters != null) {
             for (Parameter param : parameters) {
@@ -123,6 +129,7 @@ public class RoutineDeclarationStatement extends Statement {
                     case REAL -> methodSignature.append("F");
                     default -> throw new IllegalStateException("Unsupported parameter type: " + param.getType());
                 }
+//                generator.registerVariable(param.getName(), param.getType());
             }
         }
         methodSignature.append(")");
@@ -144,15 +151,11 @@ public class RoutineDeclarationStatement extends Statement {
         generator.writeToProgram(".limit stack 100");
         generator.writeToProgram(".limit locals 100");
 
-        // Save current stack state
-        int previousStackIndex = generator.getCurrentStackIndex();
-
-        // Register parameters as variables
-        if (parameters != null) {
-            for (Parameter param : parameters) {
-                generator.registerVariable(param.getName(), param.getType());
-            }
-        }
+        // TODO: handle case, when a routineCallStatement that returns some value other than void is called,
+        // TODO: but its value not used.
+        // EXAMPLE:
+        // func(5)         -> has no effect (must be discarded)
+        // var a = func(5) -> has effect
 
         // Generate body code
         body.generateCode(generator);
@@ -171,8 +174,8 @@ public class RoutineDeclarationStatement extends Statement {
         // Method epilogue
         generator.writeToProgram(".end method\n");
 
-        // Restore previous stack state
-        generator.setStackIndex(previousStackIndex);
+        // Exit scope
+        generator.exitScope();
     }
 
 }

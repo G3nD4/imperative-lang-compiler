@@ -1,24 +1,70 @@
 package Nodes.jasmine;
 
+import Nodes.Parameter;
 import Nodes.Type;
+import org.antlr.v4.misc.OrderedHashMap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CodeGenerator {
+
+    private final ScopeManager scopeManager = new ScopeManager();
+
     public CodeGenerator() {}
 
     private final StringBuilder assemblyProgram = new StringBuilder();
-    private int currentStackIndex = 0;
+    private int currentStackIndex = 0;  // REFERS TO FIRST FREE INDEX
     private final Map<String, VariableInfo> variables = new HashMap<>();
+    private final Map<String, RoutineInfo> routines = new HashMap<>();
     private int labelCounter = 0; // Counter for generating unique labels
+    private HashMap<String, Integer> stackIndices =  new HashMap<>();
+
+    public boolean isGlobalScope() {
+        return scopeManager.isMainScope();
+    }
+
+    public void enterScope(String scopeName) {
+        scopeManager.enterScope(scopeName);
+    }
+
+    public void exitScope() {
+        scopeManager.exitScope();
+    }
 
     public void registerVariable(String name, Type type) {
-        variables.put(name, new VariableInfo(currentStackIndex, type));
-        ++currentStackIndex;
+        final String scope = scopeManager.getCurrentScope();
+        if (scope == null) {
+            variables.put(name, new VariableInfo(currentStackIndex, type));
+        } else {
+            final int index = getAndIncreaseCurrentStackIndex();
+            routines.get(scope).registerVariable(name, new VariableInfo(index, type));
+        }
+        // Increase index.
+//        ++currentStackIndex;
+    }
+
+    public void registerRoutine(String name, Type returnType, ArrayList<Parameter> params) {
+        final OrderedHashMap<String, VariableInfo> parameters = new OrderedHashMap<>();
+        for (final Parameter param : params) {
+            parameters.put(param.getName(), new VariableInfo(getAndIncreaseCurrentStackIndex(), param.getType()));
+        }
+        final RoutineInfo routineInfo = new RoutineInfo(returnType, parameters);
+        routines.put(name, routineInfo);
     }
 
     public VariableInfo getVariable(String name) {
+        final String scope = scopeManager.getCurrentScope();
+        if (scope != null) {
+            // Try to get variable from current scope.
+            final VariableInfo info = routines.get(scope).getVariables().get(name);
+            if (info != null) {
+                return info;
+            }
+            // Variable is not found in current scope.
+        }
+        // Get variable from global scope.
         final VariableInfo info = variables.get(name);
         // If trying to access a variable that does not exist, log an error and exit the program
         if (info == null) {
@@ -51,25 +97,35 @@ public class CodeGenerator {
     }
 
     public int getCurrentStackIndex() {
-        return currentStackIndex > 0 ? currentStackIndex - 1 : 0;
+        final String scope = scopeManager.getCurrentScope();
+        stackIndices.putIfAbsent(scope, 0);
+        final int index = stackIndices.get(scope);
+        return index > 0 ? index - 1 : 0;
     }
 
     public int getFreeIndex() {
-        return currentStackIndex;
+        final String scope = scopeManager.getCurrentScope();
+        stackIndices.putIfAbsent(scope, 0);
+        return stackIndices.get(scope);
     }
 
     public int getAndIncreaseCurrentStackIndex() {
-        if (currentStackIndex == 0) {
-            return 0;
-        }
-        return ++currentStackIndex;
+        final String scope = scopeManager.getCurrentScope();
+        stackIndices.putIfAbsent(scope, 0);
+        final int index = stackIndices.get(scope);
+        stackIndices.put(scope, index + 1);
+        return index;
     }
 
     public void setStackIndex(int index) {
-        currentStackIndex = index;
+        final String scope = scopeManager.getCurrentScope();
+        stackIndices.putIfAbsent(scope, 0);
+        stackIndices.put(scope, index);
     }
 
     public void increaseStackIndex() {
-        ++currentStackIndex;
+        final String scope = scopeManager.getCurrentScope();
+        stackIndices.putIfAbsent(scope, 0);
+        stackIndices.put(scope, stackIndices.get(scope) + 1);
     }
 }

@@ -7,9 +7,6 @@ import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import static Nodes.Type.INTEGER;
-import static Nodes.Type.REAL;
-
 public class ModifiablePrimary extends Primary {
 
     public ModifiablePrimary(String identifier) {
@@ -36,6 +33,20 @@ public class ModifiablePrimary extends Primary {
         switch (varType) {
             case INTEGER, BOOLEAN -> code.append("iload_").append(varIndex).append("\n");
             case REAL -> code.append("fload_").append(varIndex).append("\n");
+            default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
+        }
+        return code.toString();
+    }
+
+    public String getReturnCode(CodeGenerator generator) {
+        final VariableInfo varInfo = generator.getVariable(identifier);
+        final Type varType = varInfo.getType();
+        final int varIndex = varInfo.getIndex();
+
+        StringBuilder code = new StringBuilder();
+        switch (varType) {
+            case INTEGER, BOOLEAN -> code.append("ireturn_").append(varIndex).append("\n");
+            case REAL -> code.append("freturn_").append(varIndex).append("\n");
             default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
         }
         return code.toString();

@@ -1,5 +1,6 @@
-routine add(): integer is
-    var a is 10 != 100.56 = true != false
-    a := true and false
-    return 1
+routine Rout(a: integer): integer is
+    var b is 10
+    a := 11
+
+    return a
 end

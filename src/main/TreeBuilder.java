@@ -21,6 +21,7 @@ public class TreeBuilder {
     }
 
     public static String TreeToRule(ParseTree tree, MyLangParser parser) {
+        final ParserRuleContext context = (ParserRuleContext)tree;
         return parser.getRuleNames()[((ParserRuleContext) tree).getRuleIndex()];
     }
 }

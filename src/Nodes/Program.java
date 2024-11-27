@@ -1,14 +1,16 @@
 package Nodes;
 
+import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
 import java.util.ArrayList;
 
-public class Program {
+public class Program implements JasmineInstructionsGeneratable {
     ArrayList<Statement> statements;
     ArrayList<RoutineDeclarationStatement> routineDeclarations;
     ArrayList<Declaration> declarations;
@@ -19,6 +21,10 @@ public class Program {
         this.routineDeclarations = routineDeclaration;
         this.declarations = declarations;
         this.orderedProgram = orderedProgram;
+    }
+
+    public ArrayList<RoutineDeclarationStatement> getRoutineDeclarations() {
+        return routineDeclarations;
     }
 
     public Program() {
@@ -65,9 +71,12 @@ public class Program {
     public static Program parse(ParseTree tree, MyLangParser parser) {
         Program program = new Program();
         for (int i = 0; i < tree.getChildCount(); ++i) {
-            final String ruleName;
+            String ruleName = "";
             try {
-                ruleName = TreeBuilder.TreeToRule(tree.getChild(i), parser);
+                final ParseTree parseTree = tree.getChild(i);
+                if (!(parseTree instanceof TerminalNodeImpl)) {
+                    ruleName = TreeBuilder.TreeToRule(parseTree, parser);
+                }
             } catch (Exception e) {
                 System.out.println("Exception occurred during parsing the Program:\n" + e);
                 continue;
@@ -86,5 +95,25 @@ public class Program {
             }
         }
         return program;
+    }
+
+    @Override
+    public String generateInstructions(CodeGenerator generator) {
+        for (Object object : orderedProgram) {
+            if (object instanceof RoutineDeclarationStatement) {
+                ((RoutineDeclarationStatement)object).generateCode(generator);
+            }
+        }
+
+        final String body = generator.getProgramText();
+        final String header = ".class public SumProgram\n.super java/lang/Object\n";
+        final String constructor = ".method public <init>()V\n" +
+                "    aload_0\n" +
+                "    invokespecial java/lang/Object/<init>()V\n" +
+                "    return\n" +
+                ".end method\n";
+        final String programCode = header + constructor + body;
+
+        return programCode;
     }
 }

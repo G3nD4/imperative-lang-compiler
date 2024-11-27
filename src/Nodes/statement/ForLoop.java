@@ -117,4 +117,7 @@ public class ForLoop extends Statement {
         // Write end label
         generator.writeLabel(loopEnd);
     }
+
+    int a;
+    int a() {return 0;}
 }
