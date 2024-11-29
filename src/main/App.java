@@ -19,11 +19,11 @@ public class App {
 
     public static void main(String[] args) {
         try {
-            CharStream charStream = CharStreams.fromFileName(
-                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
-
 //            CharStream charStream = CharStreams.fromFileName(
-//                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\WhileLoop.txt");
+//                    "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/ForLoop.txt");
+
+            CharStream charStream = CharStreams.fromFileName(
+                    "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
 
 
             MyLangLexer myLangLexer = new MyLangLexer(charStream);

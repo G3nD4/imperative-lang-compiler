@@ -8,7 +8,7 @@
 //import java.util.Stack;
 //
 //public class MyListener extends MyLangBaseListener {
-//    private List<RoutineDeclarationStatement> routines = new ArrayList<>();
+//    private List<RoutineDeclaration> routines = new ArrayList<>();
 //    private List<VariableDeclaration> variableDeclarations = new ArrayList<>();
 //    private List<IfStatement> ifStatements = new ArrayList<>();
 //    private Block rootBlock = new Block(); // Root block for top-level statements
@@ -36,7 +36,7 @@
 //        Block body = new Block();
 //        blockStack.push(body); // Start a new block for the function body
 //
-//        routines.add(new RoutineDeclarationStatement(name, parameters, returnType, body));
+//        routines.add(new RoutineDeclaration(name, parameters, returnType, body));
 //    }
 //
 //    @Override
@@ -126,7 +126,7 @@
 //        blockStack.pop();
 //    }
 //
-//    public List<RoutineDeclarationStatement> getRoutines() {
+//    public List<RoutineDeclaration> getRoutines() {
 //        return routines;
 //    }
 //

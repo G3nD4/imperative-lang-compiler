@@ -1,6 +1,6 @@
 package main;
 
-import Nodes.Declaration;
+import Nodes.statement.Declarations.Declaration;
 import Nodes.statement.Statement;
 
 import java.util.ArrayList;

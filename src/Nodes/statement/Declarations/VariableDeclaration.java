@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.Enums.Type;
 import Nodes.expression.Expression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
@@ -7,13 +8,10 @@ import Nodes.primary.BooleanLiteral;
 import Nodes.primary.IntegerLiteral;
 import Nodes.primary.ModifiablePrimary;
 import Nodes.primary.RealLiteral;
-import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.util.ArrayList;
 
 public class VariableDeclaration extends Declaration implements JasminConvertable {
     private String identifier;

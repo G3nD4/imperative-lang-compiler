@@ -1,10 +1,8 @@
 package main;
 
-import Nodes.Declaration;
 import Nodes.Program;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
-import Nodes.RoutineDeclarationStatement;
 
 public class TreeBuilder {
 
