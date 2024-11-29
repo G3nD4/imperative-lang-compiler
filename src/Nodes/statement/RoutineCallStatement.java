@@ -148,6 +148,8 @@ public class RoutineCallStatement extends Statement {
             }
         }
 
+        parametersTypesString.reverse();
+
         String returnType = "";
         // TODO: MAYBE need to handle Type.IDENTIFIER
         switch (routineInfo.getReturnType()) {

@@ -1,6 +1,6 @@
-var x is 500
+var x is 500.2
 
-routine rout(a: integer, b: integer): integer is
+routine rout(a: integer, b: real): integer is
     var b is 10
     a := 11
 
