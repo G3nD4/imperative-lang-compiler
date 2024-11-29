@@ -1,13 +1,12 @@
-package Nodes;
+package Nodes.statement;
 
+import Nodes.Enums.Type;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.VariableInfo;
 import Nodes.primary.ModifiablePrimary;
-import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Assignment extends Statement {

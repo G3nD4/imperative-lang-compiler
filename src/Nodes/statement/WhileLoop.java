@@ -1,8 +1,7 @@
 package Nodes.statement;
 
 import Nodes.Body;
-import Nodes.JasminConvertable;
-import Nodes.JasmineInstructionsGeneratable;
+import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;

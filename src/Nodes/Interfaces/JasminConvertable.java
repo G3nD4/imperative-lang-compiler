@@ -1,4 +1,4 @@
-package Nodes;
+package Nodes.Interfaces;
 
 import Nodes.jasmine.CodeGenerator;
 

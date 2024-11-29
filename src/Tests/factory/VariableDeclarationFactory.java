@@ -1,13 +1,12 @@
 package Tests.factory;
 
-import Nodes.Sign;
-import Nodes.Type;
-import Nodes.VariableDeclaration;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.expression.Expression;
 import Nodes.expression.UnaryExpression;
 import Nodes.primary.BooleanLiteral;
 import Nodes.primary.IntegerLiteral;
-import Nodes.primary.ModifiablePrimary;
 import Nodes.primary.RealLiteral;
 
 public class VariableDeclarationFactory {

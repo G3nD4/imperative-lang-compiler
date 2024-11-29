@@ -1,6 +1,6 @@
 package Nodes.primary;
 
-import Nodes.Type;
+import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.VariableInfo;
 import main.IndentManager;
@@ -63,5 +63,25 @@ public class ModifiablePrimary extends Primary {
             default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
         }
         return code.toString();
+    }
+
+    // This method is used ONLY after parsing, in code generation phase
+    public Type getType(CodeGenerator generator) {
+        final VariableInfo varInfo = generator.getVariable(identifier);
+        final Type varType = varInfo.getType();
+
+        switch (varType) {
+            case INTEGER -> {
+                return Type.INTEGER;
+            }
+            case BOOLEAN -> {
+                return Type.BOOLEAN;
+            }
+            case REAL -> {
+                return Type.REAL;
+            }
+            // Maybe need to handle IDENTIFIER type
+            default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
+        }
     }
 }

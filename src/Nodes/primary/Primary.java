@@ -1,6 +1,6 @@
 package Nodes.primary;
 
-import Nodes.Type;
+import Nodes.Enums.Type;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.RoutineCallStatement;

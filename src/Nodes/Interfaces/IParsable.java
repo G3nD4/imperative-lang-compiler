@@ -1,4 +1,4 @@
-package Nodes;
+package Nodes.Interfaces;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 

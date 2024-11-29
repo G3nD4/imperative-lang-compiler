@@ -1,7 +1,6 @@
 package Nodes.statement;
 
-import Nodes.Assignment;
-import Nodes.JasminConvertable;
+import Nodes.Interfaces.JasminConvertable;
 import main.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;

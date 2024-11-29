@@ -1,9 +1,9 @@
 package Tests.unit;
 
-import Nodes.Operation;
-import Nodes.Sign;
-import Nodes.Type;
-import Nodes.VariableDeclaration;
+import Nodes.Enums.Operation;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.expression.MultiplicativeExpression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;

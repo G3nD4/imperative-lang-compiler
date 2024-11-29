@@ -1,20 +1,22 @@
 package Tests.unit;
 
 import Helpers.RemoveRedundantEnters;
-import Helpers.RunJasmin;
 import Nodes.*;
+import Nodes.Enums.Operation;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.*;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.IntegerLiteral;
 import Nodes.primary.ModifiablePrimary;
+import Nodes.statement.Assignment;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.statement.WhileLoop;
 import Tests.factory.MultiplicationExpressionFactory;
 import Tests.factory.VariableDeclarationFactory;
 import org.junit.Test;
 import Lexical_analyzer.TokenType;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class WhileLoopTest {

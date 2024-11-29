@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.Enums.Type;
 import main.IndentManager;
 
 public class Parameter {

@@ -1,6 +1,6 @@
 package Nodes.primary;
 
-import Nodes.Type;
+import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.JasminLoadable;
 import main.IndentManager;
@@ -23,7 +23,7 @@ public class BooleanLiteral extends Primary<Boolean> implements Literal<Boolean>
     }
 
     public String toString(String indent) {
-        IndentManager.print("BooleanLiteran: " + value.toString());
+        IndentManager.print("BooleanLiteral: " + value.toString());
 
         return "";
     }

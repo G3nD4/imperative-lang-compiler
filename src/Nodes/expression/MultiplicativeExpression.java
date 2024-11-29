@@ -1,8 +1,8 @@
 package Nodes.expression;
 
-import Nodes.JasminConvertable;
-import Nodes.Operation;
-import Nodes.Type;
+import Nodes.Interfaces.JasminConvertable;
+import Nodes.Enums.Operation;
+import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;

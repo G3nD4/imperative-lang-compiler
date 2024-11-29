@@ -1,6 +1,4 @@
-package Nodes;
-
-import Lexical_analyzer.TokenType;
+package Nodes.Enums;
 
 public enum Sign {
     PLUS, MINUS, NOT;

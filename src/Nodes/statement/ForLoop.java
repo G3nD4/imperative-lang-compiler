@@ -1,12 +1,15 @@
 package Nodes.statement;
 
 import Nodes.*;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.AdditiveExpression;
 import Nodes.expression.MultiplicativeExpression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.IntegerLiteral;
 import Nodes.primary.ModifiablePrimary;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Tests.factory.MultiplicationExpressionFactory;
 import main.IndentManager;
 import main.MyLangParser;

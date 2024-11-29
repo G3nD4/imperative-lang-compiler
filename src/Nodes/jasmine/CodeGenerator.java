@@ -1,7 +1,7 @@
 package Nodes.jasmine;
 
 import Nodes.Parameter;
-import Nodes.Type;
+import Nodes.Enums.Type;
 import org.antlr.v4.misc.OrderedHashMap;
 
 import java.util.ArrayList;
@@ -12,14 +12,15 @@ public class CodeGenerator {
 
     private final ScopeManager scopeManager = new ScopeManager();
 
-    public CodeGenerator() {}
+    public CodeGenerator() {
+    }
 
     private final StringBuilder assemblyProgram = new StringBuilder();
     private int currentStackIndex = 0;  // REFERS TO FIRST FREE INDEX
     private final Map<String, VariableInfo> variables = new HashMap<>();
     private final Map<String, RoutineInfo> routines = new HashMap<>();
     private int labelCounter = 0; // Counter for generating unique labels
-    private HashMap<String, Integer> stackIndices =  new HashMap<>();
+    private HashMap<String, Integer> stackIndices = new HashMap<>();
 
     public boolean isGlobalScope() {
         return scopeManager.isMainScope();
@@ -127,5 +128,14 @@ public class CodeGenerator {
         final String scope = scopeManager.getCurrentScope();
         stackIndices.putIfAbsent(scope, 0);
         stackIndices.put(scope, stackIndices.get(scope) + 1);
+    }
+
+    // Checks if the routine with "name" exists
+    public Boolean isRoutine(String routineName) {
+        return routines.containsKey(routineName);
+    }
+
+    public RoutineInfo getRoutineInfo(String routineName) {
+        return this.routines.get(routineName);
     }
 }

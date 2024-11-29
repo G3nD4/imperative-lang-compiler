@@ -1,10 +1,14 @@
 package Nodes;
 
+import Nodes.Interfaces.JasmineInstructionsGeneratable;
 import Nodes.jasmine.CodeGenerator;
+import Nodes.statement.Declarations.Declaration;
+import Nodes.statement.Declarations.RoutineDeclaration;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;
 import main.TreeBuilder;
+import org.antlr.v4.codegen.model.decl.Decl;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
@@ -12,20 +16,29 @@ import java.util.ArrayList;
 
 public class Program implements JasmineInstructionsGeneratable {
     ArrayList<Statement> statements;
-    ArrayList<RoutineDeclarationStatement> routineDeclarations;
+    ArrayList<RoutineDeclaration> routineDeclarations;
     ArrayList<Declaration> declarations;
     ArrayList<Object> orderedProgram;
 
-    public Program(ArrayList<Statement> statements, ArrayList<RoutineDeclarationStatement> routineDeclaration, ArrayList<Declaration> declarations, ArrayList<Object> orderedProgram) {
+    public Program(ArrayList<Statement> statements, ArrayList<RoutineDeclaration> routineDeclaration, ArrayList<Declaration> declarations, ArrayList<Object> orderedProgram) {
         this.statements = statements;
         this.routineDeclarations = routineDeclaration;
         this.declarations = declarations;
         this.orderedProgram = orderedProgram;
     }
 
-    public ArrayList<RoutineDeclarationStatement> getRoutineDeclarations() {
+    public ArrayList<RoutineDeclaration> getRoutineDeclarations() {
         return routineDeclarations;
     }
+
+    public ArrayList<Statement> getStatements() {
+        return statements;
+    }
+
+    public ArrayList<Declaration> getDeclarations() {
+        return declarations;
+    }
+
 
     public Program() {
         statements = new ArrayList<>();
@@ -34,7 +47,7 @@ public class Program implements JasmineInstructionsGeneratable {
         orderedProgram = new ArrayList<>();
     }
 
-    public void addRoutine(RoutineDeclarationStatement routine) {
+    public void addRoutine(RoutineDeclaration routine) {
         routineDeclarations.add(routine);
         orderedProgram.add(routine);
     }
@@ -54,8 +67,8 @@ public class Program implements JasmineInstructionsGeneratable {
         IndentManager.print("Program:");
         IndentManager.goDown();
         for (int i = 0; i < orderedProgram.size(); ++i) {
-            if (orderedProgram.get(i) instanceof RoutineDeclarationStatement) {
-                IndentManager.print(((RoutineDeclarationStatement) orderedProgram.get(i)).toString(""));
+            if (orderedProgram.get(i) instanceof RoutineDeclaration) {
+                IndentManager.print(((RoutineDeclaration) orderedProgram.get(i)).toString(""));
             }
             if (orderedProgram.get(i) instanceof Declaration) {
                 IndentManager.print(((Declaration) orderedProgram.get(i)).toString(""));
@@ -84,7 +97,7 @@ public class Program implements JasmineInstructionsGeneratable {
 
             switch (ruleName) {
                 case "routineDeclaration":
-                    program.addRoutine(RoutineDeclarationStatement.parse(tree.getChild(i), parser));
+                    program.addRoutine(RoutineDeclaration.parse(tree.getChild(i), parser));
                     break;
                 case "declaration":
                     program.addDeclaration(Declaration.parse(tree.getChild(i), parser));
@@ -100,8 +113,8 @@ public class Program implements JasmineInstructionsGeneratable {
     @Override
     public String generateInstructions(CodeGenerator generator) {
         for (Object object : orderedProgram) {
-            if (object instanceof RoutineDeclarationStatement) {
-                ((RoutineDeclarationStatement)object).generateCode(generator);
+            if (object instanceof RoutineDeclaration) {
+                ((RoutineDeclaration) object).generateCode(generator);
             }
         }
 

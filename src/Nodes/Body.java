@@ -1,6 +1,9 @@
 package Nodes;
 
+import Nodes.Interfaces.JasminConvertable;
 import Nodes.jasmine.CodeGenerator;
+import Nodes.statement.Declarations.Declaration;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.statement.Statement;
 import main.IndentManager;
 import main.MyLangParser;

@@ -1,6 +1,6 @@
 package Nodes.jasmine;
 
-import Nodes.Type;
+import Nodes.Enums.Type;
 
 public class VariableInfo {
     private final int index;

@@ -1,5 +1,6 @@
 package Nodes;
 
+import Nodes.Enums.Type;
 import Nodes.expression.Expression;
 import main.IndentManager;
 import main.MyLangParser;
@@ -20,5 +21,9 @@ public class RoutineCallParameter {
         IndentManager.print("RoutineCallParameter:");
         IndentManager.print(expression.toString(""));
         return "";
+    }
+
+    public Type getType() {
+        return expression.type;
     }
 }

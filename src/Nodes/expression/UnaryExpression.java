@@ -1,8 +1,8 @@
 package Nodes.expression;
 
-import Nodes.JasminConvertable;
-import Nodes.Sign;
-import Nodes.Type;
+import Nodes.Interfaces.JasminConvertable;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.JasminLoadable;
 import Nodes.primary.*;

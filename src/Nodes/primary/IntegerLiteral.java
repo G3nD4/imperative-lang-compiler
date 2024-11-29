@@ -1,6 +1,6 @@
 package Nodes.primary;
 
-import Nodes.Type;
+import Nodes.Enums.Type;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;

@@ -3,17 +3,19 @@ package Tests.unit;
 import Helpers.RemoveRedundantEnters;
 import Lexical_analyzer.TokenType;
 import Nodes.*;
-import Nodes.Assignment;
+import Nodes.statement.Assignment;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.*;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.BooleanLiteral;
 import Nodes.primary.IntegerLiteral;
 import Nodes.primary.ModifiablePrimary;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.statement.IfStatement;
 import Tests.factory.MultiplicationExpressionFactory;
 import Tests.factory.VariableDeclarationFactory;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 

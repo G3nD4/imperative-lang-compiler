@@ -1,5 +1,8 @@
-package Nodes;
+package Nodes.statement.Declarations;
 
+import Nodes.Body;
+import Nodes.Enums.Type;
+import Nodes.Parameter;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
@@ -9,24 +12,24 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoutineDeclarationStatement extends Statement {
+public class RoutineDeclaration extends Statement {
     private String name;
     private List<Parameter> parameters;
     private Type returnType;
     private Body body;
 
-    public RoutineDeclarationStatement() {
+    public RoutineDeclaration() {
     }
 
-    public RoutineDeclarationStatement(String name, List<Parameter> parameters, Type returnType, Body body) {
+    public RoutineDeclaration(String name, List<Parameter> parameters, Type returnType, Body body) {
         this.name = name;
         this.parameters = parameters;
         this.returnType = returnType;
         this.body = body;
     }
 
-    public static RoutineDeclarationStatement parse(ParseTree tree, MyLangParser parser) {
-        RoutineDeclarationStatement routine = new RoutineDeclarationStatement();
+    public static RoutineDeclaration parse(ParseTree tree, MyLangParser parser) {
+        RoutineDeclaration routine = new RoutineDeclaration();
 
         routine.name = tree.getChild(1).getText();
         if (tree.getChildCount() > 5) {
@@ -129,7 +132,6 @@ public class RoutineDeclarationStatement extends Statement {
                     case REAL -> methodSignature.append("F");
                     default -> throw new IllegalStateException("Unsupported parameter type: " + param.getType());
                 }
-//                generator.registerVariable(param.getName(), param.getType());
             }
         }
         methodSignature.append(")");

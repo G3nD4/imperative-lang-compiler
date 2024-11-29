@@ -1,6 +1,10 @@
-routine Rout(a: integer): integer is
+var x is 500
+
+routine rout(a: integer, b: integer): integer is
     var b is 10
     a := 11
 
     return a
 end
+
+rout(5, x)

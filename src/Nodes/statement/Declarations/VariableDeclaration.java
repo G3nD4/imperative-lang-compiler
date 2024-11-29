@@ -1,6 +1,7 @@
-package Nodes;
+package Nodes.statement.Declarations;
 
 import Nodes.Enums.Type;
+import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;

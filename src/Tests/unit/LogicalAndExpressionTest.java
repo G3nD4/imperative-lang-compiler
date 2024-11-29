@@ -1,15 +1,12 @@
 package Tests.unit;
 
-import Lexical_analyzer.Token;
-import Lexical_analyzer.TokenType;
-import Nodes.Sign;
-import Nodes.Type;
-import Nodes.VariableDeclaration;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.expression.*;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.ModifiablePrimary;
 import Tests.factory.AdditiveExpressionFactory;
-import Tests.factory.MultiplicationExpressionFactory;
 import Tests.factory.VariableDeclarationFactory;
 import org.junit.Test;
 

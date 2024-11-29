@@ -1,17 +1,9 @@
 package Tests.factory;
 
-import Nodes.Operation;
-import Nodes.Sign;
-import Nodes.Type;
-import Nodes.VariableDeclaration;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.AdditiveExpression;
-import Nodes.expression.Expression;
 import Nodes.expression.MultiplicativeExpression;
-import Nodes.expression.UnaryExpression;
-import Nodes.primary.BooleanLiteral;
-import Nodes.primary.IntegerLiteral;
-import Nodes.primary.ModifiablePrimary;
-import Nodes.primary.RealLiteral;
 
 import java.util.ArrayList;
 

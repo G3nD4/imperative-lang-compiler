@@ -1,4 +1,4 @@
-package Nodes;
+package Nodes.Interfaces;
 
 public interface IRoutine {
 }

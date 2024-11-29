@@ -1,4 +1,4 @@
-package Parsing;
+package Nodes.Interfaces;
 
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;

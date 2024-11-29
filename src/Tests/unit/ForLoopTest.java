@@ -2,10 +2,15 @@ package Tests.unit;
 
 import Helpers.RemoveRedundantEnters;
 import Nodes.*;
+import Nodes.Enums.Operation;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.*;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.IntegerLiteral;
 import Nodes.primary.ModifiablePrimary;
+import Nodes.statement.Assignment;
+import Nodes.statement.Declarations.VariableDeclaration;
 import Nodes.statement.ForLoop;
 import Tests.factory.MultiplicationExpressionFactory;
 import Tests.factory.VariableDeclarationFactory;

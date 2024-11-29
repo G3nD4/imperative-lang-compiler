@@ -2,14 +2,12 @@ package Tests.unit;
 
 import Helpers.RemoveRedundantEnters;
 import Lexical_analyzer.TokenType;
-import Nodes.Operation;
-import Nodes.Type;
+import Nodes.Enums.Type;
 import Nodes.expression.AdditiveExpression;
 import Nodes.expression.RelationalExpression;
 import Nodes.jasmine.CodeGenerator;
 import Tests.factory.AdditiveExpressionFactory;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import Helpers.RunJasmin;
 
 import java.io.FileWriter;

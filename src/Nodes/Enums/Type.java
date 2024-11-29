@@ -1,4 +1,4 @@
-package Nodes;
+package Nodes.Enums;
 
 /*
 [Type.IDENTIFIER] is ONLY needed for optimization process.

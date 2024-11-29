@@ -1,9 +1,9 @@
 package Tests.unit;
 
 import Lexical_analyzer.TokenType;
-import Nodes.Operation;
-import Nodes.Sign;
-import Nodes.Type;
+import Nodes.Enums.Operation;
+import Nodes.Enums.Sign;
+import Nodes.Enums.Type;
 import Nodes.expression.AdditiveExpression;
 import Nodes.expression.MultiplicativeExpression;
 import Nodes.expression.RelationalExpression;
