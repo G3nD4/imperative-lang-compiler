@@ -15,6 +15,11 @@ public class ModifiablePrimary extends Primary {
         super.type = Program.getVariableType(identifier);
     }
 
+    public ModifiablePrimary(String identifier, CodeGenerator generator) {
+        this.identifier = identifier;
+        super.type = Program.getVariableTypeWithScope(identifier, generator);
+    }
+
     public String identifier;
 
     public String toString(String indent) {

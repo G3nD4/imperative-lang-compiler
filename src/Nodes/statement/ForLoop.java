@@ -92,10 +92,8 @@ public class ForLoop extends Statement {
         // Generate body code
         body.generateCode(generator);
 
-        System.out.println("I am here");
-
         // Generate iterator increment/decrement
-        ModifiablePrimary iter = new ModifiablePrimary(loopVariable);
+        ModifiablePrimary iter = new ModifiablePrimary(loopVariable, generator);
         IntegerLiteral one = new IntegerLiteral(1);
         UnaryExpression oneExpr = new UnaryExpression(
                 Sign.PLUS,

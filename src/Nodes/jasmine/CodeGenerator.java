@@ -68,16 +68,13 @@ public class CodeGenerator {
         }
         // TODO may cause issues
         // Get variable from global scope.
-//        final VariableInfo info = variables.get(name);
-//        // If trying to access a variable that does not exist, log an error and exit the program
-//        if (info == null) {
-//            System.out.println(("Variable " + name + " does not exist!"));
-//            System.exit(1);
-//        }
-//        return info;
-        System.out.println(("Variable " + name + " does not exist!"));
-        System.exit(1);
-        return null;
+        final VariableInfo info = variables.get(name);
+        // If trying to access a variable that does not exist, log an error and exit the program
+        if (info == null) {
+            System.out.println(("Variable " + name + " does not exist!"));
+            System.exit(1);
+        }
+        return info;
     }
 
     public String getProgramText() {
@@ -155,5 +152,9 @@ public class CodeGenerator {
 
     public static void registerType(String identifier, Type type) {
         types.put(identifier, type);
+    }
+
+    public String getCurrentScope() {
+        return scopeManager.getCurrentScope();
     }
 }

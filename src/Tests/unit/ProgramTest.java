@@ -1,5 +1,6 @@
 package Tests.unit;
 
+import Helpers.AddIndents;
 import Nodes.Program;
 import Nodes.jasmine.CodeGenerator;
 import main.InternalNode;
@@ -16,10 +17,10 @@ import java.io.IOException;
 public class ProgramTest {
     @Test
     public void testSimpleProgram() throws IOException {
-        CharStream charStream = CharStreams.fromFileName(
-                "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Routine.txt");
 //        CharStream charStream = CharStreams.fromFileName(
-//                "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
+//                "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Routine.txt");
+        CharStream charStream = CharStreams.fromFileName(
+                "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\ForLoop.txt");
 
         MyLangLexer myLangLexer = new MyLangLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -33,8 +34,8 @@ public class ProgramTest {
 
         final CodeGenerator generator = new CodeGenerator();
 
-        final String result = program.generateInstructions(generator);
-
+        String result = program.generateInstructions(generator);
+        result = AddIndents.add(result);
         System.out.println(result);
     }
 }
