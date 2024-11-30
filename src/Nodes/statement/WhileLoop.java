@@ -40,8 +40,8 @@ public class WhileLoop extends Statement implements JasminConvertable {
     @Override
     public void generateCode(CodeGenerator generator) {
         // Generate unique labels for loop
-        String startLabel = generator.generateUniqueLabel("while_start");
-        String endLabel = generator.generateUniqueLabel("while_end");
+        String startLabel = generator.generateUniqueLabel("wl_start");
+        String endLabel = generator.generateUniqueLabel("wl_end");
 
         // Write start label
         generator.writeLabel(startLabel);

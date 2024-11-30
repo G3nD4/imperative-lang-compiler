@@ -153,12 +153,16 @@ public class RoutineCallStatement extends Statement implements JasminConvertable
 
         String returnType = "";
         // TODO: MAYBE need to handle Type.IDENTIFIER
-        switch (routineInfo.getReturnType()) {
-            case Type.REAL -> returnType = "F";
-            case Type.INTEGER, Type.BOOLEAN -> returnType = "I";
-            default -> returnType = "V";
-        }
 
+        if (routineInfo.getReturnType() == null) {
+            returnType = "V";
+        } else {
+            switch (routineInfo.getReturnType()) {
+                case Type.REAL -> returnType = "F";
+                case Type.INTEGER, Type.BOOLEAN -> returnType = "I";
+                default -> returnType = "V";
+            }
+        }
 
         // TODO: Jasmin class name may be changed
         generator.writeToProgram("invokestatic SumProgram/" + this.identifier

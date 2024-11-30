@@ -1,8 +1,10 @@
 routine findFactorial(i: integer, n: integer) : integer is
     var factorial is 0
-    while i <= n loop
+    while i < n loop
         factorial := factorial * i
         i := i + 1
     end
     return factorial
 end
+
+findFactorial(1, 5)

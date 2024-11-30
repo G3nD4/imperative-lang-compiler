@@ -18,10 +18,10 @@ import java.io.IOException;
 public class ProgramTest {
     @Test
     public void testSimpleProgram() throws IOException, InterruptedException {
-//        CharStream charStream = CharStreams.fromFileName(
-//                "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/Routine.txt");
         CharStream charStream = CharStreams.fromFileName(
-                "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
+                "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/complex_assign.txt");
+//        CharStream charStream = CharStreams.fromFileName(
+//                "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\Routine.txt");
 
         MyLangLexer myLangLexer = new MyLangLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);

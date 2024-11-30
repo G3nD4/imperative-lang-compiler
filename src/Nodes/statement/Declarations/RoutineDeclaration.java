@@ -29,6 +29,10 @@ public class RoutineDeclaration extends Statement {
         this.body = body;
     }
 
+    public boolean isReturnTypeVoid() {
+        return this.returnType == null;
+    }
+
     public static RoutineDeclaration parse(ParseTree tree, MyLangParser parser) {
 
         RoutineDeclaration routine = new RoutineDeclaration();
@@ -38,22 +42,44 @@ public class RoutineDeclaration extends Statement {
         // Need to handle modifiable primary types. Does not affect parse method logic.
         Program.enterScope(routine.name);
 
-        if (tree.getChildCount() > 5) {
-            routine.parameters = parseParameters(tree.getChild(3));
-        }
-        if (tree.getChildCount() > 4) {
-            String rt = tree.getChild(6).getText();
-            if (!rt.equals("is")) {
+        for (int i = 0; i < tree.getChildCount(); i++) {
+            if (tree.getChild(i) instanceof MyLangParser.ParametersContext) {
+                routine.parameters = parseParameters(tree.getChild(i));
+            } else if (tree.getChild(i) instanceof MyLangParser.TypeContext) {
+                String rt = tree.getChild(i).getText();
                 routine.returnType = Type.fromString(rt);
+            } else if (tree.getChild(i) instanceof MyLangParser.BodyContext) {
+                routine.body = Body.parse(tree.getChild(i), parser);
             }
         }
-        int bodyIndex;
-        if (routine.returnType == null) {
-            bodyIndex = 8;
-        } else {
-            bodyIndex = 9;
+
+        if (routine.parameters == null) {
+            routine.parameters = new ArrayList<>();
         }
-        routine.body = Body.parse(tree.getChild(bodyIndex), parser);
+
+//        if (tree.getChildCount() > 5) {
+//            routine.parameters = parseParameters(tree.getChild(3));
+//        }
+//        if (tree.getChildCount() > 4) {
+//            if (tree.getChild(5).getText().equals("is") || routine.parameters.isEmpty() && tree.getChild(4).getText().equals("is")) {
+//                routine.returnType = null;
+//            } else {
+//                String rt = tree.getChild(routine.parameters.isEmpty() ? 5 : 6).getText();
+//                if (!rt.equals("is")) {
+//                    routine.returnType = Type.fromString(rt);
+//                }
+//            }
+//        }
+//        int bodyIndex;
+//        if (routine.returnType != null && !routine.parameters.isEmpty()) {
+//            bodyIndex = 9;
+//        } else if (routine.returnType == null && !routine.parameters.isEmpty() || routine.returnType != null && routine.parameters.isEmpty()) {
+//            bodyIndex = 8;
+//        } else {
+//            bodyIndex = 6;
+//        }
+
+//        routine.body = Body.parse(tree.getChild(bodyIndex), parser);
 
         // Need to handle modifiable primary types. Does not affect parse method logic.
         Program.scopeManager.exitScope();
@@ -175,6 +201,10 @@ public class RoutineDeclaration extends Statement {
 //                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
 //            }
 //        }
+
+        if (isReturnTypeVoid()) {
+            generator.writeToProgram("return");
+        }
 
         // Method epilogue
         generator.writeToProgram(".end method\n");

@@ -42,6 +42,11 @@ public class Return extends Statement {
 
     @Override
     public void generateCode(CodeGenerator generator) {
+        if (expression == null) {
+            generator.writeToProgram("return");
+            return;
+        }
+
         expression.generateCode(generator);
 
         switch (expression.getType(generator)) {

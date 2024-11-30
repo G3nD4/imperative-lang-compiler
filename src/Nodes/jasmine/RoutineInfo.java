@@ -22,6 +22,10 @@ public class RoutineInfo {
     }
 
     public void registerVariable(String name, VariableInfo info) {
+        if (this.variables.containsKey(name)) {
+            System.out.println("Variable " + name + " is already defined!");
+            System.exit(1);
+        }
         this.variables.put(name, info);
     }
 

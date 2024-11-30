@@ -1,25 +1,15 @@
 routine comprehensiveRoutine(a: integer, b: integer, c: integer): integer is
-    var sum: integer is a + b + c
-    var product: integer is a * b * c
-    var average: integer
-    if sum > 100 then
-        average := sum / 3
-    else
-        average := (a + b) / 2
-    end
+    var sum: integer is a
+    var average: real is 0.0
     var finalResult: integer is 0
-    for i in 1..average loop
+    for i in 1..10 loop
         if i % 2 = 0 then
             finalResult := finalResult + i
         else
             finalResult := finalResult - i
         end
     end
-    while finalResult < 100 loop
-        finalResult := finalResult + product
-        if finalResult > 200 then
-            break
-        end
-    end
     return finalResult
 end
+
+comprehensiveRoutine(1, 2, 3)

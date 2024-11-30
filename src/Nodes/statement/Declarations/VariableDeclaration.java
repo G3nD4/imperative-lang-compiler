@@ -112,6 +112,19 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
                         System.exit(1);
                 }
             }
+        } else {
+            expression.generateCode(generator);
+            switch (type) {
+                case Type.BOOLEAN, Type.INTEGER:
+                    generator.writeToProgram("istore_" + index);
+                    break;
+                case Type.REAL:
+                    generator.writeToProgram("fstore_" + index);
+                    break;
+                default:
+                    System.out.println("Type " + type.name() + " is not supported!");
+                    System.exit(1);
+            }
         }
     }
 }

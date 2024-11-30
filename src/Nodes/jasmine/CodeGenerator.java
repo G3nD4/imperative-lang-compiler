@@ -40,7 +40,8 @@ public class CodeGenerator {
     public void registerVariable(String name, Type type) {
         final String scope = scopeManager.getCurrentScope();
         if (scope.equals("main")) {
-            variables.put(name, new VariableInfo(currentStackIndex, type));
+            final int index = getAndIncreaseCurrentStackIndex();
+            variables.put(name, new VariableInfo(index, type));
         } else {
             final int index = getAndIncreaseCurrentStackIndex();
             routines.get(scope).registerVariable(name, new VariableInfo(index, type));
@@ -48,6 +49,10 @@ public class CodeGenerator {
     }
 
     public void registerRoutine(String name, Type returnType, ArrayList<Parameter> params) {
+        if (routines.containsKey(name)) {
+            System.out.println("Routine " + name + " is already defined!");
+            System.exit(1);
+        }
         final OrderedHashMap<String, VariableInfo> parameters = new OrderedHashMap<>();
         for (final Parameter param : params) {
             parameters.put(param.getName(), new VariableInfo(getAndIncreaseCurrentStackIndex(), param.getType()));

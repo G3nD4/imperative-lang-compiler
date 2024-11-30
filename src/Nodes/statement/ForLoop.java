@@ -66,8 +66,8 @@ public class ForLoop extends Statement {
         iterVar.generateCode(generator);
 
         // Generate unique labels
-        String loopStart = generator.generateUniqueLabel("for_start");
-        String loopEnd = generator.generateUniqueLabel("for_end");
+        String loopStart = generator.generateUniqueLabel("fl_start");
+        String loopEnd = generator.generateUniqueLabel("fl_end");
 
         // Write loop start label
         generator.writeLabel(loopStart);
