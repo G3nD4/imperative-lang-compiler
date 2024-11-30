@@ -1,5 +1,6 @@
 package Nodes.statement;
 
+import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
@@ -41,6 +42,12 @@ public class Return extends Statement {
 
     @Override
     public void generateCode(CodeGenerator generator) {
+        expression.generateCode(generator);
 
+        switch (expression.getType(generator)) {
+            case INTEGER, BOOLEAN -> generator.writeToProgram("ireturn");
+            case REAL -> generator.writeToProgram("freturn");
+            default -> throw new IllegalStateException("Unsupported return type: " + expression.getType(generator));
+        }
     }
 }

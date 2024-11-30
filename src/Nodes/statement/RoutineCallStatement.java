@@ -2,6 +2,7 @@ package Nodes.statement;
 
 import Nodes.Enums.Sign;
 import Nodes.Enums.Type;
+import Nodes.Interfaces.JasminConvertable;
 import Nodes.RoutineCallParameter;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
@@ -16,7 +17,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoutineCallStatement extends Statement {
+public class RoutineCallStatement extends Statement implements JasminConvertable {
     private final String identifier;
     private final List<RoutineCallParameter> parameters;
 

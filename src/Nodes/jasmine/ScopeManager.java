@@ -12,7 +12,7 @@ public class ScopeManager {
     private final Stack<String> scope;
 
     public boolean isMainScope() {
-        return scope.isEmpty();
+        return scope.size() == 1 && scope.peek().equals("main");
     }
 
     public void enterScope(String scopeName) {
@@ -28,6 +28,6 @@ public class ScopeManager {
     }
 
     public String getCurrentScope() {
-        return isMainScope() ? null : scope.getLast();
+        return isMainScope() ? "main" : scope.getLast();
     }
 }

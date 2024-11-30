@@ -19,6 +19,7 @@ public class MultiplicativeExpression extends Expression implements JasminConver
         this.operands = operands;
         this.operations = operations;
         super.type = type;
+        super.returnType = type;
     }
 
     public static MultiplicativeExpression parse(ParseTree tree, MyLangParser parser) {

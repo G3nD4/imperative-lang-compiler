@@ -2,6 +2,8 @@ package Nodes.primary;
 
 import Nodes.Enums.Type;
 import Nodes.expression.Expression;
+import Nodes.expression.LogicalOrExpression;
+import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.RoutineCallStatement;
 import main.MyLangParser;
@@ -16,8 +18,13 @@ public abstract class Primary<T> {
     public Type type;
 
     public Type getType(CodeGenerator generator) {
+//        if (this instanceof UnaryExpression
+//                && ((UnaryExpression) this).primary instanceof ModifiablePrimary modPrim) {
+//            return modPrim.getType(generator);
+//        }
+
         if (type != null) {
-            return type;
+        return type;
         }
         if (expression != null) {
             return expression.returnType;
@@ -26,8 +33,14 @@ public abstract class Primary<T> {
             return generator.getVariable(modifiablePrimary.identifier).getType();
         }
         if (routineCall != null) {
-            // TODO: need to write logic to register routines. After that get its type.
+            return generator.getRoutineInfo(routineCall.getIdentifier()).getReturnType();
         }
+
+//        Primary prim = this;
+//        if (this instanceof LogicalOrExpression) {
+//            if (((LogicalOrExpression)this).)
+//        }
+
         System.out.println("Cannot determine type!");
         System.exit(1);
 

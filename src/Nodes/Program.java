@@ -1,7 +1,10 @@
 package Nodes;
 
+import Helpers.RemoveRedundantEnters;
+import Nodes.Enums.Type;
 import Nodes.Interfaces.JasmineInstructionsGeneratable;
 import Nodes.jasmine.CodeGenerator;
+import Nodes.jasmine.ScopeManager;
 import Nodes.statement.Declarations.Declaration;
 import Nodes.statement.Declarations.RoutineDeclaration;
 import Nodes.statement.Statement;
@@ -12,7 +15,9 @@ import org.antlr.v4.codegen.model.decl.Decl;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Program implements JasmineInstructionsGeneratable {
     ArrayList<Statement> statements;
@@ -82,6 +87,8 @@ public class Program implements JasmineInstructionsGeneratable {
     }
 
     public static Program parse(ParseTree tree, MyLangParser parser) {
+        Program.enterScope("main");
+
         Program program = new Program();
         for (int i = 0; i < tree.getChildCount(); ++i) {
             String ruleName = "";
@@ -107,16 +114,44 @@ public class Program implements JasmineInstructionsGeneratable {
                     break;
             }
         }
+
+        Program.scopeManager.exitScope();
+
         return program;
     }
 
     @Override
     public String generateInstructions(CodeGenerator generator) {
+        for (final RoutineDeclaration routineDeclaration : routineDeclarations) {
+            routineDeclaration.generateCode(generator);
+        }
+        generator.registerRoutine("main", Type.INTEGER, new ArrayList<>());
+        generator.enterScope("main");
+        generator.writeToProgram("""
+                .method public static main([Ljava/lang/String;)V
+                .limit stack 100
+                .limit locals 100""");
         for (Object object : orderedProgram) {
-            if (object instanceof RoutineDeclaration) {
-                ((RoutineDeclaration) object).generateCode(generator);
+            if (object instanceof  Statement) {
+                if (object instanceof RoutineDeclaration) {
+                    continue;
+                }
+                ((Statement) object).generateCode(generator);
+            } else if (object instanceof Declaration) {
+                ((Declaration) object).generateCode(generator);
             }
         }
+        generator.writeToProgram("return");
+        generator.writeToProgram(".end method");
+//        for (Object object : orderedProgram) {
+//            if (object instanceof RoutineDeclaration) {
+//                ((RoutineDeclaration) object).generateCode(generator);
+//            } else if (object instanceof  Statement) {
+//                ((Statement) object).generateCode(generator);
+//            } else if (object instanceof Declaration) {
+//                ((Declaration) object).generateCode(generator);
+//            }
+//        }
 
         final String body = generator.getProgramText();
         final String header = ".class public SumProgram\n.super java/lang/Object\n";
@@ -125,8 +160,30 @@ public class Program implements JasmineInstructionsGeneratable {
                 "    invokespecial java/lang/Object/<init>()V\n" +
                 "    return\n" +
                 ".end method\n";
-        final String programCode = header + constructor + body;
+        final String programCode = RemoveRedundantEnters.remove(header + constructor + body);
 
         return programCode;
+    }
+
+    public static final HashMap<String, HashMap<String, Type>> variables = new HashMap<>();
+
+    public static final ScopeManager scopeManager = new ScopeManager();
+
+    public static void enterScope(String routineName) {
+        variables.putIfAbsent(routineName, new HashMap<>());
+        scopeManager.enterScope(routineName);
+    }
+
+    public static Type getVariableType(String identifier) {
+        final Type type = Program.variables.get(Program.scopeManager.getCurrentScope()).get(identifier);
+        if (type == null) {
+            System.out.println("Variable does not exists: " + identifier);
+            System.exit(1);
+        }
+        return type;
+    }
+
+    public static void registerVariable(String identifier, Type type) {
+        Program.variables.get(Program.scopeManager.getCurrentScope()).put(identifier, type);
     }
 }

@@ -2,6 +2,7 @@ package Nodes.statement.Declarations;
 
 import Nodes.Enums.Type;
 import Nodes.Interfaces.JasminConvertable;
+import Nodes.Program;
 import Nodes.expression.Expression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
@@ -26,6 +27,7 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
     }
 
     public static VariableDeclaration parse(ParseTree tree, MyLangParser parser) {
+        // Need to handle modifiable primary types. Does not affect parse method logic.
         VariableDeclaration var = new VariableDeclaration("", null, null);
 
         var.identifier = tree.getChild(1).getText();
@@ -47,6 +49,8 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
         if (var.type == null) {
             var.type = var.expression.type;
         }
+
+        Program.registerVariable(var.getIdentifier(), var.type);
 
         return var;
     }

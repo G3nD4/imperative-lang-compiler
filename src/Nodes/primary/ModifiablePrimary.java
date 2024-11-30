@@ -1,6 +1,7 @@
 package Nodes.primary;
 
 import Nodes.Enums.Type;
+import Nodes.Program;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.VariableInfo;
 import main.IndentManager;
@@ -11,6 +12,7 @@ public class ModifiablePrimary extends Primary {
 
     public ModifiablePrimary(String identifier) {
         this.identifier = identifier;
+        super.type = Program.getVariableType(identifier);
     }
 
     public String identifier;

@@ -1,18 +1,17 @@
 package main;
 
-import Nodes.*;
+import Nodes.jasmine.ScopeManager;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.IOException;
 import java.util.*;
+import Nodes.Enums.Type;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 public class App {
@@ -32,7 +31,7 @@ public class App {
 
             MyLangParser.ProgramContext context = myLangParser.program();
 
-            UnusedVariableListener listener = new UnusedVariableListener();
+            ModifiablePrimaryTypesOptimizator listener = new ModifiablePrimaryTypesOptimizator();
             ParseTreeWalker.DEFAULT.walk(listener, context);
 
             Set<String> unusedGlobalVariables = listener.getVariableTracker().getUnusedVariablesInCurrentScope();
@@ -126,9 +125,70 @@ class VariableTracker {
     }
 }
 
-
 class UnusedVariableListener extends MyLangBaseListener {
     private final VariableTracker variableTracker = new VariableTracker();
+
+    @Override
+    public void enterRoutineDeclaration(MyLangParser.RoutineDeclarationContext ctx) {
+        variableTracker.enterScope();
+
+        if (ctx.parameters() != null) {
+            for (MyLangParser.ParameterContext param : ctx.parameters().parameter()) {
+                String paramName = param.IDENTIFIER().getText();
+                variableTracker.declareParameter(paramName);
+            }
+        }
+    }
+
+    @Override
+    public void exitRoutineDeclaration(MyLangParser.RoutineDeclarationContext ctx) {
+        Set<String> unusedVars = variableTracker.getUnusedVariablesInCurrentScope();
+        if (!unusedVars.isEmpty()) {
+            System.out.println("Unused variables in routine '" + ctx.IDENTIFIER().getText() + "': " + unusedVars);
+        }
+        variableTracker.exitScope();
+    }
+
+    @Override
+    public void enterForLoop(MyLangParser.ForLoopContext ctx) {
+        // Declare the loop variable
+        String loopVarName = ctx.IDENTIFIER().getText();
+        variableTracker.declareVariable(loopVarName);
+        variableTracker.enterScope();
+    }
+
+    @Override
+    public void exitForLoop(MyLangParser.ForLoopContext ctx) {
+        variableTracker.exitScope();
+    }
+
+    @Override
+    public void enterVariableDeclaration(MyLangParser.VariableDeclarationContext ctx) {
+        String variableName = ctx.IDENTIFIER().getText();
+        variableTracker.declareVariable(variableName);
+    }
+
+    @Override
+    public void enterModifiablePrimary(MyLangParser.ModifiablePrimaryContext ctx) {
+        for (TerminalNode node : ctx.IDENTIFIER()) {
+            variableTracker.useVariable(node.getText());
+        }
+    }
+
+    public VariableTracker getVariableTracker() {
+        return variableTracker;
+    }
+}
+
+
+class ModifiablePrimaryTypesOptimizator extends MyLangBaseListener {
+    private final VariableTracker variableTracker = new VariableTracker();
+    private ScopeManager scopeManager = new ScopeManager();
+    private HashMap<String, HashMap<String, Type>> modPrimToType = new HashMap<>();
+
+    public ModifiablePrimaryTypesOptimizator() {
+        scopeManager.enterScope("main");
+    }
 
     @Override
     public void enterRoutineDeclaration(MyLangParser.RoutineDeclarationContext ctx) {

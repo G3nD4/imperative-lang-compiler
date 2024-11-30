@@ -18,6 +18,7 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
         this.sign = sign;
         this.primary = primary;
         super.type = type;
+        super.returnType = type;
     }
 
     public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
@@ -80,7 +81,9 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
             generator.writeToProgram(((ModifiablePrimary) primary).getLoadCode(generator));
         } else {
             // load constant value
-            if (type == Type.INTEGER || type == Type.BOOLEAN) {
+            if (primary instanceof Expression) {
+                ((Expression)primary).generateCode(generator);
+            } else if (type == Type.INTEGER || type == Type.BOOLEAN) {
                 if (type == Type.INTEGER) {
                     code.append("ldc ").append(((IntegerLiteral)primary).getValue()).append("\n");
                 } else {

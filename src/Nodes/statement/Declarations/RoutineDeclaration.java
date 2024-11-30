@@ -3,6 +3,7 @@ package Nodes.statement.Declarations;
 import Nodes.Body;
 import Nodes.Enums.Type;
 import Nodes.Parameter;
+import Nodes.Program;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
@@ -29,21 +30,21 @@ public class RoutineDeclaration extends Statement {
     }
 
     public static RoutineDeclaration parse(ParseTree tree, MyLangParser parser) {
+
         RoutineDeclaration routine = new RoutineDeclaration();
 
         routine.name = tree.getChild(1).getText();
+
+        // Need to handle modifiable primary types. Does not affect parse method logic.
+        Program.enterScope(routine.name);
+
         if (tree.getChildCount() > 5) {
             routine.parameters = parseParameters(tree.getChild(3));
         }
         if (tree.getChildCount() > 4) {
             String rt = tree.getChild(6).getText();
             if (!rt.equals("is")) {
-                routine.returnType = switch (rt) {
-                    case "integer" -> Type.INTEGER;
-                    case "real" -> Type.REAL;
-                    case "boolean" -> Type.BOOLEAN;
-                    default -> Type.IDENTIFIER;
-                };
+                routine.returnType = Type.fromString(rt);
             }
         }
         int bodyIndex;
@@ -53,6 +54,10 @@ public class RoutineDeclaration extends Statement {
             bodyIndex = 9;
         }
         routine.body = Body.parse(tree.getChild(bodyIndex), parser);
+
+        // Need to handle modifiable primary types. Does not affect parse method logic.
+        Program.scopeManager.exitScope();
+
         return routine;
     }
 
@@ -62,12 +67,9 @@ public class RoutineDeclaration extends Statement {
             try {
                 String paramName = parametersTree.getChild(i).getChild(0).getText();
                 String paramType = parametersTree.getChild(i).getChild(2).getText();
-                Type type = switch (paramType) {
-                    case "integer" -> Type.INTEGER;
-                    case "real" -> Type.REAL;
-                    case "boolean" -> Type.BOOLEAN;
-                    default -> Type.IDENTIFIER;
-                };
+
+                Type type = Type.fromString(paramType);
+                Program.registerVariable(paramName, type);
                 params.add(new Parameter(paramName, type));
             } catch (Exception e) {
                 break;
@@ -162,16 +164,17 @@ public class RoutineDeclaration extends Statement {
         // Generate body code
         body.generateCode(generator);
 
+
         // If no explicit return at the end, add default return
-        if (returnType == null) {
-            generator.writeToProgram("return");
-        } else {
-            switch (returnType) {
-                case INTEGER, BOOLEAN -> generator.writeToProgram("iconst_0\nireturn");
-                case REAL -> generator.writeToProgram("fconst_0\nfreturn");
-                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
-            }
-        }
+//        if (returnType == null) {
+//            generator.writeToProgram("return");
+//        } else {
+//            switch (returnType) {
+//                case INTEGER, BOOLEAN -> generator.writeToProgram("iconst_0\nireturn");
+//                case REAL -> generator.writeToProgram("fconst_0\nfreturn");
+//                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
+//            }
+//        }
 
         // Method epilogue
         generator.writeToProgram(".end method\n");

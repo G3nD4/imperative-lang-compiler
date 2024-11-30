@@ -13,6 +13,7 @@ public class TypeDeclaration extends Declaration {
     public TypeDeclaration(String identifier, Type type) {
         this.identifier = identifier;
         this.type = type;
+        CodeGenerator.registerType(identifier, type);
     }
 
     public static TypeDeclaration parse(ParseTree tree, MyLangParser parser) {
@@ -41,6 +42,6 @@ public class TypeDeclaration extends Declaration {
 
     @Override
     public void generateCode(CodeGenerator generator) {
-
+        // TODO: register user-defined type in CodeGenerator
     }
 }

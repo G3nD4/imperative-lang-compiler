@@ -10,9 +10,10 @@ import java.util.Map;
 
 public class CodeGenerator {
 
-    private final ScopeManager scopeManager = new ScopeManager();
-
     public CodeGenerator() {
+        types.put("integer", Type.INTEGER);
+        types.put("real", Type.REAL);
+        types.put("boolean", Type.BOOLEAN);
     }
 
     private final StringBuilder assemblyProgram = new StringBuilder();
@@ -21,6 +22,8 @@ public class CodeGenerator {
     private final Map<String, RoutineInfo> routines = new HashMap<>();
     private int labelCounter = 0; // Counter for generating unique labels
     private HashMap<String, Integer> stackIndices = new HashMap<>();
+    static private final Map<String, Type> types = new HashMap<>();
+    private final ScopeManager scopeManager = new ScopeManager();
 
     public boolean isGlobalScope() {
         return scopeManager.isMainScope();
@@ -42,8 +45,6 @@ public class CodeGenerator {
             final int index = getAndIncreaseCurrentStackIndex();
             routines.get(scope).registerVariable(name, new VariableInfo(index, type));
         }
-        // Increase index.
-//        ++currentStackIndex;
     }
 
     public void registerRoutine(String name, Type returnType, ArrayList<Parameter> params) {
@@ -65,14 +66,18 @@ public class CodeGenerator {
             }
             // Variable is not found in current scope.
         }
+        // TODO may cause issues
         // Get variable from global scope.
-        final VariableInfo info = variables.get(name);
-        // If trying to access a variable that does not exist, log an error and exit the program
-        if (info == null) {
-            System.out.println(("Variable " + name + " does not exist!"));
-            System.exit(1);
-        }
-        return info;
+//        final VariableInfo info = variables.get(name);
+//        // If trying to access a variable that does not exist, log an error and exit the program
+//        if (info == null) {
+//            System.out.println(("Variable " + name + " does not exist!"));
+//            System.exit(1);
+//        }
+//        return info;
+        System.out.println(("Variable " + name + " does not exist!"));
+        System.exit(1);
+        return null;
     }
 
     public String getProgramText() {
@@ -137,5 +142,18 @@ public class CodeGenerator {
 
     public RoutineInfo getRoutineInfo(String routineName) {
         return this.routines.get(routineName);
+    }
+
+    public static Type getType(String identifier) {
+        final Type type = types.get(identifier);
+        if (type == null) {
+            System.out.println("Type " + identifier + " is not defined!");
+            System.exit(1);
+        }
+        return type;
+    }
+
+    public static void registerType(String identifier, Type type) {
+        types.put(identifier, type);
     }
 }

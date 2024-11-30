@@ -1,8 +1,9 @@
-var x is 500.2
+type int is integer
 
-routine rout(a: integer, b: real): integer is
-    var b is 10
-    a := 11
+var x is 500
+
+routine rout(a: int, b: int): int is
+    a := (b * b) + 1
 
     return a
 end
