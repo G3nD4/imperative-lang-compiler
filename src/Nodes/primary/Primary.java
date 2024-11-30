@@ -81,16 +81,13 @@ public abstract class Primary<T> {
                 child = tree.getChild(1);
             }
             String nextStep = TreeBuilder.TreeToRule(child, parser);
-            switch (nextStep) {
-                case "routineCall":
-                    return RoutineCallPrimary.parse(child, parser);
-                case "modifiablePrimary":
-                    return ModifiablePrimary.parse(child, parser);
-                case "expression":
-                    return Expression.parse(child, parser);
-            }
-            System.out.println(TreeBuilder.TreeToRule(tree.getChild(0), parser));
-            return null;
+            return switch (nextStep) {
+                case "routineCall" -> RoutineCallPrimary.parse(child, parser);
+                case "modifiablePrimary" -> ModifiablePrimary.parse(child, parser);
+                case "expression" -> Expression.parse(child, parser);
+                default -> null;
+            };
+
         }
     }
 

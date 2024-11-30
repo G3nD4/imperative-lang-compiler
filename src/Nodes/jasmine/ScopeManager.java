@@ -28,6 +28,7 @@ public class ScopeManager {
     }
 
     public String getCurrentScope() {
+        System.out.println(scope);
         return isMainScope() ? "main" : scope.getLast();
     }
 }

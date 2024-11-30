@@ -122,6 +122,7 @@ public class Program implements JasmineInstructionsGeneratable {
 
     @Override
     public String generateInstructions(CodeGenerator generator) {
+        this.generator = generator;
         for (final RoutineDeclaration routineDeclaration : routineDeclarations) {
             routineDeclaration.generateCode(generator);
         }
@@ -175,6 +176,11 @@ public class Program implements JasmineInstructionsGeneratable {
     }
 
     public static Type getVariableType(String identifier) {
+        // Program распарсится и будет хранить в себе HashMap
+        // вида "функция: перменная: тип"
+        // Но после парсинга у "Program" scope будет пустой, поэтому возникает ошибка в
+        // code generation фазе. Нужно в getVariableType узнавать, какой сейчас у кодгенерации scope, из него идти в
+        // variables у Program
         final Type type = Program.variables.get(Program.scopeManager.getCurrentScope()).get(identifier);
         if (type == null) {
             System.out.println("Variable does not exists: " + identifier);

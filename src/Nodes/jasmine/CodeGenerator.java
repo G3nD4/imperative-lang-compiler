@@ -39,7 +39,7 @@ public class CodeGenerator {
 
     public void registerVariable(String name, Type type) {
         final String scope = scopeManager.getCurrentScope();
-        if (scope == null) {
+        if (scope.equals("main")) {
             variables.put(name, new VariableInfo(currentStackIndex, type));
         } else {
             final int index = getAndIncreaseCurrentStackIndex();

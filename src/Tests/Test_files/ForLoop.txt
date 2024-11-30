@@ -12,6 +12,4 @@ end
 
 var n is 0
 
-type int is integer
-
 sumOfNumbers(n)

@@ -45,6 +45,9 @@ public class ForLoop extends Statement {
     public static ForLoop parse(ParseTree tree, MyLangParser parser) {
         String loopVariable = String.valueOf(tree.getChild(1));
 
+        // FIXME: ASSUMING that for variable is ALWAYS integer
+        Program.registerVariable(loopVariable, Type.INTEGER);
+
         // If "reverse" exists, "range" and "loop" shifts to 1
         boolean reverseExists = String.valueOf(tree.getChild(3)).equals("reverse");
         int rangeChildIndex = reverseExists ? 4 : 3;
@@ -89,6 +92,8 @@ public class ForLoop extends Statement {
         // Generate body code
         body.generateCode(generator);
 
+        System.out.println("I am here");
+
         // Generate iterator increment/decrement
         ModifiablePrimary iter = new ModifiablePrimary(loopVariable);
         IntegerLiteral one = new IntegerLiteral(1);
@@ -120,7 +125,4 @@ public class ForLoop extends Statement {
         // Write end label
         generator.writeLabel(loopEnd);
     }
-
-    int a;
-    int a() {return 0;}
 }
