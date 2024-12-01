@@ -1,2 +1,1 @@
-var x: array [] integer
-
+var myArray: array [10] integer;

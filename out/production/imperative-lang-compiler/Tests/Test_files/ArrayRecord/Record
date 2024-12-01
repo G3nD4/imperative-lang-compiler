@@ -1,0 +1,4 @@
+var Person: record {
+    var x is 5
+    var y is 10
+}
