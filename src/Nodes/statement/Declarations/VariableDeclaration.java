@@ -89,6 +89,13 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
     public void generateCode(CodeGenerator generator) {
         generator.registerVariable(identifier, type);
         int index = generator.getCurrentStackIndex();
+
+        // ERROR: variable type and expression type do not match
+        if (this.expression != null && this.type != this.expression.type) {
+            System.out.println("Error in " + this.identifier + " variable declaration. Should be " + this.type
+                    + ", but " + this.expression.type + " was provided. [VariableDeclaration]");
+            System.exit(1);
+        }
         if (expression instanceof UnaryExpression exp) {
             if (exp.primary instanceof ModifiablePrimary modifiablePrimary) {
                 generator.writeToProgram(modifiablePrimary.getLoadCode(generator));

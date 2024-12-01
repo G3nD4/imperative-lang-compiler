@@ -1,1 +1,4 @@
-var x: boolean is true
+var largestPrime is 2
+var result : real is 5 * 2.718;
+var roundedResult : integer is result;
+largestPrime := roundedResult - 1;
