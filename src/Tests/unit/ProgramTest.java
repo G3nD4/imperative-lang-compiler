@@ -16,12 +16,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ProgramTest {
-    @Test
-    public void testSimpleProgram() throws IOException, InterruptedException {
+    private String testAdel = "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/";
+    private String testKamil = "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\";
+
+    private void runTest(String fileName) throws IOException {
 //        CharStream charStream = CharStreams.fromFileName(
-//                "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/complex_assign.txt");
+//                testAdel + fileName);
         CharStream charStream = CharStreams.fromFileName(
-                "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\IfStatement.txt");
+                testKamil + fileName);
 
         MyLangLexer myLangLexer = new MyLangLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -43,24 +45,70 @@ public class ProgramTest {
         try (FileWriter writer = new FileWriter("SumProgram.j")) {
             writer.write(result);
         }
+    }
 
+    @Test
+    public void testAssignment() throws IOException, InterruptedException {
+        runTest("Assignment.txt");
+    }
 
-        // Call Jasmin to assemble the .j file into a .class file
-        Process jasminProcess = new ProcessBuilder("java", "-jar", "C:\\Users\\HUAWEI\\Downloads\\jasmin-2.4.jar", "SumProgram.j")
-                .inheritIO() // Ensures Jasmin output is visible
-                .start();
-        int jasminExitCode = jasminProcess.waitFor();
-        if (jasminExitCode != 0) {
-            throw new RuntimeException("Jasmin failed to assemble the .j file.");
-        }
+    @Test
+    public void testComplexAssign() throws IOException, InterruptedException {
+        runTest("complex_assign.txt");
+    }
 
-        // Execute the generated MyProgram.class file
-        Process javaProcess = new ProcessBuilder("java", "SumProgram")
-                .inheritIO() // Ensures program output is visible
-                .start();
-        int javaExitCode = javaProcess.waitFor();
-        if (javaExitCode != 0) {
-            throw new RuntimeException("Execution of MyProgram.class failed.");
-        }
+    @Test
+    public void testComplexCode() throws IOException, InterruptedException {
+        runTest("complex_code.txt");
+    }
+
+    @Test
+    public void testForLoop() throws IOException, InterruptedException {
+        runTest("ForLoop.txt");
+    }
+
+    @Test
+    public void testIfStatement() throws IOException, InterruptedException {
+        runTest("IfStatement.txt");
+    }
+
+    @Test
+    public void testNestedIf() throws IOException, InterruptedException {
+        runTest("NestedIf.txt");
+    }
+
+    @Test
+    public void testPriorityTest() throws IOException, InterruptedException {
+        runTest("priority_test.txt");
+    }
+
+    @Test
+    public void testRoutine() throws IOException, InterruptedException {
+        runTest("Routine.txt");
+    }
+
+    @Test
+    public void testRoutinRout() throws IOException, InterruptedException {
+        runTest("RoutInRout.txt");
+    }
+
+    @Test
+    public void testTypeDeclaration() throws IOException, InterruptedException {
+        runTest("TypeDeclaration.txt");
+    }
+
+    @Test
+    public void testVariableDeclaration() throws IOException, InterruptedException {
+        runTest("VariableDeclaration.txt");
+    }
+
+    @Test
+    public void testWhileLoop() throws IOException, InterruptedException {
+        runTest("WhileLoop.txt");
+    }
+
+    @Test
+    public void testRoutineCallPrimary() throws IOException {
+        runTest("RoutineCallPrimary");
     }
 }

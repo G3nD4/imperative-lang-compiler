@@ -19,7 +19,7 @@ public class VariableDeclarationTest {
         final VariableDeclaration declaration = VariableDeclarationFactory.buildIntegerVarDeclaration("a", 5);
         declaration.generateCode(generator);
         String real = generator.getProgramText();
-        Assertions.assertEquals("ldc 5\nistore_0\n", real);
+        Assertions.assertEquals("ldc 5\nistore 0\n", real);
         System.out.println(real);
     }
 
@@ -29,7 +29,7 @@ public class VariableDeclarationTest {
         final VariableDeclaration declaration = VariableDeclarationFactory.buildRealVarDeclaration("a", 5.0);
         declaration.generateCode(generator);
         String real = generator.getProgramText();
-        Assertions.assertEquals("ldc 5.0\nfstore_0\n", real);
+        Assertions.assertEquals("ldc 5.0\nfstore 0\n", real);
         System.out.println(real);
     }
 
@@ -39,7 +39,7 @@ public class VariableDeclarationTest {
         final VariableDeclaration declaration = VariableDeclarationFactory.buildBooleanVarDeclaration("a", true);
         declaration.generateCode(generator);
         String real = generator.getProgramText();
-        Assertions.assertEquals("ldc 1\nistore_0\n", real);
+        Assertions.assertEquals("ldc 1\nistore 0\n", real);
         System.out.println(real);
     }
 
@@ -58,7 +58,7 @@ public class VariableDeclarationTest {
         final VariableDeclaration declaration = new VariableDeclaration("b", Type.BOOLEAN, expression);
         declaration.generateCode(generator);
         String real = generator.getProgramText();
-        Assertions.assertEquals("ldc 1\nistore_0\niload_0\n\nistore_1\n\n", real);
+        Assertions.assertEquals("ldc 1\nistore 0\niload 0\n\nistore 1\n\n", real);
         System.out.println(real);
     }
 }

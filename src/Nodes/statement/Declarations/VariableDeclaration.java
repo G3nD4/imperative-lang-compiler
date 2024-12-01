@@ -6,10 +6,7 @@ import Nodes.Program;
 import Nodes.expression.Expression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
-import Nodes.primary.BooleanLiteral;
-import Nodes.primary.IntegerLiteral;
-import Nodes.primary.ModifiablePrimary;
-import Nodes.primary.RealLiteral;
+import Nodes.primary.*;
 import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -103,13 +100,24 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
                     generator.writeToProgram("ldc " + ((BooleanLiteral) exp.primary).jasmineConst());
                 } else if (exp.primary instanceof RealLiteral) {
                     generator.writeToProgram("ldc " + ((RealLiteral) exp.primary).value.toString());
+                } else if (exp.primary instanceof RoutineCallPrimary) {
+                    ((RoutineCallPrimary) exp.primary).generateCode(generator);
                 }
+
+                if (exp.primary.type != this.type) {
+                    System.out.println("Variable " + this.identifier + " should have type "
+                            + this.type.toString() + ". But " + exp.primary.type +
+                            " was provided in his expression. [VariableDeclaration]");
+                    System.exit(1);
+                    return;
+                }
+
                 switch (type) {
                     case Type.BOOLEAN, Type.INTEGER:
-                        generator.writeToProgram("istore_" + index);
+                        generator.writeToProgram("istore " + index);
                         break;
                     case Type.REAL:
-                        generator.writeToProgram("fstore_" + index);
+                        generator.writeToProgram("fstore " + index);
                         break;
                     default:
                         System.out.println("Type " + type.name() + " is not supported!");
@@ -124,10 +132,10 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
             expression.generateCode(generator);
             switch (type) {
                 case Type.BOOLEAN, Type.INTEGER:
-                    generator.writeToProgram("istore_" + index);
+                    generator.writeToProgram("istore " + index);
                     break;
                 case Type.REAL:
-                    generator.writeToProgram("fstore_" + index);
+                    generator.writeToProgram("fstore " + index);
                     break;
                 default:
                     System.out.println("Type " + type.name() + " is not supported!");

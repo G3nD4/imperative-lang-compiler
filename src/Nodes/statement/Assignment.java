@@ -49,9 +49,9 @@ public class Assignment extends Statement {
         // Store value based on type
         switch (varInfo.getType()) {
             case Type.BOOLEAN, Type.INTEGER ->
-                    generator.writeToProgram("istore_" + varInfo.getIndex());
+                    generator.writeToProgram("istore " + varInfo.getIndex());
             case Type.REAL ->
-                    generator.writeToProgram("fstore_" + varInfo.getIndex());
+                    generator.writeToProgram("fstore " + varInfo.getIndex());
             default -> {
                 System.out.println("Type " + varInfo.getType().name() + " is not supported!");
                 System.exit(1);

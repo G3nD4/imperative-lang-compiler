@@ -1,0 +1,5 @@
+routine multiply(a: integer, b: integer): integer is
+    return a + b
+end
+
+var x: integer is multiply(2, 5)

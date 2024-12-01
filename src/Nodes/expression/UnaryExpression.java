@@ -82,7 +82,9 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
         } else {
             // load constant value
             if (primary instanceof Expression) {
-                ((Expression)primary).generateCode(generator);
+                ((Expression) primary).generateCode(generator);
+            } else if (primary instanceof RoutineCallPrimary routineCallPrimary) {
+                routineCallPrimary.generateCode(generator);
             } else if (type == Type.INTEGER || type == Type.BOOLEAN) {
                 if (type == Type.INTEGER) {
                     code.append("ldc ").append(((IntegerLiteral)primary).getValue()).append("\n");

@@ -53,7 +53,7 @@ public abstract class Primary<T> {
 
     public static Primary parse(ParseTree tree, MyLangParser parser) {
         ParseTree child = tree.getChild(0);
-        if (child.getChildCount() == 0 && !child.getText().equals("(")) {
+        if (child.getChildCount() == 0 && !child.getText().equals("(") && !(tree instanceof MyLangParser.RoutineCallContext)) {
             // INTEGER_LITERAL | REAL_LITERAL | TRUE | FALSE
             String literal = String.valueOf(child);
             switch (literal) {

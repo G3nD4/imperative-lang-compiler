@@ -66,7 +66,7 @@ public class UnaryExpressionTest {
 
         System.out.println(result);
 
-        Assertions.assertEquals("ldc 32.0\nfstore_0\nfload_0\n\nfneg", result);
+        Assertions.assertEquals("ldc 32.0\nfstore 0\nfload 0\n\nfneg", result);
     }
 
     @Test
@@ -89,6 +89,6 @@ public class UnaryExpressionTest {
 
         System.out.println(result);
 
-        Assertions.assertEquals("ldc 100.0\nfstore_0\nldc 32.0\nfstore_1\nfload_1\n\nfneg", result);
+        Assertions.assertEquals("ldc 100.0\nfstore 0\nldc 32.0\nfstore 1\nfload_1\n\nfneg", result);
     }
 }

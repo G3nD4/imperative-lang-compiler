@@ -166,6 +166,7 @@ public class Program implements JasmineInstructionsGeneratable {
     }
 
     public static final HashMap<String, HashMap<String, Type>> variables = new HashMap<>();
+    public static final HashMap<String, Type> routineReturnTypes = new HashMap<>();
 
     public static final ScopeManager scopeManager = new ScopeManager();
 
@@ -184,11 +185,6 @@ public class Program implements JasmineInstructionsGeneratable {
     }
 
     public static Type getVariableTypeWithScope(String identifier, CodeGenerator generator) {
-        // Program распарсится и будет хранить в себе HashMap
-        // вида "функция: перменная: тип"
-        // Но после парсинга у "Program" scope будет пустой, поэтому возникает ошибка в
-        // code generation фазе. Нужно в getVariableType узнавать, какой сейчас у кодгенерации scope, из него идти в
-        // variables у Program
         String scope = generator.getCurrentScope();
         final Type type = Program.variables.get(scope).get(identifier);
         if (type == null) {
@@ -200,5 +196,13 @@ public class Program implements JasmineInstructionsGeneratable {
 
     public static void registerVariable(String identifier, Type type) {
         Program.variables.get(Program.scopeManager.getCurrentScope()).put(identifier, type);
+    }
+
+    public static Type getRoutineReturnType(String routineName) {
+        return Program.routineReturnTypes.get(routineName);
+    }
+
+    public static void addRoutineReturnType(String routineName, Type type) {
+        Program.routineReturnTypes.put(routineName, type);
     }
 }

@@ -1,5 +1,6 @@
 package Nodes.statement;
 
+import Nodes.Enums.Type;
 import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
@@ -48,6 +49,18 @@ public class Return extends Statement {
         }
 
         expression.generateCode(generator);
+        Type expressionType = expression.getType(generator);
+
+        String currentScope = generator.getCurrentScope();
+        if (!currentScope.equals("main")) {
+            Type returnType = generator.getRoutineInfo(currentScope).getReturnType();
+            if (expressionType != returnType) {
+                System.out.println("Incorrect return type for '"
+                        + currentScope + "' routine. Should be "
+                        + returnType + " instead of " + expressionType);
+                System.exit(1);
+            };
+        }
 
         switch (expression.getType(generator)) {
             case INTEGER, BOOLEAN -> generator.writeToProgram("ireturn");

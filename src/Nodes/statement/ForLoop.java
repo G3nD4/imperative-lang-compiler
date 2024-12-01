@@ -77,7 +77,7 @@ public class ForLoop extends Statement {
         range.getEnd().generateCode(generator);
 
         // Load iterator value
-        generator.writeToProgram("iload_" + generator.getVariable(loopVariable).getIndex());
+        generator.writeToProgram("iload " + generator.getVariable(loopVariable).getIndex());
 
         // Compare iterator with end value
         if (reverse) {

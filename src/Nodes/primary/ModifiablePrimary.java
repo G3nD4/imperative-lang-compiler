@@ -38,8 +38,8 @@ public class ModifiablePrimary extends Primary {
 
         StringBuilder code = new StringBuilder();
         switch (varType) {
-            case INTEGER, BOOLEAN -> code.append("iload_").append(varIndex).append("\n");
-            case REAL -> code.append("fload_").append(varIndex).append("\n");
+            case INTEGER, BOOLEAN -> code.append("iload ").append(varIndex).append("\n");
+            case REAL -> code.append("fload ").append(varIndex).append("\n");
             default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
         }
         return code.toString();
@@ -65,8 +65,8 @@ public class ModifiablePrimary extends Primary {
 
         StringBuilder code = new StringBuilder();
         switch (varType) {
-            case INTEGER, BOOLEAN -> code.append("istore_").append(index).append("\n");
-            case REAL -> code.append("fstore_").append(index).append("\n");
+            case INTEGER, BOOLEAN -> code.append("istore ").append(index).append("\n");
+            case REAL -> code.append("fstore ").append(index).append("\n");
             default -> throw new RuntimeException("Unsupported type for variable: " + identifier);
         }
         return code.toString();

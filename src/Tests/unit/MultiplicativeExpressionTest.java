@@ -184,8 +184,8 @@ public class MultiplicativeExpressionTest {
         System.out.println(real);
         Assertions.assertEquals("""
                 ldc 5.0
-                fstore_0
-                fload_0
+                fstore 0
+                fload 0
                 
                 
                 ldc 8

@@ -84,6 +84,8 @@ public class RoutineDeclaration extends Statement {
         // Need to handle modifiable primary types. Does not affect parse method logic.
         Program.scopeManager.exitScope();
 
+        Program.addRoutineReturnType(routine.name, routine.returnType);
+
         return routine;
     }
 

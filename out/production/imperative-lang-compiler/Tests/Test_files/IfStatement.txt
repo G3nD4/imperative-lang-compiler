@@ -1,7 +1,7 @@
 routine add(a: real) is
     var x is 4
 
-    var result is 100
+    var result : integer
     if x % 2 = 0 then
          result := 1
     elseif x % 2 = 3 then
