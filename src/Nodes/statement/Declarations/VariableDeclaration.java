@@ -43,6 +43,13 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
             System.out.println("Error occurred on line: " + ((ParserRuleContext) tree).start.getLine() + " at character: " + ((ParserRuleContext) tree).start.getCharPositionInLine());
             System.exit(1);
         }
+
+
+//        if (var.expression == null) {
+//            if (var.type == Type.INTEGER) {
+//            }
+//        }
+
         if (var.type == null) {
             var.type = var.expression.returnType;
         }
@@ -85,21 +92,18 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
     public void generateCode(CodeGenerator generator) {
         generator.registerVariable(identifier, type);
         int index = generator.getCurrentStackIndex();
-        if (expression instanceof UnaryExpression) {
-            final UnaryExpression exp = (UnaryExpression) expression;
-            if (exp.primary instanceof ModifiablePrimary) {
-                final ModifiablePrimary modifiablePrimary = (ModifiablePrimary)exp.primary;
+        if (expression instanceof UnaryExpression exp) {
+            if (exp.primary instanceof ModifiablePrimary modifiablePrimary) {
                 generator.writeToProgram(modifiablePrimary.getLoadCode(generator));
                 generator.writeToProgram(modifiablePrimary.getStoreCode(generator, index));
             } else {
                 if (exp.primary instanceof IntegerLiteral) {
                     generator.writeToProgram("ldc " + ((IntegerLiteral) exp.primary).getValue().toString());
                 } else if (exp.primary instanceof BooleanLiteral) {
-                    generator.writeToProgram("ldc " + ((BooleanLiteral)exp.primary).jasmineConst());
+                    generator.writeToProgram("ldc " + ((BooleanLiteral) exp.primary).jasmineConst());
                 } else if (exp.primary instanceof RealLiteral) {
-                    generator.writeToProgram("ldc " + ((RealLiteral)exp.primary).value.toString());
+                    generator.writeToProgram("ldc " + ((RealLiteral) exp.primary).value.toString());
                 }
-                // TODO: handle Expression
                 switch (type) {
                     case Type.BOOLEAN, Type.INTEGER:
                         generator.writeToProgram("istore_" + index);
@@ -113,6 +117,10 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
                 }
             }
         } else {
+            // In case "var result: integer" we need to store only address
+            if (expression == null) {
+                return;
+            }
             expression.generateCode(generator);
             switch (type) {
                 case Type.BOOLEAN, Type.INTEGER:

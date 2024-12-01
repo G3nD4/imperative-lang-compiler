@@ -1,1 +1,1 @@
-var x: bool is true
+var x: boolean is true
