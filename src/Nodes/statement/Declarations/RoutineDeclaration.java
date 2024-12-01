@@ -48,43 +48,20 @@ public class RoutineDeclaration extends Statement {
             } else if (tree.getChild(i) instanceof MyLangParser.TypeContext) {
                 String rt = tree.getChild(i).getText();
                 routine.returnType = Type.fromString(rt);
+                Program.addRoutineReturnType(routine.name, routine.returnType);
             } else if (tree.getChild(i) instanceof MyLangParser.BodyContext) {
                 routine.body = Body.parse(tree.getChild(i), parser);
             }
         }
 
+        Program.addRoutineReturnType(routine.name, routine.returnType);
+
         if (routine.parameters == null) {
             routine.parameters = new ArrayList<>();
         }
 
-//        if (tree.getChildCount() > 5) {
-//            routine.parameters = parseParameters(tree.getChild(3));
-//        }
-//        if (tree.getChildCount() > 4) {
-//            if (tree.getChild(5).getText().equals("is") || routine.parameters.isEmpty() && tree.getChild(4).getText().equals("is")) {
-//                routine.returnType = null;
-//            } else {
-//                String rt = tree.getChild(routine.parameters.isEmpty() ? 5 : 6).getText();
-//                if (!rt.equals("is")) {
-//                    routine.returnType = Type.fromString(rt);
-//                }
-//            }
-//        }
-//        int bodyIndex;
-//        if (routine.returnType != null && !routine.parameters.isEmpty()) {
-//            bodyIndex = 9;
-//        } else if (routine.returnType == null && !routine.parameters.isEmpty() || routine.returnType != null && routine.parameters.isEmpty()) {
-//            bodyIndex = 8;
-//        } else {
-//            bodyIndex = 6;
-//        }
-
-//        routine.body = Body.parse(tree.getChild(bodyIndex), parser);
-
         // Need to handle modifiable primary types. Does not affect parse method logic.
         Program.scopeManager.exitScope();
-
-        Program.addRoutineReturnType(routine.name, routine.returnType);
 
         return routine;
     }

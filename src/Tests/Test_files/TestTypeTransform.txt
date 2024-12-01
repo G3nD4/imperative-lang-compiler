@@ -1,0 +1,3 @@
+var a: integer is 10
+var b: real is a
+b := b + 1

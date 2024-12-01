@@ -15,6 +15,7 @@ import main.IndentManager;
 import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class RoutineCallPrimary extends Primary implements JasminConvertable {
     public RoutineCallPrimary(String identifier, List<RoutineCallParameter> parameters) {
         this.identifier = identifier;
         this.parameters = parameters;
-        super.type = Program.getRoutineReturnType(identifier);
+        final Type type = Program.getRoutineReturnType(identifier);
+        super.type = type;
     }
 
     public String getIdentifier() {
@@ -143,9 +145,28 @@ public class RoutineCallPrimary extends Primary implements JasminConvertable {
                         }
                         generator.writeToProgram(paramPrimary.getLoadCode(generator));
                     }
+                    case RoutineCallPrimary paramPrimary -> {
+                        paramPrimary.generateCode(generator);
+                        final Type type = paramPrimary.getType(generator);
+                        final String typeStr = switch(type) {
+                            case Type.INTEGER, Type.BOOLEAN -> "I";
+                            case Type.REAL -> "F";
+                            default -> throw new UnsupportedTemporalTypeException("Type " + type.toString() + " not supported!");
+                        };
+                        parametersTypesString.append(typeStr);
+                    }
                     case null, default -> throw new IllegalStateException("Undefined parameter type." +
-                            " Please check 'RoutineCallStatement' class");
+                            " Please check 'RoutineCallPrimary' class");
                 }
+            } else {
+                parameters.get(i).expression.generateCode(generator);
+                final Type type = parameters.get(i).expression.getType(generator);
+                final String typeStr = switch(type) {
+                    case Type.INTEGER, Type.BOOLEAN -> "I";
+                    case Type.REAL -> "F";
+                    default -> throw new UnsupportedTemporalTypeException("Type " + type.toString() + " not supported!");
+                };
+                parametersTypesString.append(typeStr);
             }
         }
 

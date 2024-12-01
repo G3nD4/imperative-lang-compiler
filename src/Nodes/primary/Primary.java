@@ -35,6 +35,11 @@ public abstract class Primary<T> {
         if (routineCall != null) {
             return generator.getRoutineInfo(routineCall.getIdentifier()).getReturnType();
         }
+        if (this instanceof RoutineCallPrimary) {
+            // TODO: get type from code generator
+            final Type type = generator.getRoutineInfo(((RoutineCallPrimary) this).getIdentifier()).getReturnType();
+            return type;
+        }
 
 //        Primary prim = this;
 //        if (this instanceof LogicalOrExpression) {

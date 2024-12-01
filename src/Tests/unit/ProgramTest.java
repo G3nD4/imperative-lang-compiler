@@ -17,13 +17,13 @@ import java.io.IOException;
 
 public class ProgramTest {
     private String testAdel = "/home/adel/Desktop/compilers-project/imperative-lang-compiler/src/Tests/Test_files/";
-    private String testKamil = "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\";
+//    private String testKamil = "C:\\Users\\HUAWEI\\IdeaProjects\\imperative-lang-compiler\\src\\Tests\\Test_files\\";
 
     private void runTest(String fileName) throws IOException {
-//        CharStream charStream = CharStreams.fromFileName(
-//                testAdel + fileName);
         CharStream charStream = CharStreams.fromFileName(
-                testKamil + fileName);
+                testAdel + fileName);
+//        CharStream charStream = CharStreams.fromFileName(
+//                testKamil + fileName);
 
         MyLangLexer myLangLexer = new MyLangLexer(charStream);
         CommonTokenStream tokenStream = new CommonTokenStream(myLangLexer);
@@ -110,5 +110,15 @@ public class ProgramTest {
     @Test
     public void testRoutineCallPrimary() throws IOException {
         runTest("RoutineCallPrimary");
+    }
+
+    @Test
+    public void testTypeTransform() throws IOException {
+        runTest("TestTypeTransform.txt");
+    }
+
+    @Test
+    public void factorialFunctionUsingRecursion() throws IOException {
+        runTest("ProgramTest.txt");
     }
 }
