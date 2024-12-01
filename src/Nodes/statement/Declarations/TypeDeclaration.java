@@ -1,6 +1,7 @@
 package Nodes.statement.Declarations;
 
 import Nodes.Enums.Type;
+import Nodes.User_defined.RecordType;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
 import main.MyLangParser;

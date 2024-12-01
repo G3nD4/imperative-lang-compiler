@@ -28,6 +28,9 @@ INTEGER: 'integer';
 REAL: 'real';
 BOOLEAN: 'boolean';
 
+RECORD: 'record';
+ARRAY: 'array';
+
 ASSIGN: ':=';
 COLON: ':';
 SEMICOLON: ';';
@@ -46,6 +49,10 @@ RANGE: '..';
 
 LPAREN: '(';
 RPAREN: ')';
+LCURLY: '{';
+RCURLY: '}';
+LSQUARE: '[';
+RSQUARE: ']';
 DOT: '.';
 COMMA: ',';
 NEWLINE: '\r'? '\n';
@@ -82,6 +89,16 @@ type
     | REAL
     | BOOLEAN
     | IDENTIFIER               // User-defined types
+    | arrayType
+    | recordType
+    ;
+
+arrayType
+    : ARRAY LSQUARE (expression)? RSQUARE type
+    ;
+
+recordType
+    : RECORD LCURLY separator? (variableDeclaration separator?)* RCURLY END
     ;
 
 routineDeclaration
@@ -197,5 +214,6 @@ primary
 // -------------------- Modifiable Primary --------------------
 
 modifiablePrimary
-    : IDENTIFIER (DOT IDENTIFIER)*
+    : IDENTIFIER (DOT IDENTIFIER | LSQUARE expression RSQUARE)*
+    | IDENTIFIER LSQUARE expression RSQUARE
     ;
