@@ -21,6 +21,46 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
         super.returnType = type;
     }
 
+    public Number getNumericalLiteralValue() {
+        assert (!(primary instanceof ModifiablePrimary));
+        assert (!(primary.getValue() instanceof Boolean));
+
+        if (sign == Sign.PLUS) {
+            if (primary.getValue() instanceof Integer) {
+                return (Integer) primary.getValue();
+            } else {
+                return (Double) primary.getValue();
+            }
+        } else {
+            if (primary.getValue() instanceof Integer) {
+                return -((Integer) primary.getValue());
+            } else {
+                return -((Double) primary.getValue());
+            }
+        }
+    }
+
+    public void setNumericalLiteralValue(Number number) {
+        assert (!(primary instanceof ModifiablePrimary));
+        assert (!(primary instanceof BooleanLiteral));
+
+        if (number instanceof Integer) {
+            if (number.intValue() < 0) {
+                this.sign = Sign.MINUS;
+            } else {
+                this.sign = Sign.PLUS;
+            }
+            this.primary.setValue(number.intValue());
+        } else {
+            if (number.doubleValue() < 0) {
+                this.sign = Sign.MINUS;
+            } else {
+                this.sign = Sign.PLUS;
+            }
+            this.primary.setValue(number.doubleValue());
+        }
+    }
+
     public static UnaryExpression parse(ParseTree tree, MyLangParser parser) {
         Sign sign = Sign.PLUS;
 
@@ -37,10 +77,9 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
                 default -> throw new IllegalStateException("Unexpected value: " + tree.getChild(0));
             };
             final Primary _primary = Primary.parse(tree.getChild(1), parser);
-            return new UnaryExpression(sign, _primary, _primary != null ? _primary.type : null );
+            return new UnaryExpression(sign, _primary, _primary != null ? _primary.type : null);
         }
     }
-
 
 
     @Override
@@ -61,6 +100,7 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
     public void generateCode(CodeGenerator generator) {
         generator.writeToProgram(getLoadCode(generator));
     }
+
     @Override
     /*
     Loads variable with respect to its sign: PLUS, MINUS, NOT;
@@ -87,12 +127,12 @@ public class UnaryExpression extends Expression implements JasminLoadable, Jasmi
                 routineCallPrimary.generateCode(generator);
             } else if (type == Type.INTEGER || type == Type.BOOLEAN) {
                 if (type == Type.INTEGER) {
-                    code.append("ldc ").append(((IntegerLiteral)primary).getValue()).append("\n");
+                    code.append("ldc ").append(((IntegerLiteral) primary).getValue()).append("\n");
                 } else {
-                    code.append(((BooleanLiteral)primary).getLoadCode(generator)).append("\n");
+                    code.append(((BooleanLiteral) primary).getLoadCode(generator)).append("\n");
                 }
             } else if (type == Type.REAL) {
-                code.append("ldc ").append(((RealLiteral)primary).getValue()).append("\n");
+                code.append("ldc ").append(((RealLiteral) primary).getValue()).append("\n");
             }
         }
 

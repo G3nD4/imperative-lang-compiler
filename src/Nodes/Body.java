@@ -19,7 +19,7 @@ public class Body implements JasminConvertable {
     /*
      Contains declarations and statements in the right order.
      */
-    private final ArrayList<Object> orderedDnS = new ArrayList<>();
+    private ArrayList<Object> orderedDnS = new ArrayList<>();
 
     public void addDeclaration(Declaration declaration) {
         declarations.add(declaration);
@@ -33,6 +33,19 @@ public class Body implements JasminConvertable {
 
     public ArrayList<Object> getOrderedDnS() {
         return orderedDnS;
+    }
+
+    public void setDns(ArrayList<Object> newOrderedDnS) {
+        orderedDnS.clear();
+        statements.clear();
+        declarations.clear();
+        for (Object object: newOrderedDnS) {
+            if (object instanceof Statement statement) {
+                addStatement(statement);
+            } else if (object instanceof Declaration declaration) {
+                addDeclaration(declaration);
+            }
+        }
     }
 
     public List<Statement> getStatements() {

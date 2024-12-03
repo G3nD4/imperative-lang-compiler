@@ -18,11 +18,6 @@ public abstract class Primary<T> {
     public Type type;
 
     public Type getType(CodeGenerator generator) {
-//        if (this instanceof UnaryExpression
-//                && ((UnaryExpression) this).primary instanceof ModifiablePrimary modPrim) {
-//            return modPrim.getType(generator);
-//        }
-
         if (type != null) {
         return type;
         }
@@ -50,6 +45,14 @@ public abstract class Primary<T> {
         System.exit(1);
 
         return null;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
     }
 
     boolean hasChildren() {

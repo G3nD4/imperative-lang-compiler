@@ -22,6 +22,22 @@ public class MultiplicativeExpression extends Expression implements JasminConver
         super.returnType = type;
     }
 
+    public ArrayList<UnaryExpression> getOperands() {
+        return operands;
+    }
+
+    public ArrayList<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperands(ArrayList<UnaryExpression> operands) {
+        this.operands = operands;
+    }
+
+    public void setOperations(ArrayList<Operation> operations) {
+        this.operations = operations;
+    }
+
     public static MultiplicativeExpression parse(ParseTree tree, MyLangParser parser) {
         ArrayList<UnaryExpression> operands = new ArrayList<>();
         ArrayList<Operation> operations = new ArrayList<>();

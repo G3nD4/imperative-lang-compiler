@@ -12,7 +12,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// RoutineDeclaration.getBody() ->
+// -> проходимся по orderedDnS -> усекаем всё после "Return" -> возвращаем orderedDnS
 public class RoutineDeclaration extends Statement {
     private String name;
     private List<Parameter> parameters;
@@ -98,6 +99,7 @@ public class RoutineDeclaration extends Statement {
     public Body getBody() {
         return body;
     }
+
 
     @Override
     public String toString(String indent) {

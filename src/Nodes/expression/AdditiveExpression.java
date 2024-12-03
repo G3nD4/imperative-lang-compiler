@@ -20,6 +20,10 @@ public class AdditiveExpression extends Expression implements JasminConvertable 
         super.type = type;
     }
 
+    public ArrayList<MultiplicativeExpression> getOperands() {
+        return operands;
+    }
+
     public static AdditiveExpression parse(ParseTree tree, MyLangParser parser) {
         ArrayList<MultiplicativeExpression> operands = new ArrayList<>();
         ArrayList<Sign> operations = new ArrayList<>();

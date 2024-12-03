@@ -19,6 +19,11 @@ public class RealLiteral extends Primary<Double> implements Literal<Double> {
     }
 
     @Override
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    @Override
     public String toString(String indent) {
         IndentManager.print("RealLiteran: " + value.toString());
 

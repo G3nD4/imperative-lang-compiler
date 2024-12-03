@@ -1,6 +1,13 @@
 package main;
 
+import Helpers.AddIndents;
+import Nodes.Program;
+import Nodes.expression.AdditiveExpression;
+import Nodes.expression.MultiplicativeExpression;
+import Nodes.expression.UnaryExpression;
+import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.ScopeManager;
+import Nodes.statement.Declarations.VariableDeclaration;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -9,6 +16,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.IOException;
 import java.util.*;
+
 import Nodes.Enums.Type;
 
 import java.io.FileWriter;
@@ -43,16 +51,29 @@ public class App {
             ParseTreeWalker.DEFAULT.walk(keywordUsageListener, context);
 
             TreeNode root = TreeBuilder.buildTree(context.children.getFirst(), myLangParser);
+            RoutineDeadCodeOptimizer routineDeadCodeOptimizer = new RoutineDeadCodeOptimizer();
+            routineDeadCodeOptimizer.optimize((Program) ((InternalNode) root).data);
 
-            try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
-                writer.println("\n\n\n");
-                writer.println(root.toString("       "));
-                writer.println("\n\n\nDone");
-                System.out.println("Output successfully written to output.txt");
-            } catch (IOException e) {
-                System.err.println("An error occurred while writing to the file:");
-                e.printStackTrace();
-            }
+            ConstantFoldingOptimizer constantFoldingOptimizer = new ConstantFoldingOptimizer();
+            constantFoldingOptimizer.optimize((Program) ((InternalNode) root).data);
+
+
+            final Program program = (Program) ((InternalNode) root).data;
+            final CodeGenerator generator = new CodeGenerator();
+            String result = program.generateInstructions(generator);
+            result = AddIndents.add(result);
+            System.out.println(result);
+
+
+//            try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
+//                writer.println("\n\n\n");
+//                writer.println(root.toString("       "));
+//                writer.println("\n\n\nDone");
+//                System.out.println("Output successfully written to output.txt");
+//            } catch (IOException e) {
+//                System.err.println("An error occurred while writing to the file:");
+//                e.printStackTrace();
+//            }
 
             System.out.println("\n\n\nDone");
         } catch (IOException e) {

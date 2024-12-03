@@ -23,6 +23,10 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
         this.expression = expression;
     }
 
+    public void setExpression(Expression expression) {
+        this.expression = expression;
+    }
+
     public static VariableDeclaration parse(ParseTree tree, MyLangParser parser) {
         // Need to handle modifiable primary types. Does not affect parse method logic.
         VariableDeclaration var = new VariableDeclaration("", null, null);

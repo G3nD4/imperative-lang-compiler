@@ -1,11 +1,5 @@
-type int is integer
-
-var x is 500
-
-routine rout(a: int, b: int): int is
-    a := (b * b) + 1
-
-    return a
-end
-
-rout(5, x)
+var b is 10
+var a is 100
+var c is 10000
+var x is 3 * 5 * 10 / 2 % 5
+print(x)

@@ -6,7 +6,7 @@ import main.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class IntegerLiteral extends Primary<Integer> implements Literal<Integer> {
-    private final Integer value;
+    private Integer value;
 
     public IntegerLiteral(int value) {
         this.value = value;
@@ -18,8 +18,13 @@ public class IntegerLiteral extends Primary<Integer> implements Literal<Integer>
         return value;
     }
 
+    @Override
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
     public String toString(String indent) {
-        IndentManager.print("IntegerLiteran: " + value.toString());
+        IndentManager.print("IntegerLiteral: " + value.toString());
 
         return "";
     }
