@@ -143,15 +143,6 @@ public class Program implements JasmineInstructionsGeneratable {
         }
         generator.writeToProgram("return");
         generator.writeToProgram(".end method");
-//        for (Object object : orderedProgram) {
-//            if (object instanceof RoutineDeclaration) {
-//                ((RoutineDeclaration) object).generateCode(generator);
-//            } else if (object instanceof  Statement) {
-//                ((Statement) object).generateCode(generator);
-//            } else if (object instanceof Declaration) {
-//                ((Declaration) object).generateCode(generator);
-//            }
-//        }
 
         final String body = generator.getProgramText();
         final String header = ".class public SumProgram\n.super java/lang/Object\n";
@@ -160,9 +151,8 @@ public class Program implements JasmineInstructionsGeneratable {
                 "    invokespecial java/lang/Object/<init>()V\n" +
                 "    return\n" +
                 ".end method\n";
-        final String programCode = RemoveRedundantEnters.remove(header + constructor + body);
 
-        return programCode;
+        return RemoveRedundantEnters.remove(header + constructor + body);
     }
 
     public static final HashMap<String, HashMap<String, Type>> variables = new HashMap<>();

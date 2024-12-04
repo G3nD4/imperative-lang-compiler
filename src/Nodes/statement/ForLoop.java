@@ -73,7 +73,6 @@ public class ForLoop extends Statement {
         generator.writeLabel(loopStart);
 
         // Generate condition code (i <= end or i >= end for reverse)
-//        ModifiablePrimary iterRef = new ModifiablePrimary(loopVariable);
         range.getEnd().generateCode(generator);
 
         // Load iterator value

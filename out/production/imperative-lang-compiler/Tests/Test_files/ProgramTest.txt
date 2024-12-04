@@ -1,0 +1,61 @@
+var number : integer is 84;
+var largestPrime : integer is -1;
+var isPrime : boolean;
+
+routine IsPrime(n : integer) : boolean is
+    if n <= 1 then
+        return false;
+    end;
+    for divisor in 2..n loop
+        if n % divisor = 0 then
+            return false;
+        end;
+    end;
+    return true;
+end;
+
+routine FindLargestPrimeFactor(n : integer) : integer is
+    var factor : integer is 2;
+    var maxPrime : integer is -1;
+
+    while n > 1 loop
+        if n % factor = 0 then
+            if IsPrime(factor) then
+                maxPrime := factor;
+            end;
+            n := n / factor;
+        else
+            factor := factor + 1;
+        end;
+    end;
+
+    return maxPrime;
+end;
+
+routine ValidatePrimeFactorization(n : integer, factor : integer) : boolean is
+    if n % factor = 0 and IsPrime(factor) then
+        return true;
+    end;
+    return false;
+end;
+
+largestPrime := FindLargestPrimeFactor(number);
+
+isPrime := ValidatePrimeFactorization(number, largestPrime);
+
+if isPrime then
+    var result : integer is largestPrime * 2;
+    var roundedResult : integer is result;
+    largestPrime := roundedResult - 1;
+else
+    number := -1;
+    largestPrime := -1;
+    isPrime := false;
+end;
+
+for i in 1..largestPrime loop
+    if i % 3 = 0 and isPrime then
+        isPrime := not isPrime;
+    end;
+end;
+

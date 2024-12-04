@@ -12,8 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.List;
-// RoutineDeclaration.getBody() ->
-// -> проходимся по orderedDnS -> усекаем всё после "Return" -> возвращаем orderedDnS
+
 public class RoutineDeclaration extends Statement {
     private String name;
     private List<Parameter> parameters;
@@ -162,26 +161,9 @@ public class RoutineDeclaration extends Statement {
         generator.writeToProgram(".limit stack 100");
         generator.writeToProgram(".limit locals 100");
 
-        // TODO: handle case, when a routineCallStatement that returns some value other than void is called,
-        // TODO: but its value not used.
-        // EXAMPLE:
-        // func(5)         -> has no effect (must be discarded)
-        // var a = func(5) -> has effect
-
         // Generate body code
         body.generateCode(generator);
 
-
-        // If no explicit return at the end, add default return
-//        if (returnType == null) {
-//            generator.writeToProgram("return");
-//        } else {
-//            switch (returnType) {
-//                case INTEGER, BOOLEAN -> generator.writeToProgram("iconst_0\nireturn");
-//                case REAL -> generator.writeToProgram("fconst_0\nfreturn");
-//                default -> throw new IllegalStateException("Unsupported return type: " + returnType);
-//            }
-//        }
 
         if (isReturnTypeVoid()) {
             generator.writeToProgram("return");

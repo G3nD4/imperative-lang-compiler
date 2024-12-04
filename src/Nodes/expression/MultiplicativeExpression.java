@@ -151,10 +151,7 @@ public class MultiplicativeExpression extends Expression implements JasminConver
             }
             if (exp.type == Type.IDENTIFIER) {
                 System.out.println("This type MUST NOT appear during code-generation process! FIX OPTMIZATION!");
-                System.exit(666);
-//                if (exp.primary.getType(generator) == Type.REAL) {
-//                    return true;
-//                }
+                System.exit(1);
             }
         }
         for (final Operation operation : operations) {

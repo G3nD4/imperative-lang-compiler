@@ -31,15 +31,8 @@ public abstract class Primary<T> {
             return generator.getRoutineInfo(routineCall.getIdentifier()).getReturnType();
         }
         if (this instanceof RoutineCallPrimary) {
-            // TODO: get type from code generator
-            final Type type = generator.getRoutineInfo(((RoutineCallPrimary) this).getIdentifier()).getReturnType();
-            return type;
+            return generator.getRoutineInfo(((RoutineCallPrimary) this).getIdentifier()).getReturnType();
         }
-
-//        Primary prim = this;
-//        if (this instanceof LogicalOrExpression) {
-//            if (((LogicalOrExpression)this).)
-//        }
 
         System.out.println("Cannot determine type!");
         System.exit(1);

@@ -25,10 +25,6 @@ public class CodeGenerator {
     static private final Map<String, Type> types = new HashMap<>();
     private final ScopeManager scopeManager = new ScopeManager();
 
-    public boolean isGlobalScope() {
-        return scopeManager.isMainScope();
-    }
-
     public void enterScope(String scopeName) {
         scopeManager.enterScope(scopeName);
     }

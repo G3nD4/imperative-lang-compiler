@@ -172,7 +172,6 @@ public class RoutineCallStatement extends Statement implements JasminConvertable
         parametersTypesString.reverse();
 
         String returnType = "";
-        // TODO: MAYBE need to handle Type.IDENTIFIER
 
         if (routineInfo.getReturnType() == null) {
             returnType = "V";
@@ -184,11 +183,7 @@ public class RoutineCallStatement extends Statement implements JasminConvertable
             }
         }
 
-        // TODO: Jasmin class name may be changed
         generator.writeToProgram("invokestatic SumProgram/" + this.identifier
                 + "(" + parametersTypesString + ")" + returnType);
-
-        // TODO: no handling of return type
-        // TODO: check for nested routine calls
     }
 }

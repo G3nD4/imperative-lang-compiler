@@ -42,6 +42,5 @@ public class TypeDeclaration extends Declaration {
 
     @Override
     public void generateCode(CodeGenerator generator) {
-        // TODO: register user-defined type in CodeGenerator
     }
 }

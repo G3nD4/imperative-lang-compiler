@@ -101,14 +101,6 @@ public class RelationalExpression extends Expression implements JasminConvertabl
         String trueLabel = generator.generateUniqueLabel("true");
         String endLabel = generator.generateUniqueLabel("end");
 
-        /*
-        FIXME: for some reason, this [ATTENTION] claims the opposite to how it really works
-
-        ATTENTION: need to flip operations, because Jasmin
-        compares LAST value with PRE-last
-        5 -> 8 for GREATER_THAN will be compared as 8 > 5
-         */
-//        generator.writeToProgram("swap");
         generator.writeToProgram("fcmpl");
         switch (operations.getFirst()) {
             case LESS_THAN -> generator.writeToProgram("iflt " + trueLabel);

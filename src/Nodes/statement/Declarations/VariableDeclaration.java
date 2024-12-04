@@ -46,11 +46,6 @@ public class VariableDeclaration extends Declaration implements JasminConvertabl
         }
 
 
-//        if (var.expression == null) {
-//            if (var.type == Type.INTEGER) {
-//            }
-//        }
-
         if (var.type == null) {
             var.type = var.expression.returnType;
         }

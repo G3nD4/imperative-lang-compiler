@@ -8,7 +8,7 @@ import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PrintStatement extends Statement implements JasminConvertable {
-    private final Expression expression; // Assuming you have an Expression class
+    private final Expression expression;
 
     public PrintStatement(Expression expression) {
         this.expression = expression;

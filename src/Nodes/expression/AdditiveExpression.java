@@ -118,10 +118,7 @@ public class AdditiveExpression extends Expression implements JasminConvertable 
             }
             if (exp.type == Type.IDENTIFIER) {
                 System.out.println("This type MUST NOT appear during code-generation process! FIX OPTMIZATION!");
-                System.exit(666);
-//                if (exp.primary.getType(generator) == Type.REAL) {
-//                    return true;
-//                }
+                System.exit(1);
             }
         }
         return false;

@@ -25,7 +25,7 @@ public class RealLiteral extends Primary<Double> implements Literal<Double> {
 
     @Override
     public String toString(String indent) {
-        IndentManager.print("RealLiteran: " + value.toString());
+        IndentManager.print("RealLiteral: " + value.toString());
 
         return "";
     }

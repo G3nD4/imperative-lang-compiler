@@ -1,0 +1,15 @@
+type int is integer
+
+routine multiply(a: int, b: int): integer is
+    return a * b
+end
+
+routine sumOfNumbers(): integer is
+    var sum is 1
+    for i in 1..10 loop
+        sum := multiply(sum, i)
+    end
+    return sum
+end
+
+var x is sumOfNumbers()

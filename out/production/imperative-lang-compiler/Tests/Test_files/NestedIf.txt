@@ -1,0 +1,10 @@
+var n is 0
+if n < 10 then
+    if n < 5 then
+        var category : integer is 1
+    else
+        var category : integer is 2
+    end
+else
+    var category : integer is 3
+end

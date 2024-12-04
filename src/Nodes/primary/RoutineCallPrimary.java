@@ -26,8 +26,7 @@ public class RoutineCallPrimary extends Primary implements JasminConvertable {
     public RoutineCallPrimary(String identifier, List<RoutineCallParameter> parameters) {
         this.identifier = identifier;
         this.parameters = parameters;
-        final Type type = Program.getRoutineReturnType(identifier);
-        super.type = type;
+        super.type = Program.getRoutineReturnType(identifier);
     }
 
     public String getIdentifier() {
@@ -173,7 +172,6 @@ public class RoutineCallPrimary extends Primary implements JasminConvertable {
         parametersTypesString.reverse();
 
         String returnType = "";
-        // TODO: MAYBE need to handle Type.IDENTIFIER
 
         if (routineInfo.getReturnType() == null) {
             returnType = "V";
@@ -185,11 +183,7 @@ public class RoutineCallPrimary extends Primary implements JasminConvertable {
             }
         }
 
-        // TODO: Jasmin class name may be changed
         generator.writeToProgram("invokestatic SumProgram/" + this.identifier
                 + "(" + parametersTypesString + ")" + returnType);
-
-        // TODO: no handling of return type
-        // TODO: check for nested routine calls
     }
 }

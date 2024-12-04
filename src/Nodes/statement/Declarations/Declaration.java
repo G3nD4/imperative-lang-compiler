@@ -6,10 +6,6 @@ import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public abstract class Declaration implements JasminConvertable {
-    // TODO: if ruleName == 'variable declaration' : varDec.parse
-    // TODO: else if rule name == 'type declaration' : typeDec.parse
-    // TODO: else : sout(error), System.exit(1);
-
     public static Declaration parse(ParseTree tree, MyLangParser parser) {
         ParseTree child = tree.getChild(0);
         String ruleName = TreeBuilder.TreeToRule(child, parser);

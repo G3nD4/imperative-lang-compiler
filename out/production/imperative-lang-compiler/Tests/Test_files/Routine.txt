@@ -1,0 +1,5 @@
+var b is 10
+var a is 100
+var c is 10000
+var x is 3 * 5 * 10 / 2 % 5
+print(x)
