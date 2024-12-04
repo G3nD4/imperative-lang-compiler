@@ -9,7 +9,7 @@ import Nodes.statement.Declarations.Declaration;
 import Nodes.statement.Declarations.RoutineDeclaration;
 import Nodes.statement.Statement;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.codegen.model.decl.Decl;
 import org.antlr.v4.runtime.tree.ParseTree;

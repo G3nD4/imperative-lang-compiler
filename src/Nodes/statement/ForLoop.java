@@ -12,7 +12,7 @@ import Nodes.primary.ModifiablePrimary;
 import Nodes.statement.Declarations.VariableDeclaration;
 import Tests.factory.MultiplicationExpressionFactory;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;

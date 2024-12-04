@@ -4,7 +4,7 @@ import Nodes.Interfaces.JasminConvertable;
 import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public class LogicalOrExpression extends Expression implements JasminConvertable {
     public ArrayList<LogicalAndExpression> operands;
 
-    public LogicalOrExpression(ArrayList<LogicalAndExpression> operands) {
+    public LogicalOrExpression(ArrayList<LogicalAndExpression> operands, Type type) {
         this.operands = operands;
+        super.type = type;
     }
 
     public static LogicalOrExpression parse(ParseTree tree, MyLangParser parser) {
@@ -33,7 +34,7 @@ public class LogicalOrExpression extends Expression implements JasminConvertable
             }
         }
 
-        return new LogicalOrExpression(operands);
+        return new LogicalOrExpression(operands, Type.BOOLEAN);
     }
 
     @Override

@@ -8,7 +8,6 @@ import Nodes.expression.RelationalExpression;
 import Nodes.jasmine.CodeGenerator;
 import Tests.factory.AdditiveExpressionFactory;
 import org.junit.Test;
-import Helpers.RunJasmin;
 
 import java.io.FileWriter;
 import java.io.IOException;

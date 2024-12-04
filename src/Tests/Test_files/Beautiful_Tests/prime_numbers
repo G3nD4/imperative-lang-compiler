@@ -1,0 +1,25 @@
+routine isPrime(n: integer): boolean is
+    if n <= 1 then
+        return false
+    end
+
+    var i: integer is 2
+
+    while i * i <= n loop
+        if n % i = 0 then
+            return false
+        end
+        i := i + 1
+    end
+
+    return true
+end
+
+var x: integer is 1
+
+while x <= 20 loop
+    if isPrime(x) then
+        print(x)
+    end
+    x := x + 1
+end

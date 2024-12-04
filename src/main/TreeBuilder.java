@@ -3,6 +3,8 @@ package main;
 import Nodes.Program;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
+import main.antlrTree.MyLangParser;
+
 
 public class TreeBuilder {
 

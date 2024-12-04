@@ -7,7 +7,7 @@ import Nodes.Program;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.Statement;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;

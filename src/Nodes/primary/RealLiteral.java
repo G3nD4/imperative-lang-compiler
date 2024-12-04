@@ -2,7 +2,7 @@ package Nodes.primary;
 
 import Nodes.Enums.Type;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class RealLiteral extends Primary<Double> implements Literal<Double> {

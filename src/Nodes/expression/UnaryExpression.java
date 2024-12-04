@@ -7,7 +7,7 @@ import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.JasminLoadable;
 import Nodes.primary.*;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class UnaryExpression extends Expression implements JasminLoadable, JasminConvertable {

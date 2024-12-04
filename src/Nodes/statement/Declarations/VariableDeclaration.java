@@ -8,7 +8,7 @@ import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.primary.*;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 

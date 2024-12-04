@@ -10,7 +10,7 @@ import Nodes.jasmine.RoutineInfo;
 import Nodes.jasmine.VariableInfo;
 import Nodes.primary.*;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.misc.OrderedHashMap;
 import org.antlr.v4.runtime.tree.ParseTree;
 

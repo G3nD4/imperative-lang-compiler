@@ -2,7 +2,7 @@ package Nodes;
 
 import Nodes.expression.Expression;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Range {

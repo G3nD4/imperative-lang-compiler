@@ -5,7 +5,7 @@ import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 

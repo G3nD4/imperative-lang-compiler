@@ -1,0 +1,28 @@
+routine max(a: integer, b: integer): integer is
+    if a > b then
+        return a
+    end
+    return b
+end
+
+routine min(a: integer, b: integer): integer is
+    if a < b then
+        return a
+    end
+    return b
+end
+
+var x: integer is 10
+var y: integer is 20
+
+var largest: integer is max(x, y)
+var smallest: integer is min(x, y)
+
+print(largest)
+print(smallest)
+
+if max(5, 10000) < min(2, 7) then
+    print(1)
+else
+    print(0)
+end

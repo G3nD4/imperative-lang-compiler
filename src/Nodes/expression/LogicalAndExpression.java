@@ -4,7 +4,7 @@ import Nodes.Interfaces.JasminConvertable;
 import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;

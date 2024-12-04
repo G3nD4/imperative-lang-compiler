@@ -6,7 +6,7 @@ import Nodes.expression.LogicalOrExpression;
 import Nodes.expression.UnaryExpression;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.statement.RoutineCallStatement;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import main.TreeBuilder;
 import org.antlr.v4.runtime.tree.ParseTree;
 

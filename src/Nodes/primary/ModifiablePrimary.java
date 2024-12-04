@@ -5,7 +5,7 @@ import Nodes.Program;
 import Nodes.jasmine.CodeGenerator;
 import Nodes.jasmine.VariableInfo;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ModifiablePrimary extends Primary {

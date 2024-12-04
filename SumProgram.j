@@ -5,87 +5,115 @@
     invokespecial java/lang/Object/<init>()V
     return
 .end method
-.method public static IsPrime(I)I
-.limit stack 100
-.limit locals 100
-	iload 0
-	i2f
-	ldc 1
-	i2f
-	fcmpl
-	ifle true_2
-	iconst_0
-	goto end_3
-true_2:
-	iconst_1
-end_3:
-	ifeq else_0
-	ldc 0
-	ireturn
-	goto endif_1
-else_0:
-endif_1:
-	ldc 2
-	ldc 2
-	istore 1
-fl_start_4:
-	iload 0
-	ldc 1
-	isub
-	iload 1
-	if_icmplt fl_end_5
-	iload 0
-	iload 1
-	irem
-	i2f
-	ldc 0
-	i2f
-	fcmpl
-	ifeq true_8
-	iconst_0
-	goto end_9
-true_8:
-	iconst_1
-end_9:
-	ifeq else_6
-	ldc 0
-	ireturn
-	goto endif_7
-else_6:
-endif_7:
-	iload 1
-	ldc 1
-	iadd
-	istore 1
-	goto fl_start_4
-fl_end_5:
-	ldc 1
-	ireturn
-.end method
 .method public static main([Ljava/lang/String;)V
 .limit stack 100
 .limit locals 100
-	ldc 1
-	ldc 1
+	ldc 10
 	istore 0
-fl_start_10:
-	ldc 100
+	ldc 3.14
+	fstore 1
+	ldc 1
+	istore 2
 	iload 0
-	if_icmplt fl_end_11
+	ldc 5
+	iadd
+	istore 0
+	fload 1
+	ldc 2.5
+	fmul
+	fstore 1
 	iload 0
-	invokestatic SumProgram/IsPrime(I)I
-	ifeq else_12
+	i2f
+	ldc 10
+	i2f
+	fcmpl
+	ifgt true_3
+	iconst_0
+	goto end_4
+true_3:
+	iconst_1
+end_4:
+	ifeq elseif_0
+	ldc 0
+	istore 2
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	iload 0
 	invokevirtual java/io/PrintStream/println(I)V
-	goto endif_13
-else_12:
-endif_13:
+	goto endif_2
+elseif_0:
 	iload 0
+	i2f
+	ldc 10
+	i2f
+	fcmpl
+	ifeq true_5
+	iconst_0
+	goto end_6
+true_5:
+	iconst_1
+end_6:
+	ifeq else_1
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc 0
+	invokevirtual java/io/PrintStream/println(I)V
+	goto endif_2
+else_1:
+	getstatic java/lang/System/out Ljava/io/PrintStream;
 	ldc 1
-	iadd
-	istore 0
-	goto fl_start_10
-fl_end_11:
+	ineg
+	invokevirtual java/io/PrintStream/println(I)V
+endif_2:
+	ldc 0.1
+	fstore 3
+	ldc 1.2
+	fstore 4
+wl_start_7:
+	fload 3
+	fload 4
+	fcmpl
+	iflt true_9
+	iconst_0
+	goto end_10
+true_9:
+	iconst_1
+end_10:
+	ifeq wl_end_8
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	fload 3
+	invokevirtual java/io/PrintStream/println(F)V
+	fload 3
+	ldc 0.1
+	fadd
+	fstore 3
+	goto wl_start_7
+wl_end_8:
+	iload 0
+	i2f
+	ldc 5
+	i2f
+	fcmpl
+	ifgt true_11
+	iconst_0
+	goto end_12
+true_11:
+	iconst_1
+end_12:
+	fload 1
+	ldc 10
+	i2f
+	fcmpl
+	iflt true_13
+	iconst_0
+	goto end_14
+true_13:
+	iconst_1
+end_14:
+	iand
+	iload 2
+	ior
+	istore 5
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload 5
+	invokevirtual java/io/PrintStream/println(I)V
 	return
 .end method

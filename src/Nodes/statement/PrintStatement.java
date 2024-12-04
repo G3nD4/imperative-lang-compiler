@@ -4,7 +4,7 @@ import Nodes.Enums.Type;
 import Nodes.Interfaces.JasminConvertable;
 import Nodes.expression.Expression;
 import Nodes.jasmine.CodeGenerator;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PrintStatement extends Statement implements JasminConvertable {

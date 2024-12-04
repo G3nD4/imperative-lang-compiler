@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Error_detector.ErrorDetector;
-import Error_detector.LexicalError;
+import Lexical_analyzer.Error_detector.ErrorDetector;
+import Lexical_analyzer.Error_detector.LexicalError;
 
 public class LexicalAnalyzer {
 

@@ -3,7 +3,7 @@ package Nodes.statement.Declarations;
 import Nodes.Enums.Type;
 import Nodes.jasmine.CodeGenerator;
 import main.IndentManager;
-import main.MyLangParser;
+import main.antlrTree.MyLangParser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class TypeDeclaration extends Declaration {
