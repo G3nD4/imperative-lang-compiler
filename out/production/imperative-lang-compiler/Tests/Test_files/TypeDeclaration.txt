@@ -1,5 +1,0 @@
-type int is integer
-
-if 1 <= 2 then
-    var a is 9
-end
