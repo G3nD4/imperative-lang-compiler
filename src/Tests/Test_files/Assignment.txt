@@ -1,4 +1,4 @@
 var largestPrime is 2
 var result : real is 5 * 2.718;
-var roundedResult : integer is result;
+var roundedResult : real is result;
 largestPrime := roundedResult - 1;
