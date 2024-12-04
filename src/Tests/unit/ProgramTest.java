@@ -118,7 +118,12 @@ public class ProgramTest {
     }
 
     @Test
-    public void factorialFunctionUsingRecursion() throws IOException {
+    public void testFactorialFunctionUsingRecursion() throws IOException {
         runTest("ProgramTest.txt");
+    }
+
+    @Test
+    public void testPrint() throws IOException {
+        runTest("Print.txt");
     }
 }

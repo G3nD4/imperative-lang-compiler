@@ -24,6 +24,8 @@ AND: 'and';
 OR: 'or';
 NOT: 'not';
 
+PRINT: 'print';
+
 INTEGER: 'integer';
 REAL: 'real';
 BOOLEAN: 'boolean';
@@ -108,6 +110,7 @@ statement
     | ifStatement separator
     | returnStatement separator
     | breakStatement separator
+    | printStatement separator // Added print statement
     ;
 
 assignment
@@ -140,6 +143,10 @@ returnStatement
 
 breakStatement
     : BREAK
+    ;
+
+printStatement
+    : PRINT LPAREN expression RPAREN
     ;
 
 separator

@@ -17,6 +17,7 @@ public abstract class Statement implements JasminConvertable {
             case "ifStatement" -> IfStatement.parse(child, parser);
             case "returnStatement" -> Return.parse(child, parser);
             case "breakStatement" -> new Break();
+            case "printStatement" -> PrintStatement.parse(child, parser);
             default -> null;
         };
     }

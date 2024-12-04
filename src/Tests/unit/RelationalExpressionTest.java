@@ -40,7 +40,7 @@ public class RelationalExpressionTest {
 
 //        Dynamically save the Jasmin code to a.j file
         try (FileWriter writer = new FileWriter("C:\\Users\\HUAWEI\\Downloads\\jasmin-2.4\\MyProgram.j")) {
-            writer.write(RunJasmin.HEADER + jasminCode + RunJasmin.FOOTER);
+            writer.write(jasminCode);
         } catch (IOException e) {
             e.printStackTrace();
         }
